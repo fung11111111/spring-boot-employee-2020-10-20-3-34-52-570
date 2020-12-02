@@ -15,6 +15,6 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployeesList(){
-        return null;
+        return employeeRepository.getEmployeesList();
     }
 }
