@@ -18,6 +18,10 @@ public class CompanyService {
     }
 
     public List<Company> getCompanies() {
+        return companyRepository.getCompanies();
+    }
+
+    public Company addCompany(Company expectedCompany) {
         return null;
     }
 }

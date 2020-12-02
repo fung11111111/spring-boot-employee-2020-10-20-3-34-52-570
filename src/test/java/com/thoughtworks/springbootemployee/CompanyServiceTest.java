@@ -1,11 +1,8 @@
 package com.thoughtworks.springbootemployee;
 
 import com.thoughtworks.springbootemployee.model.Company;
-import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
-import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.CompanyService;
-import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -22,7 +19,7 @@ public class CompanyServiceTest {
         //given
         CompanyRepository companyRepository = Mockito.mock(CompanyRepository.class);
         CompanyService companyService = new CompanyService(companyRepository);
-        List<Company> expectedCompanies = Arrays.asList();
+        List<Company> expectedCompanies = Arrays.asList(new Company());
         when(companyRepository.getCompanies()).thenReturn(expectedCompanies);
 
         //when
@@ -30,5 +27,20 @@ public class CompanyServiceTest {
 
         //then
         assertEquals(expectedCompanies, actualEmployees);
+    }
+
+    @Test
+    public void should_add_company_when_add_company_given_repository_with_company() {
+        //given
+        CompanyRepository companyRepository = Mockito.mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService(companyRepository);
+        Company expectedCompany = new Company();
+        when(companyRepository.addCompany(expectedCompany)).thenReturn(expectedCompany);
+
+        //when
+        Company actualCompany = companyService.addCompany(expectedCompany);
+
+        //then
+        assertEquals(expectedCompany, actualCompany);
     }
 }
