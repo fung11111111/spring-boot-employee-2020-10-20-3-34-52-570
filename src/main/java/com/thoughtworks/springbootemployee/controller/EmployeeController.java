@@ -28,7 +28,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/{employeeId}")
-    public Employee updateEmployee(@PathVariable Integer employeeId, @RequestBody Employee employeeUpdate) {
+    public Employee updateEmployee(@PathVariable Integer employeeId, @RequestBody Employee employeeUpdate) throws EmployeeNotFoundException {
         return employeeService.updateEmployee(employeeId, employeeUpdate);
     }
 

@@ -62,7 +62,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void should_return_employee_when_update_employee_by_id_given_repository_with_employee_id_employee_update() {
+    public void should_return_employee_when_update_employee_by_id_given_repository_with_employee_id_employee_update() throws EmployeeNotFoundException {
         //given
         EmployeeRepository employeeRepository = Mockito.mock(EmployeeRepository.class);
         EmployeeService employeeService = new EmployeeService(employeeRepository);

@@ -30,7 +30,7 @@ public class EmployeeService {
         return employeeRepository.getEmployeeByID(id);
     }
 
-    public Employee updateEmployee(Integer id, Employee employeeUpdate) {
+    public Employee updateEmployee(Integer id, Employee employeeUpdate) throws EmployeeNotFoundException {
         return employeeRepository.updateEmployee(id, employeeUpdate);
     }
 

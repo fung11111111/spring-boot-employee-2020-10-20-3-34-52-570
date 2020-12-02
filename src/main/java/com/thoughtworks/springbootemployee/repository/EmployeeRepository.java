@@ -32,15 +32,14 @@ public class EmployeeRepository {
         }
     }
 
-    public Employee updateEmployee(Integer id, Employee employeeUpdate) {
-        employees.stream()
-                .filter(employee -> employee.getId().equals(id))
-                .findFirst()
-                .ifPresent(employee -> {
-                    employees.remove(employee);
-                    employees.add(employeeUpdate);
-                });
-        return employeeUpdate;
+    public Employee updateEmployee(Integer id, Employee employeeUpdate) throws EmployeeNotFoundException {
+        Employee existingEmployee = getEmployeeByID(id);
+        if (existingEmployee != null){
+            employees.remove(existingEmployee);
+            employees.add(employeeUpdate);
+            return employeeUpdate;
+        }
+        throw new EmployeeNotFoundException();
     }
 
     public void deleteEmployeeByID(Integer id) {
