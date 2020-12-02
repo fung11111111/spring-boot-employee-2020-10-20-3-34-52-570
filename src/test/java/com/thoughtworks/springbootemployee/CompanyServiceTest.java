@@ -85,7 +85,7 @@ public class CompanyServiceTest {
         CompanyService companyService = new CompanyService(companyRepository);
 
         //when
-        companyService.deleteCompanyById(11);
+        companyService.deleteCompanyById(1);
 
         //then
         verify(companyRepository, times(1)).deleteCompanyById(1);

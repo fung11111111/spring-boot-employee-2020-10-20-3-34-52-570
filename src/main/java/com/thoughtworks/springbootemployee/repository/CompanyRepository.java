@@ -40,6 +40,11 @@ public class CompanyRepository {
     }
 
     public void deleteCompanyById(Integer companyId) {
-
+        companies.stream()
+                .filter(company -> company.getCompanyId().equals(companyId))
+                .findFirst()
+                .ifPresent(employee -> {
+                    companies.remove(employee);
+                });
     }
 }
