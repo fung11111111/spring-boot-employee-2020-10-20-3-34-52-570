@@ -20,4 +20,8 @@ public class CompanyRepository {
         companies.add(company);
         return company;
     }
+
+    public Company getCompanyById(Integer companyId){
+        return null;
+    }
 }

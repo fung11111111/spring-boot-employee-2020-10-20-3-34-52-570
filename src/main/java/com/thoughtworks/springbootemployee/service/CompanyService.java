@@ -24,4 +24,8 @@ public class CompanyService {
     public Company addCompany(Company company) {
         return companyRepository.addCompany(company);
     }
+
+    public Company getCompanyById(Integer companyId) {
+        return null;
+    }
 }
