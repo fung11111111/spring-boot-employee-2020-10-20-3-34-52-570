@@ -93,9 +93,6 @@ public class EmployeeServiceTest {
         //given
         EmployeeRepository employeeRepository = Mockito.mock(EmployeeRepository.class);
         EmployeeService employeeService = new EmployeeService(employeeRepository);
-        employeeRepository.addEmployee(new Employee(1, "Tom", 20, "Male", 200));
-        employeeRepository.addEmployee(new Employee(2, "Tommy", 20, "Male", 200));
-        employeeRepository.addEmployee(new Employee(3, "Mandy", 20, "Female", 200));
         List<Employee> expectedEmployees = new ArrayList<>();
         expectedEmployees.add(new Employee(1, "Tom", 20, "Male", 200));
         expectedEmployees.add(new Employee(2, "Tommy", 20, "Male", 200));
