@@ -115,15 +115,13 @@ public class EmployeeServiceTest {
         List<Employee> expectedEmployees = new ArrayList<>();
         expectedEmployees.add(new Employee(1, "Tom", 20, "Male", 200));
         expectedEmployees.add(new Employee(2, "Tommy", 20, "Male", 200));
-        when(employeeRepository.getEmployeesList()).thenReturn(expectedEmployees);
+        when(employeeRepository.getWithPagination(1,2)).thenReturn(expectedEmployees);
 
         //when
-        List<Employee> actualEmployees = employeeService.getWithPagination(1, 3);
+        List<Employee> actualEmployees = employeeService.getWithPagination(1, 2);
 
         //then
         assertEquals(2, actualEmployees.size());
-        assertEquals(java.util.Optional.of(1), actualEmployees.get(0).getId());
-        assertEquals(java.util.Optional.of(2), actualEmployees.get(1).getId());
     }
 
 }

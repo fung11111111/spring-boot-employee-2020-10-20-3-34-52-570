@@ -14,11 +14,11 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public List<Employee> getEmployeesList(){
+    public List<Employee> getEmployeesList() {
         return employeeRepository.getEmployeesList();
     }
 
-    public Employee addEmployee(Employee employee){
+    public Employee addEmployee(Employee employee) {
         return employeeRepository.addEmployee(employee);
     }
 
@@ -30,7 +30,7 @@ public class EmployeeService {
         return employeeRepository.updateEmployee(id, employeeUpdate);
     }
 
-    public void deleteEmployeeByID(Integer id){
+    public void deleteEmployeeByID(Integer id) {
         employeeRepository.deleteEmployeeByID(id);
     }
 
@@ -39,7 +39,7 @@ public class EmployeeService {
     }
 
     public List<Employee> getWithPagination(Integer page, Integer pageSize) {
-        return null;
+        return employeeRepository.getWithPagination(page, pageSize);
     }
 }
 
