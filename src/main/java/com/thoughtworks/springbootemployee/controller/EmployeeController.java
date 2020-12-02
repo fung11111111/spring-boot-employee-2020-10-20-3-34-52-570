@@ -1,6 +1,8 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.Employee;
+import com.thoughtworks.springbootemployee.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -12,9 +14,11 @@ import java.util.stream.Collectors;
 public class EmployeeController {
     private List<Employee> employees = new ArrayList<>();
 
+    @Autowired
+    private EmployeeService employeeService;
     @GetMapping
     public List<Employee> getEmployeesList() {
-        return employees;
+        return employeeService.getEmployeesList();
     }
 
     @PostMapping
