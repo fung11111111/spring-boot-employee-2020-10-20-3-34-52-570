@@ -51,7 +51,6 @@ public class EmployeeServiceTest {
         EmployeeRepository employeeRepository = Mockito.mock(EmployeeRepository.class);
         EmployeeService employeeService = new EmployeeService(employeeRepository);
         Employee expectedEmployee = new Employee(1, "Tom", 20, "Male", 20000);
-        employeeRepository.addEmployee(expectedEmployee);
         when(employeeRepository.getEmployeeByID(1)).thenReturn(expectedEmployee);
 
         //when
@@ -118,7 +117,7 @@ public class EmployeeServiceTest {
         List<Employee> expectedEmployees = new ArrayList<>();
         expectedEmployees.add(new Employee(1, "Tom", 20, "Male", 200));
         expectedEmployees.add(new Employee(2, "Tommy", 20, "Male", 200));
-        when(employeeRepository.getWithPagination(1,2)).thenReturn(expectedEmployees);
+        when(employeeRepository.getWithPagination(1, 2)).thenReturn(expectedEmployees);
 
         //when
         List<Employee> actualEmployees = employeeService.getWithPagination(1, 2);
