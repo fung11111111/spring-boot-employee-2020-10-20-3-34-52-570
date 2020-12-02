@@ -2,7 +2,9 @@ package com.thoughtworks.springbootemployee;
 
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.CompanyService;
+import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -11,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class CompanyServiceTest {
 
@@ -75,6 +77,20 @@ public class CompanyServiceTest {
         //then
         assertEquals(expectedCompany, actualCompany);
     }
+
+    @Test
+    public void should_call_deleteCompanyByID_when_service_delete_company_by_id_given_repository_with_company_id() {
+        //given
+        CompanyRepository companyRepository = Mockito.mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService(companyRepository);
+
+        //when
+        companyService.deleteCompanyById(11);
+
+        //then
+        verify(companyRepository, times(1)).deleteCompanyById(1);
+    }
+
 
 
 }
