@@ -15,4 +15,8 @@ public class CompanyRepository {
     public List<Company> getCompanies() {
         return companies;
     }
+
+    public Company addCompany(Company company) {
+        return null;
+    }
 }
