@@ -18,7 +18,7 @@ public class EmployeeService {
         return employeeRepository.getEmployeesList();
     }
 
-    public Employee addEmpolyee(Employee employee){
+    public Employee addEmployee(Employee employee){
         return employeeRepository.addEmployee(employee);
     }
 
@@ -28,6 +28,10 @@ public class EmployeeService {
 
     public Employee updateEmployee(Integer id, Employee employeeUpdate) {
         return employeeRepository.updateEmployee(id, employeeUpdate);
+    }
+
+    public void deleteEmployeeByID(Integer id){
+      //  employeeRepository.deleteEmployeeByID(id);
     }
 }
 

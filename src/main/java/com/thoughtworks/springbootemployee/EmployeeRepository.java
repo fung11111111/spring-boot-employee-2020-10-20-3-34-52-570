@@ -35,4 +35,13 @@ public class EmployeeRepository {
                 });
         return employeeUpdate;
     }
+
+    public void deleteEmployeeByID(Integer id) {
+        employees.stream()
+                .filter(employee -> employee.getId().equals(id))
+                .findFirst()
+                .ifPresent(employee -> {
+                    employees.remove(employee);
+                });
+    }
 }

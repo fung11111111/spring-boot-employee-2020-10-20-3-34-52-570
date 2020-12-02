@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class EmployeeServiceTest {
 
@@ -35,7 +35,7 @@ public class EmployeeServiceTest {
         when(employeeRepository.addEmployee(expectedEmployee)).thenReturn(expectedEmployee);
 
         //when
-        Employee actualEmployees = employeeService.addEmpolyee(expectedEmployee);
+        Employee actualEmployees = employeeService.addEmployee(expectedEmployee);
 
         //then
         assertEquals(expectedEmployee, actualEmployees);
@@ -73,9 +73,18 @@ public class EmployeeServiceTest {
         assertEquals(expectedEmployee, actualEmployees);
     }
 
+    @Test
+    public void should_call_deleteEmployeeByID_when_service_delete_employee_by_id_given_repository_with_employee_id() {
+        //given
+        EmployeeRepository employeeRepository = Mockito.mock(EmployeeRepository.class);
+        EmployeeService employeeService = new EmployeeService(employeeRepository);
 
+        //when
+        employeeService.deleteEmployeeByID(1);
 
-
+        //then
+        verify(employeeRepository, times(1)).deleteEmployeeByID(1);
+    }
 
 
 }
