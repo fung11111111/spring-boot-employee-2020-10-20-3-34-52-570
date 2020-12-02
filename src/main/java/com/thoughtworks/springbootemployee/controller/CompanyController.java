@@ -30,4 +30,10 @@ public class CompanyController {
     public Company getCompanyById(@PathVariable Integer companyId) {
         return companyService.getCompanyById(companyId);
     }
+
+    @PutMapping("/{companyId}")
+    public Company updateCompany(@PathVariable Integer companyId, @RequestBody Company companyUpdate){
+        return companyService.updateCompany(companyId, companyUpdate);
+    }
+
 }

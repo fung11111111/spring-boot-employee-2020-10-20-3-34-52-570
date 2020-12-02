@@ -27,4 +27,15 @@ public class CompanyRepository {
                 .findFirst()
                 .orElse(null);
     }
+
+    public Company updateCompany(Integer companyId, Company companyUpdate) {
+        companies.stream()
+                .filter(company -> company.getCompanyId().equals(companyId))
+                .findFirst()
+                .ifPresent(existingCompany -> {
+                    companies.remove(existingCompany);
+                    companies.add(companyUpdate);
+                });
+        return companyUpdate;
+    }
 }

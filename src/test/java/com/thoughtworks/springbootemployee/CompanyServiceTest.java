@@ -59,4 +59,22 @@ public class CompanyServiceTest {
         //then
         assertEquals(expectedCompany, actualCompany);
     }
+
+    @Test
+    public void should_return_updated_company_when_update_company_given_repository_with_company_and_company_id() {
+        //given
+        CompanyRepository companyRepository = Mockito.mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService(companyRepository);
+        Company expectedCompany = new Company(123,"Hello","Banking",new ArrayList<>());
+        companyRepository.addCompany(new Company(123,"HI","Banking",new ArrayList<>()));
+        when(companyRepository.updateCompany(123, expectedCompany)).thenReturn(expectedCompany);
+
+        //when
+        Company actualCompany = companyService.updateCompany(123, expectedCompany);
+
+        //then
+        assertEquals(expectedCompany, actualCompany);
+    }
+
+
 }

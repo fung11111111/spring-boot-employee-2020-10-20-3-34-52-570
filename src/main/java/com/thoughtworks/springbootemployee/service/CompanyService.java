@@ -28,4 +28,8 @@ public class CompanyService {
     public Company getCompanyById(Integer companyId) {
         return companyRepository.getCompanyById(companyId);
     }
+
+    public Company updateCompany(Integer companyId, Company companyUpdate) {
+        return companyRepository.updateCompany(companyId, companyUpdate);
+    }
 }
