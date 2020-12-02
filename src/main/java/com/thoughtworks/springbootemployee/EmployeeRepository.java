@@ -13,4 +13,8 @@ public class EmployeeRepository {
         return employees;
     }
 
+    public Employee addEmployee(Employee employee) {
+
+        return employee;
+    }
 }
