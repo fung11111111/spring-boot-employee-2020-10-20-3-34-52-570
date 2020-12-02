@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee;
 
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.CompanyService;
@@ -52,7 +53,7 @@ public class CompanyServiceTest {
         //given
         CompanyRepository companyRepository = Mockito.mock(CompanyRepository.class);
         CompanyService companyService = new CompanyService(companyRepository);
-        Company expectedCompany = new Company(123,"Hi","Banking",new ArrayList<>());
+        Company expectedCompany = new Company(123, "Hi", "Banking", new ArrayList<>());
         when(companyRepository.getCompanyById(123)).thenReturn(expectedCompany);
 
         //when
@@ -67,8 +68,8 @@ public class CompanyServiceTest {
         //given
         CompanyRepository companyRepository = Mockito.mock(CompanyRepository.class);
         CompanyService companyService = new CompanyService(companyRepository);
-        Company expectedCompany = new Company(123,"Hello","Banking",new ArrayList<>());
-        companyRepository.addCompany(new Company(123,"HI","Banking",new ArrayList<>()));
+        Company expectedCompany = new Company(123, "Hello", "Banking", new ArrayList<>());
+        companyRepository.addCompany(new Company(123, "HI", "Banking", new ArrayList<>()));
         when(companyRepository.updateCompany(123, expectedCompany)).thenReturn(expectedCompany);
 
         //when
@@ -91,6 +92,23 @@ public class CompanyServiceTest {
         verify(companyRepository, times(1)).deleteCompanyById(1);
     }
 
+    @Test
+    public void should_return_employees_when_get_employees_by_company_id_given_repository_with_company_id() {
+        //given
+        CompanyRepository companyRepository = Mockito.mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService(companyRepository);
+        ArrayList<Employee> expectedEmployees = new ArrayList<>();
+        expectedEmployees.add(new Employee());
+        expectedEmployees.add(new Employee());
+        expectedEmployees.add(new Employee());
+        when(companyRepository.getEmployeesByCompanyId(123)).thenReturn(expectedEmployees);
+
+        //when
+        List<Employee> actualEmployees = companyService.getEmployeesByCompanyId(123);
+
+        //then
+        assertEquals(expectedEmployees, actualEmployees);
+    }
 
 
 }

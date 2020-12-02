@@ -47,4 +47,8 @@ public class CompanyRepository {
                     companies.remove(employee);
                 });
     }
+
+    public List<Employee> getEmployeesByCompanyId(Integer companyId) {
+        return null;
+    }
 }
