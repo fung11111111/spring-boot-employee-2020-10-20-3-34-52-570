@@ -21,7 +21,7 @@ public class CompanyService {
         return companyRepository.getCompanies();
     }
 
-    public Company addCompany(Company expectedCompany) {
-        return null;
+    public Company addCompany(Company company) {
+        return companyRepository.addCompany(company);
     }
 }
