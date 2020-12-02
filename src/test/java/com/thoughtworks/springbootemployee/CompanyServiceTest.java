@@ -54,7 +54,7 @@ public class CompanyServiceTest {
         when(companyRepository.getCompanyById(123)).thenReturn(expectedCompany);
 
         //when
-        Company actualCompany = companyService.addCompany(expectedCompany);
+        Company actualCompany = companyService.getCompanyById(123);
 
         //then
         assertEquals(expectedCompany, actualCompany);
