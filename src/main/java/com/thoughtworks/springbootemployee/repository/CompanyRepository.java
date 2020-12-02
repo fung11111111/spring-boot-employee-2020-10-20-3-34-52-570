@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.repository;
 
+import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.stereotype.Repository;
@@ -22,22 +23,26 @@ public class CompanyRepository {
         return company;
     }
 
-    public Company getCompanyById(Integer companyId) {
-        return this.companies.stream()
-                .filter(company -> companyId.equals(company.getCompanyId()))
-                .findFirst()
-                .orElse(null);
+    public Company getCompanyById(Integer companyId) throws EmployeeNotFoundException{
+        try{
+            return this.companies.stream()
+                    .filter(company -> companyId.equals(company.getCompanyId()))
+                    .findFirst()
+                    .orElse(null);
+        }catch (Exception exception){
+            throw  new EmployeeNotFoundException();
+        }
+
     }
 
-    public Company updateCompany(Integer companyId, Company companyUpdate) {
-        companies.stream()
-                .filter(company -> company.getCompanyId().equals(companyId))
-                .findFirst()
-                .ifPresent(existingCompany -> {
-                    companies.remove(existingCompany);
-                    companies.add(companyUpdate);
-                });
-        return companyUpdate;
+    public Company updateCompany(Integer companyId, Company companyUpdate) throws EmployeeNotFoundException {
+        Company existingCompany = getCompanyById(companyId);
+        if(existingCompany != null){
+            companies.remove(existingCompany);
+            companies.add(companyUpdate);
+            return companyUpdate;
+        }
+        throw new EmployeeNotFoundException();
     }
 
     public void deleteCompanyById(Integer companyId) {

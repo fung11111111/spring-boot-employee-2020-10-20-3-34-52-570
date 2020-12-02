@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee;
 
+import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -47,7 +48,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    public void should_company_when_get_company_by_id_given_repository_with_company_id() {
+    public void should_company_when_get_company_by_id_given_repository_with_company_id() throws EmployeeNotFoundException {
         //given
         CompanyRepository companyRepository = Mockito.mock(CompanyRepository.class);
         CompanyService companyService = new CompanyService(companyRepository);
@@ -62,7 +63,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    public void should_return_updated_company_when_update_company_given_repository_with_company_and_company_id() {
+    public void should_return_updated_company_when_update_company_given_repository_with_company_and_company_id() throws EmployeeNotFoundException {
         //given
         CompanyRepository companyRepository = Mockito.mock(CompanyRepository.class);
         CompanyService companyService = new CompanyService(companyRepository);
@@ -123,6 +124,4 @@ public class CompanyServiceTest {
         //then
         assertEquals(2, actualCompanies.size());
     }
-
-
 }
