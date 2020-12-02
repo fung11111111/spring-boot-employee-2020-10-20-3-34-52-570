@@ -69,7 +69,6 @@ public class CompanyServiceTest {
         CompanyRepository companyRepository = Mockito.mock(CompanyRepository.class);
         CompanyService companyService = new CompanyService(companyRepository);
         Company expectedCompany = new Company(123, "Hello", "Banking", new ArrayList<>());
-        companyRepository.addCompany(new Company(123, "HI", "Banking", new ArrayList<>()));
         when(companyRepository.updateCompany(123, expectedCompany)).thenReturn(expectedCompany);
 
         //when
@@ -118,7 +117,7 @@ public class CompanyServiceTest {
         List<Company> expectedCompanies = new ArrayList<>();
         expectedCompanies.add(new Company());
         expectedCompanies.add(new Company());
-        when(companyRepository.getWithPagination(1,2)).thenReturn(expectedCompanies);
+        when(companyRepository.getWithPagination(1, 2)).thenReturn(expectedCompanies);
 
         //when
         List<Company> actualCompanies = companyService.getWithPagination(1, 2);
