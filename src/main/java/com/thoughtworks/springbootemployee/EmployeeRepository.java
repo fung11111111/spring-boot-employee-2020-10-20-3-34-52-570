@@ -17,4 +17,8 @@ public class EmployeeRepository {
         employees.add(employee);
         return employee;
     }
+
+    public Employee getEmployeeByID(Integer id) {
+        return null;
+    }
 }
