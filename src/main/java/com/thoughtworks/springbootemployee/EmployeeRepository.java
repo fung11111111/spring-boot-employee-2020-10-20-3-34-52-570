@@ -51,4 +51,12 @@ public class EmployeeRepository {
                 .filter(employee -> employee.getGender().equals(gender))
                 .collect(Collectors.toList());
     }
+
+    public List<Employee> getWithPagination(Integer page, Integer pageSize) {
+        int pageToSkip = page - 1;
+        return employees.stream()
+                .skip(pageToSkip * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
+    }
 }

@@ -107,5 +107,23 @@ public class EmployeeServiceTest {
         assertEquals(expectedEmployees, actualEmployees);
     }
 
+    @Test
+    void should_return_2_employees_when_get_employees_with_pagination_given_employees_more_than_2_with_pageNumber_is_1_and_pageSize_is_2() {
+        //given
+        EmployeeRepository employeeRepository = Mockito.mock(EmployeeRepository.class);
+        EmployeeService employeeService = new EmployeeService(employeeRepository);
+        List<Employee> expectedEmployees = new ArrayList<>();
+        expectedEmployees.add(new Employee(1, "Tom", 20, "Male", 200));
+        expectedEmployees.add(new Employee(2, "Tommy", 20, "Male", 200));
+        when(employeeRepository.getEmployeesList()).thenReturn(expectedEmployees);
+
+        //when
+        List<Employee> actualEmployees = employeeService.getWithPagination(1, 3);
+
+        //then
+        assertEquals(2, actualEmployees.size());
+        assertEquals(java.util.Optional.of(1), actualEmployees.get(0).getId());
+        assertEquals(java.util.Optional.of(2), actualEmployees.get(1).getId());
+    }
 
 }

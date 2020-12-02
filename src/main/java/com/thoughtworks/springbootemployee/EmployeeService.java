@@ -37,5 +37,9 @@ public class EmployeeService {
     public List<Employee> getEmployeesByGender(String gender) {
         return employeeRepository.getEmployeesByGender(gender);
     }
+
+    public List<Employee> getWithPagination(Integer page, Integer pageSize) {
+        return null;
+    }
 }
 
