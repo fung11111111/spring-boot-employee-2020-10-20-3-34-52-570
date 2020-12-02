@@ -27,7 +27,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void should_create_employee_when_add_employee_given_repository_with_employee() {
+    public void should_add_employee_when_add_employee_given_repository_with_employee() {
         //given
         EmployeeRepository employeeRepository = Mockito.mock(EmployeeRepository.class);
         EmployeeService employeeService = new EmployeeService(employeeRepository);
@@ -35,7 +35,7 @@ public class EmployeeServiceTest {
         when(employeeRepository.addEmployee(expectedEmployee)).thenReturn(expectedEmployee);
 
         //when
-        List<Employee> actualEmployees = employeeService.getEmployeesList();
+        Employee actualEmployees = employeeService.addEmpolyee(expectedEmployee);
 
         //then
         assertEquals(expectedEmployee, actualEmployees);

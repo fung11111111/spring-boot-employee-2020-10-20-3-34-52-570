@@ -19,6 +19,7 @@ public class EmployeeService {
     }
 
     public Employee addEmpolyee(Employee employee){
-        return null;
+        return employeeRepository.addEmployee(employee);
     }
 }
+

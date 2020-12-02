@@ -14,7 +14,7 @@ public class EmployeeRepository {
     }
 
     public Employee addEmployee(Employee employee) {
-
+        employees.add(employee);
         return employee;
     }
 }
