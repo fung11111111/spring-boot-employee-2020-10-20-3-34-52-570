@@ -1,6 +1,6 @@
 package com.thoughtworks.springbootemployee.repository;
 
-import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
+import com.thoughtworks.springbootemployee.Exception.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.stereotype.Repository;
@@ -23,41 +23,41 @@ public class CompanyRepository {
         return company;
     }
 
-    public Company getCompanyById(Integer companyId) throws EmployeeNotFoundException{
+    public Company getCompanyById(Integer companyId) throws CompanyNotFoundException {
         try{
             return this.companies.stream()
                     .filter(company -> companyId.equals(company.getCompanyId()))
                     .findFirst()
                     .orElse(null);
         }catch (Exception exception){
-            throw  new EmployeeNotFoundException();
+            throw  new CompanyNotFoundException();
         }
 
     }
 
-    public Company updateCompany(Integer companyId, Company companyUpdate) throws EmployeeNotFoundException {
+    public Company updateCompany(Integer companyId, Company companyUpdate) throws CompanyNotFoundException {
         Company existingCompany = getCompanyById(companyId);
         if(existingCompany != null){
             companies.remove(existingCompany);
             companies.add(companyUpdate);
             return companyUpdate;
         }
-        throw new EmployeeNotFoundException();
+        throw new CompanyNotFoundException();
     }
 
-    public void deleteCompanyById(Integer companyId) throws EmployeeNotFoundException {
+    public void deleteCompanyById(Integer companyId) throws CompanyNotFoundException {
         Company deleteCompany = getCompanyById(companyId);
         if (deleteCompany != null){
             companies.remove(deleteCompany);
         }
     }
 
-    public List<Employee> getEmployeesByCompanyId(Integer companyId) {
-        return companies.stream()
-                .filter(company -> company.getCompanyId().equals(companyId))
-                .findFirst()
-                .get().getEmployees();
-
+    public List<Employee> getEmployeesByCompanyId(Integer companyId) throws CompanyNotFoundException {
+        Company existingCompany = getCompanyById(companyId);
+        if(existingCompany != null){
+            return existingCompany.getEmployees();
+        }
+        throw new CompanyNotFoundException();
     }
 
     public List<Company> getWithPagination(Integer page, Integer pageSize) {

@@ -1,6 +1,6 @@
 package com.thoughtworks.springbootemployee.controller;
 
-import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
+import com.thoughtworks.springbootemployee.Exception.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
@@ -28,22 +28,22 @@ public class CompanyController {
     }
 
     @GetMapping("/{companyId}")
-    public Company getCompanyById(@PathVariable Integer companyId) throws EmployeeNotFoundException {
+    public Company getCompanyById(@PathVariable Integer companyId) throws CompanyNotFoundException {
         return companyService.getCompanyById(companyId);
     }
 
     @PutMapping("/{companyId}")
-    public Company updateCompany(@PathVariable Integer companyId, @RequestBody Company companyUpdate) throws EmployeeNotFoundException {
+    public Company updateCompany(@PathVariable Integer companyId, @RequestBody Company companyUpdate) throws CompanyNotFoundException {
         return companyService.updateCompany(companyId, companyUpdate);
     }
 
     @DeleteMapping("/{companyId}")
-    public void deleteCompanyById(@PathVariable Integer companyId) throws EmployeeNotFoundException {
+    public void deleteCompanyById(@PathVariable Integer companyId) throws CompanyNotFoundException {
         companyService.deleteCompanyById(companyId);
     }
 
     @GetMapping("/{companyId}/employees")
-    public List<Employee> getEmployeesByCompanyId(@PathVariable Integer companyId) {
+    public List<Employee> getEmployeesByCompanyId(@PathVariable Integer companyId) throws CompanyNotFoundException {
         return companyService.getEmployeesByCompanyId(companyId);
     }
 

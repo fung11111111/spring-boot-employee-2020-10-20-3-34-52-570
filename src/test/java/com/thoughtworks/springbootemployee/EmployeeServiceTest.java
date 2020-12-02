@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee;
 
+import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
@@ -46,7 +47,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void should_return_employee_when_get_employee_by_id_given_repository_with_employee_id() {
+    public void should_return_employee_when_get_employee_by_id_given_repository_with_employee_id() throws EmployeeNotFoundException {
         //given
         EmployeeRepository employeeRepository = Mockito.mock(EmployeeRepository.class);
         EmployeeService employeeService = new EmployeeService(employeeRepository);

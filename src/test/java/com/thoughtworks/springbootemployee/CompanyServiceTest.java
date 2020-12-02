@@ -1,6 +1,6 @@
 package com.thoughtworks.springbootemployee;
 
-import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
+import com.thoughtworks.springbootemployee.Exception.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -48,7 +48,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    public void should_company_when_get_company_by_id_given_repository_with_company_id() throws EmployeeNotFoundException {
+    public void should_company_when_get_company_by_id_given_repository_with_company_id() throws CompanyNotFoundException {
         //given
         CompanyRepository companyRepository = Mockito.mock(CompanyRepository.class);
         CompanyService companyService = new CompanyService(companyRepository);
@@ -63,7 +63,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    public void should_return_updated_company_when_update_company_given_repository_with_company_and_company_id() throws EmployeeNotFoundException {
+    public void should_return_updated_company_when_update_company_given_repository_with_company_and_company_id() throws CompanyNotFoundException {
         //given
         CompanyRepository companyRepository = Mockito.mock(CompanyRepository.class);
         CompanyService companyService = new CompanyService(companyRepository);
@@ -78,7 +78,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    public void should_call_deleteCompanyByID_when_service_delete_company_by_id_given_repository_with_company_id() throws EmployeeNotFoundException {
+    public void should_call_deleteCompanyByID_when_service_delete_company_by_id_given_repository_with_company_id() throws CompanyNotFoundException {
         //given
         CompanyRepository companyRepository = Mockito.mock(CompanyRepository.class);
         CompanyService companyService = new CompanyService(companyRepository);
@@ -91,7 +91,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    public void should_return_employees_when_get_employees_by_company_id_given_repository_with_company_id() {
+    public void should_return_employees_when_get_employees_by_company_id_given_repository_with_company_id() throws CompanyNotFoundException {
         //given
         CompanyRepository companyRepository = Mockito.mock(CompanyRepository.class);
         CompanyService companyService = new CompanyService(companyRepository);

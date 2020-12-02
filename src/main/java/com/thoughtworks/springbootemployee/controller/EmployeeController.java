@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}")
-    public Employee getEmployeeByID(@PathVariable Integer employeeId) {
+    public Employee getEmployeeByID(@PathVariable Integer employeeId) throws EmployeeNotFoundException {
         return employeeService.getEmployeeByID(employeeId);
     }
 

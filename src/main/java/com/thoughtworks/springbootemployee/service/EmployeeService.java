@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
@@ -25,7 +26,7 @@ public class EmployeeService {
         return employeeRepository.addEmployee(employee);
     }
 
-    public Employee getEmployeeByID(Integer id) {
+    public Employee getEmployeeByID(Integer id) throws EmployeeNotFoundException {
         return employeeRepository.getEmployeeByID(id);
     }
 

@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.repository;
 
+import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.stereotype.Repository;
 
@@ -20,11 +21,15 @@ public class EmployeeRepository {
         return employee;
     }
 
-    public Employee getEmployeeByID(Integer id) {
-        return this.employees.stream()
-                .filter(employee -> id.equals(employee.getId()))
-                .findFirst()
-                .orElse(null);
+    public Employee getEmployeeByID(Integer id) throws EmployeeNotFoundException {
+        try {
+            return this.employees.stream()
+                    .filter(employee -> id.equals(employee.getId()))
+                    .findFirst()
+                    .orElse(null);
+        } catch (Exception exception) {
+            throw new EmployeeNotFoundException();
+        }
     }
 
     public Employee updateEmployee(Integer id, Employee employeeUpdate) {
