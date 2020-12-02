@@ -33,5 +33,9 @@ public class EmployeeService {
     public void deleteEmployeeByID(Integer id){
         employeeRepository.deleteEmployeeByID(id);
     }
+
+    public List<Employee> getEmployeesByGender(String gender) {
+        return null;
+    }
 }
 

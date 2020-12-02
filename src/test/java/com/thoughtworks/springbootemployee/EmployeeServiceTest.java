@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -84,6 +85,26 @@ public class EmployeeServiceTest {
 
         //then
         verify(employeeRepository, times(1)).deleteEmployeeByID(1);
+    }
+
+    @Test
+    public void should_return_male_employees_when_get_employees_by_gender_given_repository_with_employee_gender() {
+        //given
+        EmployeeRepository employeeRepository = Mockito.mock(EmployeeRepository.class);
+        EmployeeService employeeService = new EmployeeService(employeeRepository);
+        employeeRepository.addEmployee(new Employee(1, "Tom", 20, "Male", 200));
+        employeeRepository.addEmployee(new Employee(2, "Tommy", 20, "Male", 200));
+        employeeRepository.addEmployee(new Employee(3, "Mandy", 20, "Female", 200));
+        List<Employee> expectedEmployees = new ArrayList<>();
+        expectedEmployees.add(new Employee(1, "Tom", 20, "Male", 200));
+        expectedEmployees.add(new Employee(2, "Tommy", 20, "Male", 200));
+        when(employeeRepository.getEmployeesByGender("Male")).thenReturn(expectedEmployees);
+
+        //when
+        List<Employee> actualEmployees = employeeService.getEmployeesByGender("Male");
+
+        //then
+        assertEquals(expectedEmployees, actualEmployees);
     }
 
 
