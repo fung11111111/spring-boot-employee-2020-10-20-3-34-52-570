@@ -43,6 +43,6 @@ public class CompanyService {
     }
 
     public List<Company> getWithPagination(Integer page, Integer pageSize) {
-        return null;
+        return companyRepository.getWithPagination(page, pageSize);
     }
 }

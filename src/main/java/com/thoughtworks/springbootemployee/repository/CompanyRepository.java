@@ -22,7 +22,7 @@ public class CompanyRepository {
         return company;
     }
 
-    public Company getCompanyById(Integer companyId){
+    public Company getCompanyById(Integer companyId) {
         return this.companies.stream()
                 .filter(company -> companyId.equals(company.getCompanyId()))
                 .findFirst()
@@ -58,6 +58,10 @@ public class CompanyRepository {
     }
 
     public List<Company> getWithPagination(Integer page, Integer pageSize) {
-        return null;
+        int pageToSkip = page - 1;
+        return companies.stream()
+                .skip(pageToSkip * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
     }
 }
