@@ -46,7 +46,7 @@ public class EmployeeRepository {
                 });
     }
 
-    public Object getEmployeesByGender(String gender) {
+    public List<Employee> getEmployeesByGender(String gender) {
         return employees.stream()
                 .filter(employee -> employee.getGender().equals(gender))
                 .collect(Collectors.toList());
