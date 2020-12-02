@@ -38,7 +38,7 @@ public class CompanyController {
     }
 
     @DeleteMapping("/{companyId}")
-    public void deleteCompanyById(@PathVariable Integer companyId) {
+    public void deleteCompanyById(@PathVariable Integer companyId) throws EmployeeNotFoundException {
         companyService.deleteCompanyById(companyId);
     }
 

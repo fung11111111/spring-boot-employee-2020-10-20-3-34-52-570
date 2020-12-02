@@ -45,13 +45,11 @@ public class CompanyRepository {
         throw new EmployeeNotFoundException();
     }
 
-    public void deleteCompanyById(Integer companyId) {
-        companies.stream()
-                .filter(company -> company.getCompanyId().equals(companyId))
-                .findFirst()
-                .ifPresent(employee -> {
-                    companies.remove(employee);
-                });
+    public void deleteCompanyById(Integer companyId) throws EmployeeNotFoundException {
+        Company deleteCompany = getCompanyById(companyId);
+        if (deleteCompany != null){
+            companies.remove(deleteCompany);
+        }
     }
 
     public List<Employee> getEmployeesByCompanyId(Integer companyId) {

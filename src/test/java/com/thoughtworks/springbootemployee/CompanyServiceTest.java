@@ -78,7 +78,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    public void should_call_deleteCompanyByID_when_service_delete_company_by_id_given_repository_with_company_id() {
+    public void should_call_deleteCompanyByID_when_service_delete_company_by_id_given_repository_with_company_id() throws EmployeeNotFoundException {
         //given
         CompanyRepository companyRepository = Mockito.mock(CompanyRepository.class);
         CompanyService companyService = new CompanyService(companyRepository);

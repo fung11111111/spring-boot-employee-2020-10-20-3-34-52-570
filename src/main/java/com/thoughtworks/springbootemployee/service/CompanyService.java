@@ -35,7 +35,7 @@ public class CompanyService {
         return companyRepository.updateCompany(companyId, companyUpdate);
     }
 
-    public void deleteCompanyById(Integer companyId) {
+    public void deleteCompanyById(Integer companyId) throws EmployeeNotFoundException {
         companyRepository.deleteCompanyById(companyId);
     }
 
