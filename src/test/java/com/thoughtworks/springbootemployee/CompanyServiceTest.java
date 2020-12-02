@@ -110,5 +110,22 @@ public class CompanyServiceTest {
         assertEquals(expectedEmployees, actualEmployees);
     }
 
+    @Test
+    void should_return_2_companies_when_get_companies_with_pagination_given_companies_more_than_2_with_pageNumber_is_1_and_pageSize_is_2() {
+        //given
+        CompanyRepository companyRepository = Mockito.mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService(companyRepository);
+        List<Company> expectedCompanies = new ArrayList<>();
+        expectedCompanies.add(new Company());
+        expectedCompanies.add(new Company());
+        when(companyRepository.getWithPagination(1,2)).thenReturn(expectedCompanies);
+
+        //when
+        List<Company> actualCompanies = companyService.getWithPagination(1, 2);
+
+        //then
+        assertEquals(2, actualCompanies.size());
+    }
+
 
 }

@@ -56,4 +56,8 @@ public class CompanyRepository {
                 .get().getEmployees();
 
     }
+
+    public List<Company> getWithPagination(Integer page, Integer pageSize) {
+        return null;
+    }
 }
