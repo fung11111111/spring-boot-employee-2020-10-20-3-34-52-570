@@ -9,7 +9,7 @@ import java.util.List;
 public class EmployeeRepository {
     private List<Employee> employees = new ArrayList<>();
 
-    public List<Employee> getEmployeesList(){
+    public List<Employee> getEmployeesList() {
         return employees;
     }
 
@@ -19,6 +19,9 @@ public class EmployeeRepository {
     }
 
     public Employee getEmployeeByID(Integer id) {
-        return null;
+        return this.employees.stream()
+                .filter(employee -> id.equals(employee.getId()))
+                .findFirst()
+                .orElse(null);
     }
 }

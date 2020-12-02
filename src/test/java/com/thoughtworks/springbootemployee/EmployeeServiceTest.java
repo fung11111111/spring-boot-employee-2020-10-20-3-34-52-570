@@ -48,6 +48,7 @@ public class EmployeeServiceTest {
         EmployeeService employeeService = new EmployeeService(employeeRepository);
         Employee expectedEmployee = new Employee(1, "Tom", 20, "Male", 20000);
         employeeRepository.addEmployee(expectedEmployee);
+        when(employeeRepository.getEmployeeByID(1)).thenReturn(expectedEmployee);
 
         //when
         Employee actualEmployees = employeeService.getEmployeeByID(1);
