@@ -34,7 +34,7 @@ public class EmployeeService {
         return employeeRepository.updateEmployee(id, employeeUpdate);
     }
 
-    public void deleteEmployeeByID(Integer id) {
+    public void deleteEmployeeByID(Integer id) throws EmployeeNotFoundException {
         employeeRepository.deleteEmployeeByID(id);
     }
 

@@ -34,7 +34,7 @@ public class EmployeeRepository {
 
     public Employee updateEmployee(Integer id, Employee employeeUpdate) throws EmployeeNotFoundException {
         Employee existingEmployee = getEmployeeByID(id);
-        if (existingEmployee != null){
+        if (existingEmployee != null) {
             employees.remove(existingEmployee);
             employees.add(employeeUpdate);
             return employeeUpdate;
@@ -42,13 +42,11 @@ public class EmployeeRepository {
         throw new EmployeeNotFoundException();
     }
 
-    public void deleteEmployeeByID(Integer id) {
-        employees.stream()
-                .filter(employee -> employee.getId().equals(id))
-                .findFirst()
-                .ifPresent(employee -> {
-                    employees.remove(employee);
-                });
+    public void deleteEmployeeByID(Integer id) throws EmployeeNotFoundException {
+        Employee deletedEmployee = getEmployeeByID(id);
+        if (deletedEmployee != null) {
+            employees.remove(deletedEmployee);
+        }
     }
 
     public List<Employee> getEmployeesByGender(String gender) {
