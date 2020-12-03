@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertThrows;
@@ -147,6 +148,19 @@ public class EmployeeServiceTest {
 
         //then
         assertEquals(expectedEmployees, actualEmployees);
+    }
+
+    @Test
+    public void should_return_employee_when_find_all_by_id_given_repository_interface_with_all_employee() {
+        //given
+        Employee expectedEmployee = new Employee("1", "Tom", 20, "Male", 20000);
+        when(employeeRepositoryInt.findAllById("1")).thenReturn(Optional.of(expectedEmployee));
+
+        //when
+        List<Employee> actualEmployees = employeeService.getEmployeesList();
+
+        //then
+        assertEquals(expectedEmployee, actualEmployees);
     }
 
 
