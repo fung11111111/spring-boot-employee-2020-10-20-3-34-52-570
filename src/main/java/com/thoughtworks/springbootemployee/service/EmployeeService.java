@@ -32,9 +32,12 @@ public class EmployeeService {
         return employeeRepositoryInt.findById(id);
     }
 
-//    public Employee updateEmployee(String id, Employee employeeUpdate) throws EmployeeNotFoundException {
-//        return employeeRepository.updateEmployee(id, employeeUpdate);
-//    }
+    public Employee updateEmployee(String id, Employee employeeUpdate) throws EmployeeNotFoundException {
+        if(employeeRepositoryInt.existsById(id)){
+            return employeeRepositoryInt.save(employeeUpdate);
+        }
+        throw new EmployeeNotFoundException();
+    }
 
     public void deleteEmployeeByID(String id) throws EmployeeNotFoundException {
         employeeRepositoryInt.deleteById(id);

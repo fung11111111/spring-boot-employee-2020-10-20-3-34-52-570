@@ -196,12 +196,25 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void should_call_deleteEmployeeByID_when_delete_employee_by_id_given_repository_with_employee_id() throws EmployeeNotFoundException {
+    public void should_call_delete_employee_by_id_when_delete_employee_by_id_given_repository_with_employee_id() throws EmployeeNotFoundException {
         //when
         employeeService.deleteEmployeeByID("1");
 
         //then
         verify(employeeRepositoryInt, times(1)).deleteById("1");
+    }
+
+    @Test
+    public void should_return_updated_employee_when_update_employee_by_id_given_repository_with_employee_id_and_employee() throws EmployeeNotFoundException {
+        //given
+        Employee expectedEmployee = new Employee("1", "Tom", 20, "Male", 20000);
+        when(employeeRepositoryInt.existsById("1")).thenReturn(true);
+        when(employeeRepositoryInt.save(expectedEmployee)).thenReturn(expectedEmployee);
+        //when
+        Employee actualEmpoloyee = employeeService.updateEmployee("1", expectedEmployee);
+
+        //then
+        assertEquals(expectedEmployee, actualEmpoloyee);
     }
 
 

@@ -18,4 +18,12 @@ public interface EmployeeRepositoryInt extends MongoRepository<Employee, String>
 
     @Override
     void deleteById(String id);
+
+    boolean existsById(String id);
+
+
+
+
+
+
 }

@@ -26,11 +26,11 @@ public class EmployeeController {
         return employeeService.addEmployee(employeeCreate);
     }
 
-//    @PutMapping("/{employeeId}")
-//    public Employee updateEmployee(@PathVariable String employeeId, @RequestBody Employee employeeUpdate) throws EmployeeNotFoundException {
-//        return employeeService.updateEmployee(employeeId, employeeUpdate);
-//    }
-//
+    @PutMapping("/{employeeId}")
+    public Employee updateEmployee(@PathVariable String employeeId, @RequestBody Employee employeeUpdate) throws EmployeeNotFoundException {
+        return employeeService.updateEmployee(employeeId, employeeUpdate);
+    }
+
     @DeleteMapping("/{employeeId}")
     public void deleteEmployee(@PathVariable String employeeId) throws EmployeeNotFoundException {
         employeeService.deleteEmployeeByID(employeeId);
