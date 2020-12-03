@@ -13,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
-    private List<Company> companies = new ArrayList<>();
 
     @Autowired
     private CompanyService companyService;
