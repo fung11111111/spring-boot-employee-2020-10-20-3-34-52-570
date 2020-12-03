@@ -205,21 +205,21 @@ public class CompanyServiceTest {
         assertEquals(expectedCompany, actualCompany);
     }
 
-//    @Test
-//    public void should_return_employees_when_get_employees_by_company_id_given_repository_with_company_id() throws CompanyNotFoundException {
-//        //given
-//        Company expectedCompany = new Company("1", "A COM", "Banking", new ArrayList<>());
-//        ArrayList<Employee> employees = new ArrayList<>();
-//        employees.add(new Employee("1", "Tom", 20, "Male", 200, "1"));
-//        employees.add(new Employee("1", "Tommy", 20, "Male", 200, "1"));
-//        when(employeeRepository.findByCompanyId("1")).thenReturn(employees);
-//
-//        //when
-//        List<Employee> actualEmployees = companyService.getEmployeesByCompanyId("1");
-//
-//        //then
-//        assertEquals(expectedCompany, actualEmployees);
-//    }
+    @Test
+    public void should_return_employees_when_get_employees_by_company_id_given_repository_with_company_id() throws CompanyNotFoundException {
+        //given
+        Company expectedCompany = new Company("1", "A COM", "Banking");
+        ArrayList<Employee> expectedEmployees = new ArrayList<>();
+        expectedEmployees.add(new Employee("1", "Tom", 20, "Male", 200, "1"));
+        expectedEmployees.add(new Employee("2", "Tommy", 20, "Male", 200, "1"));
+        when(employeeRepository.findByCompanyId("1")).thenReturn(expectedEmployees);
+
+        //when
+        List<Employee> actualEmployees = companyService.getEmployeesByCompanyId("1");
+
+        //then
+        assertEquals(expectedEmployees, actualEmployees);
+    }
 
     @Test
     public void should_return_2_companies_when_get_companies_with_pagination_given_companies_more_than_2_with_pageNumber_is_1_and_pageSize_is_2() {

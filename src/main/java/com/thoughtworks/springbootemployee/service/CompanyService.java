@@ -19,7 +19,7 @@ public class CompanyService {
     private CompanyRepository companyRepository;
 
     @Autowired
-    private EmployeeService employeeService;
+    private EmployeeRepository employeeRepository;
 
     public List<Company> getCompanies() {
         return companyRepository.findAll();
@@ -45,7 +45,7 @@ public class CompanyService {
     }
 
     public List<Employee> getEmployeesByCompanyId(String companyId) {
-        return employeeService.getEmployeeByCompanyId(companyId);
+        return employeeRepository.findByCompanyId(companyId);
     }
 
     public List<Company> getWithPagination(Integer page, Integer pageSize) {
