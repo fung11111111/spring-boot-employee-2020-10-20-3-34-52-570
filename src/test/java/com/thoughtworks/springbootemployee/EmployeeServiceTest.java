@@ -164,5 +164,18 @@ public class EmployeeServiceTest {
         assertEquals(expectedEmployee, actualEmployees);
     }
 
+    @Test
+    public void should_return_employee_when_save_given_repository_interface_with_employee() throws EmployeeNotFoundException {
+        //given
+        Employee expectedEmployee = new Employee("1", "Tom", 20, "Male", 20000);
+        when(employeeRepositoryInt.save(expectedEmployee)).thenReturn(expectedEmployee);
+
+        //when
+        Employee actualEmployees = employeeService.addEmployee(expectedEmployee);
+
+        //then
+        assertEquals(expectedEmployee, actualEmployees);
+    }
+
 
 }
