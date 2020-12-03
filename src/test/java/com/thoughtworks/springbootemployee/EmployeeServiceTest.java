@@ -177,5 +177,21 @@ public class EmployeeServiceTest {
         assertEquals(expectedEmployee, actualEmployees);
     }
 
+    @Test
+    public void should_return_employee_when_get_employee_by_gender_given_repository_interface_with_gender() throws EmployeeNotFoundException {
+        //given
+        ArrayList<Employee> expectedEmployees = new ArrayList<>();
+        expectedEmployees.add(new Employee("1", "Tom", 20, "Male", 20000));
+        expectedEmployees.add(new Employee("2", "Tommy", 20, "Male", 20000));
+
+        when(employeeRepositoryInt.findByGender("Male")).thenReturn(expectedEmployees);
+
+        //when
+        List<Employee> actualEmployees = employeeService.getEmployeesByGender("Male");
+
+        //then
+        assertEquals(expectedEmployees, actualEmployees);
+    }
+
 
 }
