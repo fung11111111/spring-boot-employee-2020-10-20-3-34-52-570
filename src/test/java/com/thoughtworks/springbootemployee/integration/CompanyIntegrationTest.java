@@ -75,23 +75,20 @@ public class CompanyIntegrationTest {
         assertEquals("Banking", companies.get(0).getCompanyType());
     }
 
-//    @Test
-//    public void should_return_employee_when_find_employee_by_id_given_employee_id() throws Exception {
-//        //given
-//        Employee employee = new Employee("May", 18, "Female", 12000, "123");
-//        employeeRepository.save(employee);
-//
-//        //when
-//        //then
-//        mockMvc.perform(get("/employees/" + employee.getId()))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.id").isString())
-//                .andExpect(jsonPath("$.name").value("May"))
-//                .andExpect(jsonPath("$.age").value(18))
-//                .andExpect(jsonPath("$.gender").value("Female"))
-//                .andExpect(jsonPath("$.salary").value(12000))
-//                .andExpect(jsonPath("$.companyId").value("123"));
-//    }
+    @Test
+    public void should_return_company_when_find_company_by_id_given_company_id() throws Exception {
+        //given
+        Company company = new Company("ACOM", "Banking");
+        companyRepository.save(company);
+
+        //when
+        //then
+        mockMvc.perform(get("/companies/" + company.getCompanyId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.companyId").isString())
+                .andExpect(jsonPath("$.companyName").value("ACOM"))
+                .andExpect(jsonPath("$.companyType").value("Banking"));
+    }
 //
 //    @Test
 //    public void should_return_all_male_employees_when_get_by_gender_given_male() throws Exception {
