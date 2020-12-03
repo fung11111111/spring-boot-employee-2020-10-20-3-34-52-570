@@ -191,4 +191,17 @@ public class CompanyServiceTest {
         //then
         verify(companyRepository, times(1)).deleteById("1");
     }
+
+    @Test
+    public void should_return_updated_company_when_update_company_by_id_given_repository_with_company_id_and_employee() throws EmployeeNotFoundException {
+        //given
+        Company expectedCompany = new Company("1", "A COM", "Banking", new ArrayList<>());
+        when(companyRepository.existsById("1")).thenReturn(true);
+        when(companyRepository.save(expectedCompany)).thenReturn(expectedCompany);
+        //when
+        Company actualCompany = companyService.updateCompany("1", expectedCompany);
+
+        //then
+        assertEquals(expectedCompany, actualCompany);
+    }
 }

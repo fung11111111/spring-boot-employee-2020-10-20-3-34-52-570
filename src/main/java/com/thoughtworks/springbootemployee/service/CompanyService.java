@@ -25,11 +25,11 @@ public class CompanyService {
     public Optional<Company> getCompanyById(String companyId){
         return companyRepository.findById(companyId);
     }
-//
-//    public Company updateCompany(String companyId, Company companyUpdate) throws CompanyNotFoundException {
-//        return companyRepositoryOld.updateCompany(companyId, companyUpdate);
-//    }
-//
+
+    public Company updateCompany(String companyId, Company companyUpdate){
+        return null;
+    }
+
     public void deleteCompanyById(String companyId) {
         companyRepository.deleteById(companyId);
     }
