@@ -154,7 +154,7 @@ public class EmployeeIntegrationTest {
     }
 
     @Test
-    public void should_return_2_employees_when_get_employee_by_pagination_given_3_employees_and_page_number_is_1_and_page_size_is_2() throws Exception {
+    public void should_return_2_employees_when_get_employee_by_pagination_given_3_employees_and_page_number_is_2_and_page_size_is_1() throws Exception {
         //given
         Employee employee1 = new Employee("Tom", 18, "Male", 10000, "123");
         Employee employee2 = new Employee("May", 18, "Female", 10000, "123");
@@ -166,13 +166,30 @@ public class EmployeeIntegrationTest {
         //then
         mockMvc.perform(get("/employees").param("page", String.valueOf(1)).param("pageSize", String.valueOf(2)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").isString())
-                .andExpect(jsonPath("$[0].name").value("Tom"))
-                .andExpect(jsonPath("$[0].age").value(18))
-                .andExpect(jsonPath("$[0].gender").value("Male"))
-                .andExpect(jsonPath("$[0].salary").value(10000))
-                .andExpect(jsonPath("$[0].companyId").value("123"));
+                .andExpect(jsonPath("$[1].id").isString())
+                .andExpect(jsonPath("$[1].name").value("May"))
+                .andExpect(jsonPath("$[1].age").value(18))
+                .andExpect(jsonPath("$[1].gender").value("Female"))
+                .andExpect(jsonPath("$[1].salary").value(10000))
+                .andExpect(jsonPath("$[1].companyId").value("123"));
     }
+
+    @Test
+    public void should_delete_employee_when_delete_given_employee_id() throws Exception {
+        //given
+        Employee employee = new Employee("Tom", 18, "Male", 10000, "123");
+        employeeRepository.save(employee);
+
+        //when
+        //then
+        mockMvc.perform(delete("/employees/" + employee.getId()))
+                .andExpect(status().isOk());
+
+        List<Employee> employees = employeeRepository.findAll();
+        assertEquals(0, employees.size());
+    }
+
+
 
 
 
