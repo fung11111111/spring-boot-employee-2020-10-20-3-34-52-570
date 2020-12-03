@@ -2,7 +2,9 @@ package com.thoughtworks.springbootemployee.integration;
 
 
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class CompanyIntegrationTest {
 
     @Autowired
     private CompanyRepository companyRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @AfterEach
     void tearDown() {
@@ -89,58 +94,27 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$.companyName").value("ACOM"))
                 .andExpect(jsonPath("$.companyType").value("Banking"));
     }
-//
-//    @Test
-//    public void should_return_all_male_employees_when_get_by_gender_given_male() throws Exception {
-//        //given
-//        Employee employee1 = new Employee("Tom", 18, "Male", 10000, "123");
-//        Employee employee2 = new Employee("May", 18, "Female", 10000, "123");
-//        employeeRepository.save(employee1);
-//        employeeRepository.save(employee2);
-//        //when
-//        //then
-//        mockMvc.perform(get("/employees").param("gender", "Male"))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$[0].id").isString())
-//                .andExpect(jsonPath("$[0].name").value("Tom"))
-//                .andExpect(jsonPath("$[0].age").value(18))
-//                .andExpect(jsonPath("$[0].gender").value("Male"))
-//                .andExpect(jsonPath("$[0].salary").value(10000))
-//                .andExpect(jsonPath("$[0].companyId").value("123"));
-//
-//        List<Employee> actualEmployees = employeeRepository.findByGender("Male");
-//        TestCase.assertEquals(1, actualEmployees.size());
-//    }
-//
-//    @Test
-//    public void should_return_updated_employee_when_update_employee_given_employee_id_and_employee() throws Exception {
-//        //given
-//        Employee employee = new Employee("Tom", 18, "Male", 200, "1234");
-//        employeeRepository.save(employee);
-//        String employeeUpdatedJson = "\n" +
-//                "{\n" +
-//                "   \"name\": \"Tom\",\n" +
-//                "   \"age\": 19,\n" +
-//                "   \"gender\": \"Male\",\n" +
-//                "   \"salary\": 10000,\n" +
-//                "   \"companyId\": \"1234\"\n" +
-//                "}";
-//
-//        //when
-//        //then
-//        mockMvc.perform(put("/employees/" + employee.getId())
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(employeeUpdatedJson))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.id").isString())
-//                .andExpect(jsonPath("$.name").value("Tom"))
-//                .andExpect(jsonPath("$.age").value(19))
-//                .andExpect(jsonPath("$.gender").value("Male"))
-//                .andExpect(jsonPath("$.salary").value(10000))
-//                .andExpect(jsonPath("$.companyId").value("1234"));
-//
-//    }
-//
+
+    @Test
+    public void should_return_employees_when_get_employees_by_company_id_given_company_id() throws Exception {
+        //given
+        Company company = new Company("ACOM", "Banking");
+        companyRepository.save(company);
+        Employee employee1 = new Employee("Tom", 18, "Male", 10000, company.getCompanyId());
+        employeeRepository.save(employee1);
+
+        //when
+        //then
+        mockMvc.perform(get("/companies/" + company.getCompanyId() + "/employees"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").isString())
+                .andExpect(jsonPath("$[0].name").value("Tom"))
+                .andExpect(jsonPath("$[0].age").value(18))
+                .andExpect(jsonPath("$[0].gender").value("Male"))
+                .andExpect(jsonPath("$[0].salary").value(10000))
+                .andExpect(jsonPath("$[0].companyId").isString());
+
+    }
     @Test
     public void should_return_2_companies_when_get_companies_by_pagination_given_3_companies_and_page_number_is_2_and_page_size_is_2() throws Exception {
         //given
