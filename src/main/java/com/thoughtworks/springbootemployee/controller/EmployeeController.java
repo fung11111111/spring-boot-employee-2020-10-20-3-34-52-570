@@ -37,7 +37,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}")
-    public Optional<Employee> getEmployeeByID(@PathVariable String employeeId) throws EmployeeNotFoundException {
+    public Optional<Employee> getEmployeeByID(@PathVariable String employeeId) {
         return employeeService.getEmployeeByID(employeeId);
     }
 

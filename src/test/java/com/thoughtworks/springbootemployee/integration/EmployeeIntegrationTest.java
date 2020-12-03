@@ -1,9 +1,8 @@
 package com.thoughtworks.springbootemployee.integration;
 
-
-
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import junit.framework.TestCase;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +11,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Arrays;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -87,6 +82,48 @@ public class EmployeeIntegrationTest {
         assertEquals(10000, employees.get(0).getSalary());
         assertEquals("123", employees.get(0).getCompanyId());
     }
+
+//    @Test No value at JSON path "$.id"
+//    public void should_return_employee_when_find_employee_by_id_given_employee_id() throws Exception {
+//        //given
+//        Employee employee = new Employee("May", 18, "Female", 12000, "123");
+//        employeeRepository.save(employee);
+//
+//        //when
+//        //then
+//        mockMvc.perform(get("/employees/" + employee.getId()))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.id").isString())
+//                .andExpect(jsonPath("$.name").value("May"))
+//                .andExpect(jsonPath("$.$age").value(18))
+//                .andExpect(jsonPath("$.gender").value("Female"))
+//                .andExpect(jsonPath("$.salary").value(12000))
+//                .andExpect(jsonPath("$.companyId").value("123"));
+//    }
+
+    @Test
+    public void should_return_all_male_employees_when_get_by_gender_given_male() throws Exception {
+        //given
+        Employee employee1 = new Employee("Tom", 18, "Male", 10000, "123");
+        Employee employee2 = new Employee("May", 18, "Female", 10000, "123");
+        employeeRepository.save(employee1);
+        employeeRepository.save(employee2);
+        //when
+        //then
+        mockMvc.perform(get("/employees").param("gender", "Male"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").isString())
+                .andExpect(jsonPath("$[0].name").value("Tom"))
+                .andExpect(jsonPath("$[0].age").value(18))
+                .andExpect(jsonPath("$[0].gender").value("Male"))
+                .andExpect(jsonPath("$[0].salary").value(10000))
+                .andExpect(jsonPath("$[0].companyId").value("123"));
+
+        List<Employee> actualEmployees = employeeRepository.findByGender("Male");
+        TestCase.assertEquals(1, actualEmployees.size());
+    }
+
+
 
 
 
