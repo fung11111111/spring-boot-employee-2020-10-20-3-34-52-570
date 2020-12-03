@@ -3,9 +3,7 @@ package com.thoughtworks.springbootemployee.service;
 import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
-import com.thoughtworks.springbootemployee.repository.EmployeeRepositoryInt;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,38 +17,38 @@ public class EmployeeService {
 //    private EmployeeRepository employeeRepository;
 
     @Autowired
-    private EmployeeRepositoryInt employeeRepositoryInt;
+    private EmployeeRepository employeeRepository;
 
     public List<Employee> getEmployeesList() {
-        return employeeRepositoryInt.findAll();
+        return employeeRepository.findAll();
     }
 
     public Employee addEmployee(Employee employee) {
-        return employeeRepositoryInt.save(employee);
+        return employeeRepository.save(employee);
     }
 
-    public Optional<Employee> getEmployeeByID(String id) throws EmployeeNotFoundException {
-        return employeeRepositoryInt.findById(id);
+    public Optional<Employee> getEmployeeByID(String id){
+        return employeeRepository.findById(id);
     }
 
     public Employee updateEmployee(String id, Employee employeeUpdate) throws EmployeeNotFoundException {
-        if(employeeRepositoryInt.existsById(id)){
-            return employeeRepositoryInt.save(employeeUpdate);
+        if(employeeRepository.existsById(id)){
+            return employeeRepository.save(employeeUpdate);
         }
         throw new EmployeeNotFoundException();
     }
 
-    public void deleteEmployeeByID(String id) throws EmployeeNotFoundException {
-        employeeRepositoryInt.deleteById(id);
+    public void deleteEmployeeByID(String id){
+        employeeRepository.deleteById(id);
     }
 
     public List<Employee> getEmployeesByGender(String gender) {
-        return employeeRepositoryInt.findByGender(gender);
+        return employeeRepository.findByGender(gender);
     }
 
     public List<Employee> getWithPagination(Integer page, Integer pageSize) {
         int pageToSkip = page - 1;
-        return employeeRepositoryInt.findAll()
+        return employeeRepository.findAll()
                 .stream()
                 .skip(pageToSkip * pageSize)
                 .limit(pageSize)

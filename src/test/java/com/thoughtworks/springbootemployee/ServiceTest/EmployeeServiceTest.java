@@ -1,15 +1,14 @@
-package com.thoughtworks.springbootemployee;
+package com.thoughtworks.springbootemployee.ServiceTest;
 
 import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepositoryOld;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
-import com.thoughtworks.springbootemployee.repository.EmployeeRepositoryInt;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -29,10 +28,10 @@ public class EmployeeServiceTest {
     private EmployeeService employeeService;
 
     @Mock
-    private EmployeeRepository employeeRepository;
+    private EmployeeRepositoryOld employeeRepositoryOld;
 
     @Mock
-    private EmployeeRepositoryInt employeeRepositoryInt;
+    private EmployeeRepository employeeRepository;
 
 //    @Test
 //    public void should_return_all_employee_when_get_employee_list_given_repository_with_all_employee() {
@@ -144,7 +143,7 @@ public class EmployeeServiceTest {
     public void should_return_all_employee_when_find_all_given_repository_interface_with_all_employee() {
         //given
         List<Employee> expectedEmployees = Arrays.asList(new Employee("1", "Tom", 20, "Male", 20000));
-        when(employeeRepositoryInt.findAll()).thenReturn(expectedEmployees);
+        when(employeeRepository.findAll()).thenReturn(expectedEmployees);
 
         //when
         List<Employee> actualEmployees = employeeService.getEmployeesList();
@@ -157,7 +156,7 @@ public class EmployeeServiceTest {
     public void should_return_employee_when_find_by_id_given_repository_interface_with_all_employee() throws EmployeeNotFoundException {
         //given
         Optional<Employee> expectedEmployee = Optional.of(new Employee("1", "Tom", 20, "Male", 20000));
-        when(employeeRepositoryInt.findById("1")).thenReturn(expectedEmployee);
+        when(employeeRepository.findById("1")).thenReturn(expectedEmployee);
 
         //when
         Optional<Employee> actualEmployees = employeeService.getEmployeeByID("1");
@@ -170,7 +169,7 @@ public class EmployeeServiceTest {
     public void should_return_employee_when_save_given_repository_interface_with_employee() throws EmployeeNotFoundException {
         //given
         Employee expectedEmployee = new Employee("1", "Tom", 20, "Male", 20000);
-        when(employeeRepositoryInt.save(expectedEmployee)).thenReturn(expectedEmployee);
+        when(employeeRepository.save(expectedEmployee)).thenReturn(expectedEmployee);
 
         //when
         Employee actualEmployees = employeeService.addEmployee(expectedEmployee);
@@ -186,7 +185,7 @@ public class EmployeeServiceTest {
         expectedEmployees.add(new Employee("1", "Tom", 20, "Male", 20000));
         expectedEmployees.add(new Employee("2", "Tommy", 20, "Male", 20000));
 
-        when(employeeRepositoryInt.findByGender("Male")).thenReturn(expectedEmployees);
+        when(employeeRepository.findByGender("Male")).thenReturn(expectedEmployees);
 
         //when
         List<Employee> actualEmployees = employeeService.getEmployeesByGender("Male");
@@ -201,15 +200,15 @@ public class EmployeeServiceTest {
         employeeService.deleteEmployeeByID("1");
 
         //then
-        verify(employeeRepositoryInt, times(1)).deleteById("1");
+        verify(employeeRepository, times(1)).deleteById("1");
     }
 
     @Test
     public void should_return_updated_employee_when_update_employee_by_id_given_repository_with_employee_id_and_employee() throws EmployeeNotFoundException {
         //given
         Employee expectedEmployee = new Employee("1", "Tom", 20, "Male", 20000);
-        when(employeeRepositoryInt.existsById("1")).thenReturn(true);
-        when(employeeRepositoryInt.save(expectedEmployee)).thenReturn(expectedEmployee);
+        when(employeeRepository.existsById("1")).thenReturn(true);
+        when(employeeRepository.save(expectedEmployee)).thenReturn(expectedEmployee);
         //when
         Employee actualEmpoloyee = employeeService.updateEmployee("1", expectedEmployee);
 
@@ -223,7 +222,7 @@ public class EmployeeServiceTest {
         List<Employee> expectedEmployees = new ArrayList<>();
         expectedEmployees.add(new Employee("1", "Tom", 20, "Male", 200));
         expectedEmployees.add(new Employee("2", "Tommy", 20, "Male", 200));
-        when(employeeRepositoryInt.findAll()).thenReturn(expectedEmployees);
+        when(employeeRepository.findAll()).thenReturn(expectedEmployees);
 
         //when
         List<Employee> actualEmployees = employeeService.getWithPagination(1, 2);

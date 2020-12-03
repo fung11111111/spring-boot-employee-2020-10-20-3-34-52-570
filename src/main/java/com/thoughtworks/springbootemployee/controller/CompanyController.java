@@ -26,22 +26,22 @@ public class CompanyController {
     }
 
     @GetMapping("/{companyId}")
-    public Company getCompanyById(@PathVariable Integer companyId) throws CompanyNotFoundException {
+    public Company getCompanyById(@PathVariable String companyId) throws CompanyNotFoundException {
         return companyService.getCompanyById(companyId);
     }
 
     @PutMapping("/{companyId}")
-    public Company updateCompany(@PathVariable Integer companyId, @RequestBody Company companyUpdate) throws CompanyNotFoundException {
+    public Company updateCompany(@PathVariable String companyId, @RequestBody Company companyUpdate) throws CompanyNotFoundException {
         return companyService.updateCompany(companyId, companyUpdate);
     }
 
     @DeleteMapping("/{companyId}")
-    public void deleteCompanyById(@PathVariable Integer companyId) throws CompanyNotFoundException {
+    public void deleteCompanyById(@PathVariable String companyId) throws CompanyNotFoundException {
         companyService.deleteCompanyById(companyId);
     }
 
     @GetMapping("/{companyId}/employees")
-    public List<Employee> getEmployeesByCompanyId(@PathVariable Integer companyId) throws CompanyNotFoundException {
+    public List<Employee> getEmployeesByCompanyId(@PathVariable String companyId) throws CompanyNotFoundException {
         return companyService.getEmployeesByCompanyId(companyId);
     }
 
