@@ -141,26 +141,23 @@ public class CompanyIntegrationTest {
 //
 //    }
 //
-//    @Test
-//    public void should_return_2_employees_when_get_employee_by_pagination_given_3_employees_and_page_number_is_2_and_page_size_is_1() throws Exception {
-//        //given
-//        Employee employee1 = new Employee("Tom", 18, "Male", 10000, "123");
-//        Employee employee2 = new Employee("May", 18, "Female", 10000, "123");
-//        Employee employee3 = new Employee("May", 18, "Female", 10000, "123");
-//        employeeRepository.save(employee1);
-//        employeeRepository.save(employee2);
-//        employeeRepository.save(employee3);
-//        //when
-//        //then
-//        mockMvc.perform(get("/employees").param("page", String.valueOf(1)).param("pageSize", String.valueOf(2)))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$[1].id").isString())
-//                .andExpect(jsonPath("$[1].name").value("May"))
-//                .andExpect(jsonPath("$[1].age").value(18))
-//                .andExpect(jsonPath("$[1].gender").value("Female"))
-//                .andExpect(jsonPath("$[1].salary").value(10000))
-//                .andExpect(jsonPath("$[1].companyId").value("123"));
-//    }
+    @Test
+    public void should_return_2_companies_when_get_companies_by_pagination_given_3_companies_and_page_number_is_2_and_page_size_is_2() throws Exception {
+        //given
+        Company company1 = new Company("ACOM", "Banking");
+        Company company2 = new Company("BCOM", "IT");
+        Company company3 = new Company("CCOM", "Education");
+        companyRepository.save(company1);
+        companyRepository.save(company2);
+        companyRepository.save(company3);
+        //when
+        //then
+        mockMvc.perform(get("/companies").param("page", String.valueOf(2)).param("pageSize", String.valueOf(2)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].companyId").isString())
+                .andExpect(jsonPath("$[0].companyName").value("CCOM"))
+                .andExpect(jsonPath("$[0].companyType").value("Education"));
+    }
 //
 //    @Test
 //    public void should_delete_employee_when_delete_given_employee_id() throws Exception {
