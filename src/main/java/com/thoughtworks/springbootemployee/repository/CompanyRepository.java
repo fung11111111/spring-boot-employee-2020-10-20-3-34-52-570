@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface CompanyRepository extends MongoRepository<Company, String> {
 
     Company save(Company company);
+
 }

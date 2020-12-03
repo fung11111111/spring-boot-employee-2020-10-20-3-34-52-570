@@ -182,4 +182,13 @@ public class CompanyServiceTest {
         //then
         assertEquals(expectedCompany, actualCompany);
     }
+
+    @Test
+    public void should_call_delete_company_by_id_when_delete_company_by_id_given_repository_with_company_id() {
+        //when
+        companyService.deleteCompanyById("1");
+
+        //then
+        verify(companyRepository, times(1)).deleteById("1");
+    }
 }

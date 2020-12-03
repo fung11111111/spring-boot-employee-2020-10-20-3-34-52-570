@@ -30,10 +30,10 @@ public class CompanyService {
 //        return companyRepositoryOld.updateCompany(companyId, companyUpdate);
 //    }
 //
-//    public void deleteCompanyById(String companyId) throws CompanyNotFoundException {
-//        companyRepositoryOld.deleteCompanyById(companyId);
-//    }
-//
+    public void deleteCompanyById(String companyId) {
+
+    }
+
 //    public List<Employee> getEmployeesByCompanyId(String companyId) throws CompanyNotFoundException {
 //        return companyRepositoryOld.getEmployeesByCompanyId(companyId);
 //    }

@@ -17,9 +17,6 @@ public interface EmployeeRepository extends MongoRepository<Employee, String> {
 
     List<Employee> findByGender(String gender);
 
-    @Override
-    void deleteById(String id);
-
     boolean existsById(String id);
 
 }
