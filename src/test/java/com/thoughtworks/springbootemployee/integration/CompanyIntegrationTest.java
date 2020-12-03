@@ -51,7 +51,7 @@ public class CompanyIntegrationTest {
         mockMvc.perform(get("/companies"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].companyId").isString())
-                .andExpect(jsonPath("$[0].companyName").value("ACom"))
+                .andExpect(jsonPath("$[0].companyName").value("ACOM"))
                 .andExpect(jsonPath("$[0].companyType").value("Banking"));
     }
 
