@@ -21,16 +21,14 @@ public class EmployeeRepository {
         return employee;
     }
 
-    public Employee getEmployeeByID(Integer id) throws EmployeeNotFoundException {
-
+    public Employee getEmployeeByID(String id) throws EmployeeNotFoundException {
         return this.employees.stream()
                 .filter(employee -> id.equals(employee.getId()))
                 .findFirst()
                 .orElseThrow(() -> new EmployeeNotFoundException());
-
     }
 
-    public Employee updateEmployee(Integer id, Employee employeeUpdate) throws EmployeeNotFoundException {
+    public Employee updateEmployee(String id, Employee employeeUpdate) throws EmployeeNotFoundException {
         Employee existingEmployee = getEmployeeByID(id);
         if (existingEmployee != null) {
             employees.remove(existingEmployee);
@@ -40,7 +38,7 @@ public class EmployeeRepository {
         throw new EmployeeNotFoundException();
     }
 
-    public void deleteEmployeeByID(Integer id) throws EmployeeNotFoundException {
+    public void deleteEmployeeByID(String id) throws EmployeeNotFoundException {
         Employee deletedEmployee = getEmployeeByID(id);
         if (deletedEmployee != null) {
             employees.remove(deletedEmployee);

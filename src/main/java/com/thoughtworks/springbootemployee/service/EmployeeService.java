@@ -4,6 +4,7 @@ import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepositoryInt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,30 +12,32 @@ import java.util.List;
 
 @Service
 public class EmployeeService {
-    @Autowired
+
     private EmployeeRepository employeeRepository;
 
-    public EmployeeService(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
+    private EmployeeRepositoryInt employeeRepositoryInt;
+
+    public EmployeeService(EmployeeRepositoryInt employeeRepositoryInt) {
+        this.employeeRepositoryInt = employeeRepositoryInt;
     }
 
     public List<Employee> getEmployeesList() {
-        return employeeRepository.getEmployeesList();
+        return employeeRepositoryInt.findAll();
     }
 
     public Employee addEmployee(Employee employee) {
         return employeeRepository.addEmployee(employee);
     }
 
-    public Employee getEmployeeByID(Integer id) throws EmployeeNotFoundException {
+    public Employee getEmployeeByID(String id) throws EmployeeNotFoundException {
         return employeeRepository.getEmployeeByID(id);
     }
 
-    public Employee updateEmployee(Integer id, Employee employeeUpdate) throws EmployeeNotFoundException {
+    public Employee updateEmployee(String id, Employee employeeUpdate) throws EmployeeNotFoundException {
         return employeeRepository.updateEmployee(id, employeeUpdate);
     }
 
-    public void deleteEmployeeByID(Integer id) throws EmployeeNotFoundException {
+    public void deleteEmployeeByID(String id) throws EmployeeNotFoundException {
         employeeRepository.deleteEmployeeByID(id);
     }
 
