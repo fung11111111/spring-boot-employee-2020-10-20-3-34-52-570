@@ -24,20 +24,18 @@ public class CompanyRepository {
     }
 
     public Company getCompanyById(Integer companyId) throws CompanyNotFoundException {
-        try{
-            return this.companies.stream()
-                    .filter(company -> companyId.equals(company.getCompanyId()))
-                    .findFirst()
-                    .orElse(null);
-        }catch (Exception exception){
-            throw  new CompanyNotFoundException();
-        }
+
+        return this.companies.stream()
+                .filter(company -> companyId.equals(company.getCompanyId()))
+                .findFirst()
+                .orElseThrow(() -> new CompanyNotFoundException());
+
 
     }
 
     public Company updateCompany(Integer companyId, Company companyUpdate) throws CompanyNotFoundException {
         Company existingCompany = getCompanyById(companyId);
-        if(existingCompany != null){
+        if (existingCompany != null) {
             companies.remove(existingCompany);
             companies.add(companyUpdate);
             return companyUpdate;
@@ -47,14 +45,14 @@ public class CompanyRepository {
 
     public void deleteCompanyById(Integer companyId) throws CompanyNotFoundException {
         Company deleteCompany = getCompanyById(companyId);
-        if (deleteCompany != null){
+        if (deleteCompany != null) {
             companies.remove(deleteCompany);
         }
     }
 
     public List<Employee> getEmployeesByCompanyId(Integer companyId) throws CompanyNotFoundException {
         Company existingCompany = getCompanyById(companyId);
-        if(existingCompany != null){
+        if (existingCompany != null) {
             return existingCompany.getEmployees();
         }
         throw new CompanyNotFoundException();

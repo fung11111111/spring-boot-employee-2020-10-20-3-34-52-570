@@ -22,14 +22,12 @@ public class EmployeeRepository {
     }
 
     public Employee getEmployeeByID(Integer id) throws EmployeeNotFoundException {
-        try {
-            return this.employees.stream()
-                    .filter(employee -> id.equals(employee.getId()))
-                    .findFirst()
-                    .orElse(null);
-        } catch (Exception exception) {
-            throw new EmployeeNotFoundException();
-        }
+
+        return this.employees.stream()
+                .filter(employee -> id.equals(employee.getId()))
+                .findFirst()
+                .orElseThrow(() -> new EmployeeNotFoundException());
+
     }
 
     public Employee updateEmployee(Integer id, Employee employeeUpdate) throws EmployeeNotFoundException {

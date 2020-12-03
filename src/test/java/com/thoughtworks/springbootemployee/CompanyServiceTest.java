@@ -68,13 +68,16 @@ public class CompanyServiceTest {
         //given
         CompanyRepository companyRepository = Mockito.mock(CompanyRepository.class);
         CompanyService companyService = new CompanyService(companyRepository);
+        Company existingCompany = new Company(123, "HI COM", "Banking", new ArrayList<>());
         Company expectedCompany = new Company(123, "Hello", "Banking", new ArrayList<>());
+        when(companyRepository.addCompany(existingCompany)).thenReturn(existingCompany);
         when(companyRepository.updateCompany(123, expectedCompany)).thenReturn(expectedCompany);
 
         //when
         Company actualCompany = companyService.updateCompany(123, expectedCompany);
 
         //then
+        //check value with id and value
         assertEquals(expectedCompany, actualCompany);
     }
 
@@ -94,6 +97,7 @@ public class CompanyServiceTest {
     @Test
     public void should_return_employees_when_get_employees_by_company_id_given_repository_with_company_id() throws CompanyNotFoundException {
         //given
+        //shd only add employee id to company
         CompanyRepository companyRepository = Mockito.mock(CompanyRepository.class);
         CompanyService companyService = new CompanyService(companyRepository);
         ArrayList<Employee> expectedEmployees = new ArrayList<>();
@@ -115,8 +119,9 @@ public class CompanyServiceTest {
         CompanyRepository companyRepository = Mockito.mock(CompanyRepository.class);
         CompanyService companyService = new CompanyService(companyRepository);
         List<Company> expectedCompanies = new ArrayList<>();
-        expectedCompanies.add(new Company());
-        expectedCompanies.add(new Company());
+        expectedCompanies.add(new Company(1, "A COM", "Banking", new ArrayList<>()));
+        expectedCompanies.add(new Company(2, "B COM", "Banking", new ArrayList<>()));
+        expectedCompanies.add(new Company(3, "C COM", "Banking", new ArrayList<>()));
         when(companyRepository.getWithPagination(1, 2)).thenReturn(expectedCompanies);
 
         //when
