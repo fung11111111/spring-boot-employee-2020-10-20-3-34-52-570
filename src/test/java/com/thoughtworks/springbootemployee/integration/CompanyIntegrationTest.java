@@ -158,19 +158,19 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$[0].companyName").value("CCOM"))
                 .andExpect(jsonPath("$[0].companyType").value("Education"));
     }
-//
-//    @Test
-//    public void should_delete_employee_when_delete_given_employee_id() throws Exception {
-//        //given
-//        Employee employee = new Employee("Tom", 18, "Male", 10000, "123");
-//        employeeRepository.save(employee);
-//
-//        //when
-//        //then
-//        mockMvc.perform(delete("/employees/" + employee.getId()))
-//                .andExpect(status().isOk());
-//
-//        List<Employee> employees = employeeRepository.findAll();
-//        assertEquals(0, employees.size());
-//    }
+
+    @Test
+    public void should_delete_company_when_delete_given_company_id() throws Exception {
+        //given
+        Company company = new Company("ACOM", "Banking");
+        companyRepository.save(company);
+
+        //when
+        //then
+        mockMvc.perform(delete("/companies/" + company.getCompanyId()))
+                .andExpect(status().isOk());
+
+        List<Company> companies = companyRepository.findAll();
+        assertEquals(0, companies.size());
+    }
 }
