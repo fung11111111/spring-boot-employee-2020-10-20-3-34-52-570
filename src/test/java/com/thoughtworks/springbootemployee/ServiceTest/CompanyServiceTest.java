@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertThrows;
@@ -164,6 +165,19 @@ public class CompanyServiceTest {
 
         //when
         Company actualCompany = companyService.addCompany(expectedCompany);
+
+        //then
+        assertEquals(expectedCompany, actualCompany);
+    }
+
+    @Test
+    public void should_return_company_when_find_company_by_id_given_repository_comapny_id() {
+        //given
+        Optional<Company> expectedCompany = Optional.of(new Company("123", "A COM", "Banking", new ArrayList<>()));
+        when(companyRepository.findById("123")).thenReturn(expectedCompany);
+
+        //when
+        Optional<Company> actualCompany = Optional.ofNullable(companyService.getCompanyById("123"));
 
         //then
         assertEquals(expectedCompany, actualCompany);

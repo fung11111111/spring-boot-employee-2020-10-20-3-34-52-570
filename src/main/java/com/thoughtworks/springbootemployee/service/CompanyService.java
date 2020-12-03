@@ -24,9 +24,9 @@ public class CompanyService {
         return companyRepository.save(company);
     }
 
-//    public Company getCompanyById(String companyId) throws CompanyNotFoundException {
-//        return companyRepositoryOld.getCompanyById(companyId);
-//    }
+    public Company getCompanyById(String companyId){
+        return null;
+    }
 //
 //    public Company updateCompany(String companyId, Company companyUpdate) throws CompanyNotFoundException {
 //        return companyRepositoryOld.updateCompany(companyId, companyUpdate);
