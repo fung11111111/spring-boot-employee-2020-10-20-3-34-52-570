@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/employees")
@@ -36,7 +37,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}")
-    public Employee getEmployeeByID(@PathVariable String employeeId) throws EmployeeNotFoundException {
+    public Optional<Employee> getEmployeeByID(@PathVariable String employeeId) throws EmployeeNotFoundException {
         return employeeService.getEmployeeByID(employeeId);
     }
 
