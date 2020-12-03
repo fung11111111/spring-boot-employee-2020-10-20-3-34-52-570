@@ -22,6 +22,11 @@ public class Company {
         this.companyType = companyType;
     }
 
+    public Company(String companyName, String companyType) {
+        this.companyName = companyName;
+        this.companyType = companyType;
+    }
+
     public String getCompanyId() {
         return companyId;
     }

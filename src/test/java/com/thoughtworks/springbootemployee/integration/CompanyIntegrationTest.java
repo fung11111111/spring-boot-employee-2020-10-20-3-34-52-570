@@ -1,22 +1,22 @@
 package com.thoughtworks.springbootemployee.integration;
 
+
 import com.thoughtworks.springbootemployee.model.Company;
-import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
-import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
-import junit.framework.TestCase;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+@SpringBootTest
+@AutoConfigureMockMvc
 
 public class CompanyIntegrationTest {
     @Autowired
@@ -31,21 +31,18 @@ public class CompanyIntegrationTest {
     }
 
     @Test
-    public void should_return_all_employees_when_get_all_given_employees() throws Exception {
+    public void should_return_all_companies_when_get_all_given_company() throws Exception {
         //given
-        Company company = new Company();
+        Company company = new Company("ACom", "Banking");
         companyRepository.save(company);
 
         //when
         //then
-        mockMvc.perform(get("/employees"))
+        mockMvc.perform(get("/companies"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").isString())
-                .andExpect(jsonPath("$[0].name").value("May"))
-                .andExpect(jsonPath("$[0].age").value(18))
-                .andExpect(jsonPath("$[0].gender").value("Female"))
-                .andExpect(jsonPath("$[0].salary").value(12000))
-                .andExpect(jsonPath("$[0].companyId").value("123"));
+                .andExpect(jsonPath("$[0].companyId").isString())
+                .andExpect(jsonPath("$[0].companyName").value("ACom"))
+                .andExpect(jsonPath("$[0].companyType").value("Banking"));
     }
 //
 //    @Test
