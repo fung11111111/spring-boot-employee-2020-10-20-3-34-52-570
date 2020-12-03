@@ -25,7 +25,7 @@ public class EmployeeService {
     }
 
     public Employee addEmployee(Employee employee) {
-        return employeeRepository.addEmployee(employee);
+        return employeeRepositoryInt.save(employee);
     }
 
     public Optional<Employee> getEmployeeByID(String id) throws EmployeeNotFoundException {
