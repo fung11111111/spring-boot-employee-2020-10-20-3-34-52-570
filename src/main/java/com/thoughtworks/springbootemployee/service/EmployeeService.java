@@ -46,9 +46,9 @@ public class EmployeeService {
     public List<Employee> getEmployeesByGender(String gender) {
         return employeeRepositoryInt.findByGender(gender);
     }
-//
-//    public List<Employee> getWithPagination(Integer page, Integer pageSize) {
-//        return employeeRepository.getWithPagination(page, pageSize);
-//    }
+
+    public List<Employee> getWithPagination(Integer page, Integer pageSize) {
+       // return employeeRepositoryInt.getTopBy(page * pageSize);
+    }
 }
 
