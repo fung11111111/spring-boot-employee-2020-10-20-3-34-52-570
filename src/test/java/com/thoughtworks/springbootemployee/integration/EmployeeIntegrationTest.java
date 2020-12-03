@@ -17,6 +17,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -42,7 +43,6 @@ public class EmployeeIntegrationTest {
         Employee employee = new Employee("May", 18, "Female", 12000, "123");
         employeeRepository.save(employee);
 
-
         //when
         //then
         mockMvc.perform(get("/employees"))
@@ -54,6 +54,40 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$[0].salary").value(12000))
                 .andExpect(jsonPath("$[0].companyId").value("123"));
     }
+
+    @Test
+    public void should_return_employee_when_add_employee_given_employee() throws Exception {
+        //given
+        String employeeJson = "{\n" +
+                "   \"name\": \"Tom\",\n" +
+                "   \"age\": 10,\n" +
+                "   \"gender\": \"Male\",\n" +
+                "   \"salary\": 10000,\n" +
+                "   \"companyId\": \"123\"\n" +
+                "}";
+
+        //when
+        //then
+        mockMvc.perform(post("/employees")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(employeeJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").isString())
+                .andExpect(jsonPath("$.name").value("Tom"))
+                .andExpect(jsonPath("$.age").value(10))
+                .andExpect(jsonPath("$.gender").value("Male"))
+                .andExpect(jsonPath("$.salary").value(10000))
+                .andExpect(jsonPath("$.companyId").value("123"));
+
+        List<Employee> employees = employeeRepository.findAll();
+        assertEquals(1, employees.size());
+        assertEquals("Tom", employees.get(0).getName());
+        assertEquals(10, employees.get(0).getAge());
+        assertEquals("Male", employees.get(0).getGender());
+        assertEquals(10000, employees.get(0).getSalary());
+        assertEquals("123", employees.get(0).getCompanyId());
+    }
+
 
 
 }
