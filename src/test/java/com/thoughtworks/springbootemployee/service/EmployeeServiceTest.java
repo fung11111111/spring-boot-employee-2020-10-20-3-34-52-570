@@ -209,10 +209,10 @@ public class EmployeeServiceTest {
         when(employeeRepository.existsById("1")).thenReturn(true);
         when(employeeRepository.save(expectedEmployee)).thenReturn(expectedEmployee);
         //when
-        Employee actualEmpoloyee = employeeService.updateEmployee("1", expectedEmployee);
+        Employee actualEmployee = employeeService.updateEmployee("1", expectedEmployee);
 
         //then
-        assertEquals(expectedEmployee, actualEmpoloyee);
+        assertEquals(expectedEmployee, actualEmployee);
     }
 
     @Test

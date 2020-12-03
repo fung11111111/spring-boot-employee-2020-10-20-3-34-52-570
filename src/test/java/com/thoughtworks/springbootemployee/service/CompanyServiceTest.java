@@ -173,7 +173,7 @@ public class CompanyServiceTest {
     @Test
     public void should_return_company_when_find_company_by_id_given_repository_comapny_id() {
         //given
-        Optional<Company> expectedCompany = Optional.of(new Company("123", "A COM", "Banking", new ArrayList<>()));
+        Optional<Company> expectedCompany = Optional.of(new Company("123", "A COM", "Banking"));
         when(companyRepository.findById("123")).thenReturn(expectedCompany);
 
         //when
@@ -195,7 +195,7 @@ public class CompanyServiceTest {
     @Test
     public void should_return_updated_company_when_update_company_by_id_given_repository_with_company_id_and_employee() throws CompanyNotFoundException {
         //given
-        Company expectedCompany = new Company("1", "A COM", "Banking", new ArrayList<>());
+        Company expectedCompany = new Company("1", "A COM", "Banking");
         when(companyRepository.existsById("1")).thenReturn(true);
         when(companyRepository.save(expectedCompany)).thenReturn(expectedCompany);
         //when
@@ -225,8 +225,8 @@ public class CompanyServiceTest {
     public void should_return_2_companies_when_get_companies_with_pagination_given_companies_more_than_2_with_pageNumber_is_1_and_pageSize_is_2() {
         //given
         ArrayList<Company> expectedCompanies = new ArrayList<>();
-        expectedCompanies.add(new Company("123", "A COM", "BANKING", new ArrayList<>()));
-        expectedCompanies.add(new Company("124", "B COM", "BANKING", new ArrayList<>()));
+        expectedCompanies.add(new Company("123", "A COM", "BANKING"));
+        expectedCompanies.add(new Company("124", "B COM", "BANKING"));
         when(companyRepository.findAll()).thenReturn(expectedCompanies);
 
         //when
