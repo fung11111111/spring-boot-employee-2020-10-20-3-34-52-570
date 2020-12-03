@@ -31,7 +31,7 @@ public class CompanyService {
 //    }
 //
     public void deleteCompanyById(String companyId) {
-
+        companyRepository.deleteById(companyId);
     }
 
 //    public List<Employee> getEmployeesByCompanyId(String companyId) throws CompanyNotFoundException {
