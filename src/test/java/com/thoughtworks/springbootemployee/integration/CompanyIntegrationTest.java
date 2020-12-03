@@ -9,12 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 
+import java.util.List;
+
+import static junit.framework.TestCase.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 
@@ -33,7 +38,7 @@ public class CompanyIntegrationTest {
     @Test
     public void should_return_all_companies_when_get_all_given_company() throws Exception {
         //given
-        Company company = new Company("ACom", "Banking");
+        Company company = new Company("ACOM", "Banking");
         companyRepository.save(company);
 
         //when
@@ -44,40 +49,32 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$[0].companyName").value("ACom"))
                 .andExpect(jsonPath("$[0].companyType").value("Banking"));
     }
-//
-//    @Test
-//    public void should_return_employee_when_add_employee_given_employee() throws Exception {
-//        //given
-//        String employeeJson = "{\n" +
-//                "   \"name\": \"Tom\",\n" +
-//                "   \"age\": 10,\n" +
-//                "   \"gender\": \"Male\",\n" +
-//                "   \"salary\": 10000,\n" +
-//                "   \"companyId\": \"123\"\n" +
-//                "}";
-//
-//        //when
-//        //then
-//        mockMvc.perform(post("/employees")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(employeeJson))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.id").isString())
-//                .andExpect(jsonPath("$.name").value("Tom"))
-//                .andExpect(jsonPath("$.age").value(10))
-//                .andExpect(jsonPath("$.gender").value("Male"))
-//                .andExpect(jsonPath("$.salary").value(10000))
-//                .andExpect(jsonPath("$.companyId").value("123"));
-//
-//        List<Employee> employees = employeeRepository.findAll();
-//        assertEquals(1, employees.size());
-//        assertEquals("Tom", employees.get(0).getName());
-//        assertEquals(10, employees.get(0).getAge());
-//        assertEquals("Male", employees.get(0).getGender());
-//        assertEquals(10000, employees.get(0).getSalary());
-//        assertEquals("123", employees.get(0).getCompanyId());
-//    }
-//
+
+    @Test
+    public void should_return_company_when_add_company_given_company() throws Exception {
+        //given
+        String employeeJson = "{\n" +
+                "   \"companyName\": \"ACOM\",\n" +
+                "   \"companyType\": \"Banking\"\n" +
+                "}";
+
+        //when
+        //then
+        mockMvc.perform(post("/companies")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(employeeJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.companyId").isString())
+                .andExpect(jsonPath("$.companyName").value("ACOM"))
+                .andExpect(jsonPath("$.companyType").value("Banking"));
+
+
+        List<Company> companies = companyRepository.findAll();
+        assertEquals(1, companies.size());
+        assertEquals("ACOM", companies.get(0).getCompanyName());
+        assertEquals("Banking", companies.get(0).getCompanyType());
+    }
+
 //    @Test
 //    public void should_return_employee_when_find_employee_by_id_given_employee_id() throws Exception {
 //        //given
