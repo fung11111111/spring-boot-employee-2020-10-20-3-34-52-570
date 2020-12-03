@@ -4,6 +4,8 @@ import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepositoryInt;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,13 +14,11 @@ import java.util.Optional;
 @Service
 public class EmployeeService {
 
-    private EmployeeRepository employeeRepository;
+//    @Autowired
+//    private EmployeeRepository employeeRepository;
 
+    @Autowired
     private EmployeeRepositoryInt employeeRepositoryInt;
-
-    public EmployeeService(EmployeeRepositoryInt employeeRepositoryInt) {
-        this.employeeRepositoryInt = employeeRepositoryInt;
-    }
 
     public List<Employee> getEmployeesList() {
         return employeeRepositoryInt.findAll();
@@ -32,20 +32,20 @@ public class EmployeeService {
         return employeeRepositoryInt.findById(id);
     }
 
-    public Employee updateEmployee(String id, Employee employeeUpdate) throws EmployeeNotFoundException {
-        return employeeRepository.updateEmployee(id, employeeUpdate);
-    }
+//    public Employee updateEmployee(String id, Employee employeeUpdate) throws EmployeeNotFoundException {
+//        return employeeRepository.updateEmployee(id, employeeUpdate);
+//    }
 
     public void deleteEmployeeByID(String id) throws EmployeeNotFoundException {
-        employeeRepository.deleteEmployeeByID(id);
+        employeeRepositoryInt.deleteById(id);
     }
 
     public List<Employee> getEmployeesByGender(String gender) {
         return employeeRepositoryInt.findByGender(gender);
     }
-
-    public List<Employee> getWithPagination(Integer page, Integer pageSize) {
-        return employeeRepository.getWithPagination(page, pageSize);
-    }
+//
+//    public List<Employee> getWithPagination(Integer page, Integer pageSize) {
+//        return employeeRepository.getWithPagination(page, pageSize);
+//    }
 }
 

@@ -26,11 +26,11 @@ public class EmployeeController {
         return employeeService.addEmployee(employeeCreate);
     }
 
-    @PutMapping("/{employeeId}")
-    public Employee updateEmployee(@PathVariable String employeeId, @RequestBody Employee employeeUpdate) throws EmployeeNotFoundException {
-        return employeeService.updateEmployee(employeeId, employeeUpdate);
-    }
-
+//    @PutMapping("/{employeeId}")
+//    public Employee updateEmployee(@PathVariable String employeeId, @RequestBody Employee employeeUpdate) throws EmployeeNotFoundException {
+//        return employeeService.updateEmployee(employeeId, employeeUpdate);
+//    }
+//
     @DeleteMapping("/{employeeId}")
     public void deleteEmployee(@PathVariable String employeeId) throws EmployeeNotFoundException {
         employeeService.deleteEmployeeByID(employeeId);
@@ -46,8 +46,8 @@ public class EmployeeController {
         return employeeService.getEmployeesByGender(gender);
     }
 
-    @GetMapping(params = {"page", "pageSize"})
-    public List<Employee> getEmployeeByPage(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
-        return employeeService.getWithPagination(page, pageSize);
-    }
+//    @GetMapping(params = {"page", "pageSize"})
+//    public List<Employee> getEmployeeByPage(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
+//        return employeeService.getWithPagination(page, pageSize);
+//    }
 }

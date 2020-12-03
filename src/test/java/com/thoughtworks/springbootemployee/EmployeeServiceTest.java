@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,16 +22,17 @@ import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class EmployeeServiceTest {
     @InjectMocks
     private EmployeeService employeeService;
 
     @Mock
-    private EmployeeRepository employeeRepository = Mockito.mock(EmployeeRepository.class);
+    private EmployeeRepository employeeRepository;
 
     @Mock
-    private EmployeeRepositoryInt employeeRepositoryInt = Mockito.mock(EmployeeRepositoryInt.class);
+    private EmployeeRepositoryInt employeeRepositoryInt;
 
 //    @Test
 //    public void should_return_all_employee_when_get_employee_list_given_repository_with_all_employee() {
@@ -191,6 +193,15 @@ public class EmployeeServiceTest {
 
         //then
         assertEquals(expectedEmployees, actualEmployees);
+    }
+
+    @Test
+    public void should_call_deleteEmployeeByID_when_delete_employee_by_id_given_repository_with_employee_id() throws EmployeeNotFoundException {
+        //when
+        employeeService.deleteEmployeeByID("1");
+
+        //then
+        verify(employeeRepositoryInt, times(1)).deleteById("1");
     }
 
 
