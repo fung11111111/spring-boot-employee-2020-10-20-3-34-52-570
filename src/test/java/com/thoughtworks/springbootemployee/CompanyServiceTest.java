@@ -1,10 +1,13 @@
 package com.thoughtworks.springbootemployee;
 
 import com.thoughtworks.springbootemployee.Exception.CompanyNotFoundException;
+import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.CompanyService;
+import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -13,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class CompanyServiceTest {
@@ -123,5 +127,21 @@ public class CompanyServiceTest {
 
         //then
         assertEquals(2, actualCompanies.size());
+    }
+
+    @Test
+    void should_throw_company_not_found_exception_when_get_company_by_id_given_not_exist_id() throws CompanyNotFoundException {
+        //given
+        CompanyRepository companyRepository = Mockito.mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService(companyRepository);
+        when(companyRepository.getCompanyById(20)).thenThrow(new CompanyNotFoundException());
+
+        //when
+        CompanyNotFoundException companyNotFoundException = assertThrows(CompanyNotFoundException.class, () -> {
+            companyService.getCompanyById(20);
+        });
+
+        //then
+        assertEquals("Company Not Found.", companyNotFoundException.getLocalizedMessage());
     }
 }
