@@ -4,11 +4,13 @@ import com.thoughtworks.springbootemployee.Exception.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CompanyService {
@@ -43,12 +45,15 @@ public class CompanyService {
     }
 
     public List<Employee> getEmployeesByCompanyId(String companyId) {
-        //employeeServic
-
-        return null;
+        return employeeService.getEmployeeByCompanyId(companyId);
     }
 
-//    public List<Company> getWithPagination(Integer page, Integer pageSize) {
-//        return companyRepositoryOld.getWithPagination(page, pageSize);
-//    }
+    public List<Company> getWithPagination(Integer page, Integer pageSize) {
+        int pageToSkip = page - 1;
+        return companyRepository.findAll()
+                .stream()
+                .skip(pageToSkip * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
+    }
 }

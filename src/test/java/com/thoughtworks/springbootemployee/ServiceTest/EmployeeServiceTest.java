@@ -232,7 +232,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void should_return_employees_when_get_employee_by_company_id_given_repository_company_id() throws EmployeeNotFoundException {
+    public void should_return_employees_when_get_employee_by_company_id_given_repository_company_id() {
         //given
         ArrayList<Employee> expectedEmployees = new ArrayList<>();
         expectedEmployees.add(new Employee("1", "Tom", 20, "Male", 20000, "123"));

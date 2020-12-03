@@ -8,6 +8,7 @@ import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.CompanyRepositoryOld;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.CompanyService;
+import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -34,7 +35,7 @@ public class CompanyServiceTest {
     @Mock
     private CompanyRepository companyRepository;
 
-    @Mock
+    @InjectMocks
     private EmployeeRepository employeeRepository;
 
     //
@@ -210,19 +211,31 @@ public class CompanyServiceTest {
     }
 
     @Test
-    public void should_return_comployees_when_get_employees_by_company_id_given_repository_with_company_id() throws CompanyNotFoundException {
+    public void should_return_employees_when_get_employees_by_company_id_given_repository_with_company_id() throws CompanyNotFoundException {
         //given
-
         Company expectedCompany = new Company("1", "A COM", "Banking", new ArrayList<>());
         ArrayList<Employee> employees = new ArrayList<>();
         employees.add(new Employee("1", "Tom", 20, "Male", 200, "1"));
         employees.add(new Employee("1", "Tommy", 20, "Male", 200, "1"));
-
+        when(employeeRepository.findByCompanyId("1")).thenReturn(employees);
 
         //when
-        Company actualCompany = companyService.updateCompany("1", expectedCompany);
+        List<Employee> actualEmployees = companyService.getEmployeesByCompanyId("1");
 
         //then
-        assertEquals(expectedCompany, actualCompany);
+        assertEquals(expectedCompany, actualEmployees);
+    }
+
+    @Test
+    public void should_return_2_companies_when_get_companies_with_pagination_given_companies_more_than_2_with_pageNumber_is_1_and_pageSize_is_2() {
+        //given
+        ArrayList<Company> expectedCompanies = new ArrayList<>();
+        expectedCompanies.add(new Company("123", "A COM", "BANKING", new ArrayList<>()));
+        expectedCompanies.add(new Company("124", "B COM", "BANKING", new ArrayList<>()));
+        when(companyRepository.findAll()).thenReturn(expectedCompanies);
+
+        //when
+        List<Company> actualCompanies = companyService.getWithPagination(1,2);
+        assertEquals(expectedCompanies, actualCompanies);
     }
 }
