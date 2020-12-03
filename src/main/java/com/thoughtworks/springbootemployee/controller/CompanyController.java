@@ -2,12 +2,12 @@ package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.Exception.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.model.Company;
-import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/companies")
@@ -21,15 +21,15 @@ public class CompanyController {
         return companyService.getCompanies();
     }
 
-//    @PostMapping
-//    public Company addCompany(@RequestBody Company company) {
-//        return companyService.addCompany(company);
-//    }
-//
-//    @GetMapping("/{companyId}")
-//    public Company getCompanyById(@PathVariable String companyId) throws CompanyNotFoundException {
-//        return companyService.getCompanyById(companyId);
-//    }
+    @PostMapping
+    public Company addCompany(@RequestBody Company company) {
+        return companyService.addCompany(company);
+    }
+
+    @GetMapping("/{companyId}")
+    public Optional<Company> getCompanyById(@PathVariable String companyId) throws CompanyNotFoundException {
+        return companyService.getCompanyById(companyId);
+    }
 //
 //    @PutMapping("/{companyId}")
 //    public Company updateCompany(@PathVariable String companyId, @RequestBody Company companyUpdate) throws CompanyNotFoundException {

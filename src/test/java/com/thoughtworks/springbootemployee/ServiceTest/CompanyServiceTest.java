@@ -177,7 +177,7 @@ public class CompanyServiceTest {
         when(companyRepository.findById("123")).thenReturn(expectedCompany);
 
         //when
-        Optional<Company> actualCompany = Optional.ofNullable(companyService.getCompanyById("123"));
+        Optional<Company> actualCompany = companyService.getCompanyById("123");
 
         //then
         assertEquals(expectedCompany, actualCompany);
