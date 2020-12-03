@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
@@ -48,7 +49,12 @@ public class EmployeeService {
     }
 
     public List<Employee> getWithPagination(Integer page, Integer pageSize) {
-       // return employeeRepositoryInt.getTopBy(page * pageSize);
+        int pageToSkip = page - 1;
+        return employeeRepositoryInt.findAll()
+                .stream()
+                .skip(pageToSkip * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
     }
 }
 

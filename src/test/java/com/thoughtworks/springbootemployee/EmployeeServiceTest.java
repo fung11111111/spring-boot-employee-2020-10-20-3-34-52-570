@@ -217,20 +217,20 @@ public class EmployeeServiceTest {
         assertEquals(expectedEmployee, actualEmpoloyee);
     }
 
-//    @Test
-//    void should_return_2_employees_when_get_employees_with_pagination_given_employees_more_than_2_with_pageNumber_is_1_and_pageSize_is_2() {
-//         //given
-//        List<Employee> expectedEmployees = new ArrayList<>();
-//        expectedEmployees.add(new Employee("1", "Tom", 20, "Male", 200));
-//        expectedEmployees.add(new Employee("2", "Tommy", 20, "Male", 200));
-//        //when(employeeRepository.getWithPagination(1, 2)).thenReturn(expectedEmployees);
-////
-//        //when
-//        //<Employee> actualEmployees = employeeService.getWithPagination(1, 2);
-//
-//        //then
-//        assertEquals(2, actualEmployees.size());
-//    }
+    @Test
+    void should_return_2_employees_when_get_employees_with_pagination_given_employees_more_than_2_with_pageNumber_is_1_and_pageSize_is_2() {
+         //given
+        List<Employee> expectedEmployees = new ArrayList<>();
+        expectedEmployees.add(new Employee("1", "Tom", 20, "Male", 200));
+        expectedEmployees.add(new Employee("2", "Tommy", 20, "Male", 200));
+        when(employeeRepositoryInt.findAll()).thenReturn(expectedEmployees);
+
+        //when
+        List<Employee> actualEmployees = employeeService.getWithPagination(1, 2);
+
+        //then
+        assertEquals(2, actualEmployees.size());
+    }
 
 
 }
