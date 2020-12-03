@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class EmployeeServiceTest {
@@ -123,4 +124,19 @@ public class EmployeeServiceTest {
         assertEquals(2, actualEmployees.size());
     }
 
+    @Test
+    void should_throw_employee_not_found_exception_when_get_employee_by_id_given_not_exist_id() throws EmployeeNotFoundException {
+        //given
+        EmployeeRepository employeeRepository = Mockito.mock(EmployeeRepository.class);
+        EmployeeService employeeService = new EmployeeService(employeeRepository);
+        when(employeeRepository.getEmployeeByID(20)).thenThrow(new EmployeeNotFoundException());
+
+        //when
+        EmployeeNotFoundException employeeNotFoundException = assertThrows(EmployeeNotFoundException.class, () -> {
+            employeeService.getEmployeeByID(20);
+        });
+
+        //then
+        assertEquals("Employee Not Found.", employeeNotFoundException.getLocalizedMessage());
+    }
 }
