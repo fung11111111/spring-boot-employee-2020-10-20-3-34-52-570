@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.Exception.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,9 @@ public class CompanyService {
 
     @Autowired
     private CompanyRepository companyRepository;
+
+    @Autowired
+    private EmployeeService employeeService;
 
     public List<Company> getCompanies() {
         return companyRepository.findAll();
@@ -38,10 +42,12 @@ public class CompanyService {
         companyRepository.deleteById(companyId);
     }
 
-//    public List<Employee> getEmployeesByCompanyId(String companyId) throws CompanyNotFoundException {
-//        return companyRepositoryOld.getEmployeesByCompanyId(companyId);
-//    }
-//
+    public List<Employee> getEmployeesByCompanyId(String companyId) {
+        //employeeServic
+
+        return null;
+    }
+
 //    public List<Company> getWithPagination(Integer page, Integer pageSize) {
 //        return companyRepositoryOld.getWithPagination(page, pageSize);
 //    }

@@ -142,7 +142,7 @@ public class EmployeeServiceTest {
     @Test
     public void should_return_all_employee_when_find_all_given_repository_interface_with_all_employee() {
         //given
-        List<Employee> expectedEmployees = Arrays.asList(new Employee("1", "Tom", 20, "Male", 20000));
+        List<Employee> expectedEmployees = Arrays.asList(new Employee("1", "Tom", 20, "Male", 20000, "123"));
         when(employeeRepository.findAll()).thenReturn(expectedEmployees);
 
         //when
@@ -155,7 +155,7 @@ public class EmployeeServiceTest {
     @Test
     public void should_return_employee_when_find_by_id_given_repository_interface_with_all_employee() throws EmployeeNotFoundException {
         //given
-        Optional<Employee> expectedEmployee = Optional.of(new Employee("1", "Tom", 20, "Male", 20000));
+        Optional<Employee> expectedEmployee = Optional.of(new Employee("1", "Tom", 20, "Male", 20000, "123"));
         when(employeeRepository.findById("1")).thenReturn(expectedEmployee);
 
         //when
@@ -168,7 +168,7 @@ public class EmployeeServiceTest {
     @Test
     public void should_return_employee_when_save_given_repository_interface_with_employee() throws EmployeeNotFoundException {
         //given
-        Employee expectedEmployee = new Employee("1", "Tom", 20, "Male", 20000);
+        Employee expectedEmployee = new Employee("1", "Tom", 20, "Male", 20000, "123");
         when(employeeRepository.save(expectedEmployee)).thenReturn(expectedEmployee);
 
         //when
@@ -182,8 +182,8 @@ public class EmployeeServiceTest {
     public void should_return_employee_when_get_employee_by_gender_given_repository_interface_with_gender() throws EmployeeNotFoundException {
         //given
         ArrayList<Employee> expectedEmployees = new ArrayList<>();
-        expectedEmployees.add(new Employee("1", "Tom", 20, "Male", 20000));
-        expectedEmployees.add(new Employee("2", "Tommy", 20, "Male", 20000));
+        expectedEmployees.add(new Employee("1", "Tom", 20, "Male", 20000, "123"));
+        expectedEmployees.add(new Employee("2", "Tommy", 20, "Male", 20000, "123"));
 
         when(employeeRepository.findByGender("Male")).thenReturn(expectedEmployees);
 
@@ -206,7 +206,7 @@ public class EmployeeServiceTest {
     @Test
     public void should_return_updated_employee_when_update_employee_by_id_given_repository_with_employee_id_and_employee() throws EmployeeNotFoundException {
         //given
-        Employee expectedEmployee = new Employee("1", "Tom", 20, "Male", 20000);
+        Employee expectedEmployee = new Employee("1", "Tom", 20, "Male", 20000, "123");
         when(employeeRepository.existsById("1")).thenReturn(true);
         when(employeeRepository.save(expectedEmployee)).thenReturn(expectedEmployee);
         //when
@@ -218,10 +218,10 @@ public class EmployeeServiceTest {
 
     @Test
     void should_return_2_employees_when_get_employees_with_pagination_given_employees_more_than_2_with_pageNumber_is_1_and_pageSize_is_2() {
-         //given
+        //given
         List<Employee> expectedEmployees = new ArrayList<>();
-        expectedEmployees.add(new Employee("1", "Tom", 20, "Male", 200));
-        expectedEmployees.add(new Employee("2", "Tommy", 20, "Male", 200));
+        expectedEmployees.add(new Employee("1", "Tom", 20, "Male", 200, "123"));
+        expectedEmployees.add(new Employee("2", "Tommy", 20, "Male", 200, "123"));
         when(employeeRepository.findAll()).thenReturn(expectedEmployees);
 
         //when
@@ -231,5 +231,20 @@ public class EmployeeServiceTest {
         assertEquals(2, actualEmployees.size());
     }
 
+    @Test
+    public void should_return_employees_when_get_employee_by_company_id_given_repository_company_id() throws EmployeeNotFoundException {
+        //given
+        ArrayList<Employee> expectedEmployees = new ArrayList<>();
+        expectedEmployees.add(new Employee("1", "Tom", 20, "Male", 20000, "123"));
+        expectedEmployees.add(new Employee("2", "Tommy", 20, "Male", 20000, "123"));
+
+        when(employeeRepository.findByCompanyId("123")).thenReturn(expectedEmployees);
+
+        //when
+        List<Employee> actualEmployees = employeeService.getEmployeeByCompanyId("123");
+
+        //then
+        assertEquals(expectedEmployees, actualEmployees);
+    }
 
 }

@@ -19,6 +19,8 @@ public interface EmployeeRepository extends MongoRepository<Employee, String> {
 
     boolean existsById(String id);
 
+    List<Employee> findByCompanyId(String companyId);
+
 }
 
 

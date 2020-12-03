@@ -51,5 +51,9 @@ public class EmployeeService {
                 .limit(pageSize)
                 .collect(Collectors.toList());
     }
+
+    public List<Employee> getEmployeeByCompanyId(String companyId){
+        return employeeRepository.findByCompanyId(companyId);
+    }
 }
 

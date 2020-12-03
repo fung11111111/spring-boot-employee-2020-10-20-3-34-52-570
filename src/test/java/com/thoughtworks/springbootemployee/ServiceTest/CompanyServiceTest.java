@@ -6,6 +6,7 @@ import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.CompanyRepositoryOld;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,6 +33,9 @@ public class CompanyServiceTest {
 
     @Mock
     private CompanyRepository companyRepository;
+
+    @Mock
+    private EmployeeRepository employeeRepository;
 
     //
 //
@@ -198,6 +202,23 @@ public class CompanyServiceTest {
         Company expectedCompany = new Company("1", "A COM", "Banking", new ArrayList<>());
         when(companyRepository.existsById("1")).thenReturn(true);
         when(companyRepository.save(expectedCompany)).thenReturn(expectedCompany);
+        //when
+        Company actualCompany = companyService.updateCompany("1", expectedCompany);
+
+        //then
+        assertEquals(expectedCompany, actualCompany);
+    }
+
+    @Test
+    public void should_return_comployees_when_get_employees_by_company_id_given_repository_with_company_id() throws CompanyNotFoundException {
+        //given
+
+        Company expectedCompany = new Company("1", "A COM", "Banking", new ArrayList<>());
+        ArrayList<Employee> employees = new ArrayList<>();
+        employees.add(new Employee("1", "Tom", 20, "Male", 200, "1"));
+        employees.add(new Employee("1", "Tommy", 20, "Male", 200, "1"));
+
+
         //when
         Company actualCompany = companyService.updateCompany("1", expectedCompany);
 

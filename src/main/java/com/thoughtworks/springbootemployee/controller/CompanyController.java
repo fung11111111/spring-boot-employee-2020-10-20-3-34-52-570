@@ -36,16 +36,16 @@ public class CompanyController {
         return companyService.updateCompany(companyId, companyUpdate);
     }
 
-//    @DeleteMapping("/{companyId}")
-//    public void deleteCompanyById(@PathVariable String companyId) throws CompanyNotFoundException {
-//        companyService.deleteCompanyById(companyId);
-//    }
-//
+    @DeleteMapping("/{companyId}")
+    public void deleteCompanyById(@PathVariable String companyId) throws CompanyNotFoundException {
+        companyService.deleteCompanyById(companyId);
+    }
+
 //    @GetMapping("/{companyId}/employees")
 //    public List<Employee> getEmployeesByCompanyId(@PathVariable String companyId) throws CompanyNotFoundException {
 //        return companyService.getEmployeesByCompanyId(companyId);
 //    }
-//
+
 //    @GetMapping(params = {"page", "pageSize"})
 //    public List<Company> getCompaniesByPage(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
 //        return companyService.getWithPagination(page, pageSize);

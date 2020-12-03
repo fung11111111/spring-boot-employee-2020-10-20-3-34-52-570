@@ -51,11 +51,7 @@ public class CompanyRepositoryOld {
     }
 
     public List<Employee> getEmployeesByCompanyId(String companyId) throws CompanyNotFoundException {
-        Company existingCompany = getCompanyById(companyId);
-        if (existingCompany != null) {
-            return existingCompany.getEmployees();
-        }
-        throw new CompanyNotFoundException();
+       return null;
     }
 
     public List<Company> getWithPagination(Integer page, Integer pageSize) {

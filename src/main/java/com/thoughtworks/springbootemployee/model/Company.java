@@ -11,16 +11,16 @@ public class Company {
     private String companyId;
     private String companyName;
     private String companyType;
-    private List<Employee> employees;
+    private List<String> employeeIdList;
 
     public Company() {
     }
 
-    public Company(String companyId, String companyName, String companyType, List<Employee> employees) {
+    public Company(String companyId, String companyName, String companyType, List<String> employees) {
         this.companyId = companyId;
         this.companyName = companyName;
         this.companyType = companyType;
-        this.employees = employees;
+        this.employeeIdList = employees;
     }
 
     public String getCompanyId() {
@@ -35,8 +35,8 @@ public class Company {
         return companyType;
     }
 
-    public List<Employee> getEmployees() {
-        return employees;
+    public List<String> getEmployees() {
+        return employeeIdList;
     }
 
 
