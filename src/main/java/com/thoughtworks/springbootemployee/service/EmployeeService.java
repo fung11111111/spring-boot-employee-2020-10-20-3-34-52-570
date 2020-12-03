@@ -30,6 +30,7 @@ public class EmployeeService {
 
     public Employee updateEmployee(String id, Employee employeeUpdate) throws EmployeeNotFoundException {
         if(employeeRepository.existsById(id)){
+            employeeUpdate.setId(id);
             return employeeRepository.save(employeeUpdate);
         }
         throw new EmployeeNotFoundException();
