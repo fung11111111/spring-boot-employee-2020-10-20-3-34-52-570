@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.ServiceTest;
 
 import com.thoughtworks.springbootemployee.Exception.CompanyNotFoundException;
+import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -146,12 +147,25 @@ public class CompanyServiceTest {
     public void should_return_all_companies_when_get_all_given_repository_with_all_companies() {
         //given
         List<Company> expectedCompanies = Arrays.asList(new Company());
-        when(companyRepository.getAll()).thenReturn(expectedCompanies);
+        when(companyRepository.findAll()).thenReturn(expectedCompanies);
 
         //when
         List<Company> actualCompanies = companyService.getCompanies();
 
         //then
         assertEquals(expectedCompanies, actualCompanies);
+    }
+
+    @Test
+    public void should_return_company_when_save_given_repository_with_company() {
+        //given
+        Company expectedCompany = new Company();
+        when(companyRepository.save(expectedCompany)).thenReturn(expectedCompany);
+
+        //when
+        Company actualCompany = companyService.addCompany(expectedCompany);
+
+        //then
+        assertEquals(expectedCompany, actualCompany);
     }
 }
