@@ -12,4 +12,6 @@ public interface CompanyRepository extends MongoRepository<Company, String> {
 
     Company save(Company company);
 
+    boolean existsById(String id);
+
 }

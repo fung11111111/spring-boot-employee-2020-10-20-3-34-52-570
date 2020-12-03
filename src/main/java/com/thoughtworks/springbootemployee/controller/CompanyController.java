@@ -30,12 +30,12 @@ public class CompanyController {
     public Optional<Company> getCompanyById(@PathVariable String companyId) throws CompanyNotFoundException {
         return companyService.getCompanyById(companyId);
     }
-//
-//    @PutMapping("/{companyId}")
-//    public Company updateCompany(@PathVariable String companyId, @RequestBody Company companyUpdate) throws CompanyNotFoundException {
-//        return companyService.updateCompany(companyId, companyUpdate);
-//    }
-//
+
+    @PutMapping("/{companyId}")
+    public Company updateCompany(@PathVariable String companyId, @RequestBody Company companyUpdate) throws CompanyNotFoundException {
+        return companyService.updateCompany(companyId, companyUpdate);
+    }
+
 //    @DeleteMapping("/{companyId}")
 //    public void deleteCompanyById(@PathVariable String companyId) throws CompanyNotFoundException {
 //        companyService.deleteCompanyById(companyId);

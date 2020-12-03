@@ -193,7 +193,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    public void should_return_updated_company_when_update_company_by_id_given_repository_with_company_id_and_employee() throws EmployeeNotFoundException {
+    public void should_return_updated_company_when_update_company_by_id_given_repository_with_company_id_and_employee() throws CompanyNotFoundException {
         //given
         Company expectedCompany = new Company("1", "A COM", "Banking", new ArrayList<>());
         when(companyRepository.existsById("1")).thenReturn(true);

@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.Exception.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,11 @@ public class CompanyService {
         return companyRepository.findById(companyId);
     }
 
-    public Company updateCompany(String companyId, Company companyUpdate){
-        return null;
+    public Company updateCompany(String companyId, Company companyUpdate) throws CompanyNotFoundException {
+        if (companyRepository.existsById(companyId)){
+            return companyRepository.save(companyUpdate);
+        }
+        throw new CompanyNotFoundException();
     }
 
     public void deleteCompanyById(String companyId) {
