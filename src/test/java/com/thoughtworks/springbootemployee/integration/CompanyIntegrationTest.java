@@ -116,9 +116,10 @@ public class CompanyIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(companyJson))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.companyId").isString())
                 .andExpect(jsonPath("$.companyName").value("BCOM"))
-                .andExpect(jsonPath("$.companyType").value("IT"));
+                .andExpect(jsonPath("$.companyType").value("IT"))
+                .andExpect(jsonPath("$.employees").isEmpty());
+        ;
 
         List<Company> companies = companyRepository.findAll();
         Assertions.assertEquals(1, companies.size());
@@ -132,20 +133,21 @@ public class CompanyIntegrationTest {
         Company company = new Company("ACOM", "Banking");
         companyRepository.save(company);
         Employee employee1 = new Employee("Tom", 18, "Male", 10000, company.getCompanyId());
+        Employee employee2 = new Employee("Tommy", 20, "Male", 10000, company.getCompanyId());
         employeeRepository.save(employee1);
+        employeeRepository.save(employee2);
 
         //when
         //then
         mockMvc.perform(get("/companies/" + company.getCompanyId() + "/employees"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.*", hasSize(1)))
-                .andExpect(jsonPath("$[0].id").isString())
-                .andExpect(jsonPath("$[0].name").value("Tom"))
-                .andExpect(jsonPath("$[0].age").value(18))
-                .andExpect(jsonPath("$[0].gender").value("Male"))
-                .andExpect(jsonPath("$[0].salary").value(10000))
-                .andExpect(jsonPath("$[0].companyId").isString());
-
+                .andExpect(jsonPath("$.*", hasSize(2)))
+                .andExpect(jsonPath("$[1].id").isString())
+                .andExpect(jsonPath("$[1].name").value("Tommy"))
+                .andExpect(jsonPath("$[1].age").value(20))
+                .andExpect(jsonPath("$[1].gender").value("Male"))
+                .andExpect(jsonPath("$[1].salary").value(10000))
+                .andExpect(jsonPath("$[1].companyId").isString());
     }
 
     @Test
