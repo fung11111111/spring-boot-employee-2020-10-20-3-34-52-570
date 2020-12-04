@@ -53,9 +53,9 @@ public class CompanyIntegrationTest {
         mockMvc.perform(get("/companies"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.*", hasSize(1)))
-                .andExpect(jsonPath("$[0].companyId").isString())
                 .andExpect(jsonPath("$[0].companyName").value("ACOM"))
-                .andExpect(jsonPath("$[0].companyType").value("Banking"));
+                .andExpect(jsonPath("$[0].companyType").value("Banking"))
+                .andExpect(jsonPath("$[0].employees").isEmpty());
     }
 
     // use create status
