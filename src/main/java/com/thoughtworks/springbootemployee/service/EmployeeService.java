@@ -29,15 +29,18 @@ public class EmployeeService {
     }
 
     public Employee updateEmployee(String id, Employee employeeUpdate) throws EmployeeNotFoundException {
-        if(employeeRepository.existsById(id)){
+        if (employeeRepository.existsById(id)) {
             employeeUpdate.setId(id);
             return employeeRepository.save(employeeUpdate);
         }
         throw new EmployeeNotFoundException();
     }
 
-    public void deleteEmployeeByID(String id){
-        employeeRepository.deleteById(id);
+    public void deleteEmployeeByID(String id) throws EmployeeNotFoundException{
+        if (employeeRepository.existsById(id)){
+            employeeRepository.deleteById(id);
+        }
+        throw new EmployeeNotFoundException();
     }
 
     public List<Employee> getEmployeesByGender(String gender) {
@@ -53,11 +56,11 @@ public class EmployeeService {
                 .collect(Collectors.toList());
     }
 
-    public List<Employee> getEmployeeByCompanyId(String companyId) throws EmployeeNotFoundException{
-        if(employeeRepository.findByCompanyId(companyId) != null){
+    public List<Employee> getEmployeeByCompanyId(String companyId) throws EmployeeNotFoundException {
+        if (employeeRepository.findByCompanyId(companyId) != null) {
             return employeeRepository.findByCompanyId(companyId);
         }
-        throw  new EmployeeNotFoundException();
+        throw new EmployeeNotFoundException();
     }
 }
 

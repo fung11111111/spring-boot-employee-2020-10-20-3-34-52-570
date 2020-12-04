@@ -59,6 +59,7 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$[0].companyType").value("Banking"));
     }
 
+    // use create status
     @Test
     public void should_return_company_when_add_company_given_company() throws Exception {
         //given

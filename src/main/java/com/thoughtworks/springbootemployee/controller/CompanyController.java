@@ -18,6 +18,7 @@ public class CompanyController {
     @Autowired
     private CompanyService companyService;
 
+    //can add response to return companies with employees
     @GetMapping
     public List<Company> getCompanies() {
         return companyService.getCompanies();

@@ -22,6 +22,7 @@ public class CompanyService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+
     public List<Company> getCompanies() {
         return companyRepository.findAll();
     }
@@ -46,6 +47,8 @@ public class CompanyService {
         companyRepository.deleteById(companyId);
     }
 
+    //add company not found exception
+    // user service at same layer
     public List<Employee> getEmployeesByCompanyId(String companyId) throws EmployeeNotFoundException {
        if (employeeRepository.findByCompanyId(companyId) != null){
            return employeeRepository.findByCompanyId(companyId);

@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
+import com.thoughtworks.springbootemployee.advice.ErrorResponse;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,11 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}")
-    public Optional<Employee> getEmployeeByID(@PathVariable String employeeId) {
-        return employeeService.getEmployeeByID(employeeId);
+    public Employee getEmployeeByID(@PathVariable String employeeId) throws EmployeeNotFoundException{
+        if (employeeService.getEmployeeByID(employeeId).isPresent()){
+            return employeeService.getEmployeeByID(employeeId).get();
+        }
+        throw  new EmployeeNotFoundException();
     }
 
     @GetMapping(params = "gender")

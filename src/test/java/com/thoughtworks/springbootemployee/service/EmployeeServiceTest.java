@@ -231,7 +231,6 @@ public class EmployeeServiceTest {
         assertEquals(2, actualEmployees.size());
     }
 
-
     @Test
     public void should_return_employees_when_get_employee_by_company_id_given_repository_company_id() throws EmployeeNotFoundException {
         //given
