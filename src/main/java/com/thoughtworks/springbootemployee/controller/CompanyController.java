@@ -10,6 +10,7 @@ import com.thoughtworks.springbootemployee.mapper.EmployeeMapper;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,6 +49,7 @@ public class CompanyController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public CompanyResponse addCompany(@RequestBody CompanyRequest companyRequest) throws CompanyNotFoundException, EmployeeNotFoundException {
         Company company = companyService.addCompany(companyMapper.toEntity(companyRequest));
         List<Employee> employees = companyService.getEmployeesByCompanyId(company.getCompanyId());

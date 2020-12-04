@@ -59,7 +59,6 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$[0].employees").isEmpty());
     }
 
-    // use create status
     @Test
     public void should_return_company_when_add_company_given_company() throws Exception {
         //given
@@ -73,7 +72,7 @@ public class CompanyIntegrationTest {
         mockMvc.perform(post("/companies")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(companyJson))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.companyName").value("ACOM"))
                 .andExpect(jsonPath("$.companyType").value("Banking"))
                 .andExpect(jsonPath("$.employees").isEmpty());
