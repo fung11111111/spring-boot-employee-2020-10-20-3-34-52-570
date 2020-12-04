@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -53,6 +54,7 @@ public class CompanyIntegrationTest {
         //then
         mockMvc.perform(get("/companies"))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.*", hasSize(1)))
                 .andExpect(jsonPath("$[0].companyId").isString())
                 .andExpect(jsonPath("$[0].companyName").value("ACOM"))
                 .andExpect(jsonPath("$[0].companyType").value("Banking"));
@@ -137,6 +139,7 @@ public class CompanyIntegrationTest {
         //then
         mockMvc.perform(get("/companies/" + company.getCompanyId() + "/employees"))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.*", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").isString())
                 .andExpect(jsonPath("$[0].name").value("Tom"))
                 .andExpect(jsonPath("$[0].age").value(18))
@@ -159,6 +162,7 @@ public class CompanyIntegrationTest {
         //then
         mockMvc.perform(get("/companies").param("page", String.valueOf(2)).param("pageSize", String.valueOf(2)))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.*", hasSize(1)))
                 .andExpect(jsonPath("$[0].companyId").isString())
                 .andExpect(jsonPath("$[0].companyName").value("CCOM"))
                 .andExpect(jsonPath("$[0].companyType").value("Education"));
