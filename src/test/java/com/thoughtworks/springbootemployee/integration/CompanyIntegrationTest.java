@@ -43,7 +43,6 @@ public class CompanyIntegrationTest {
         employeeRepository.deleteAll();
     }
 
-    // can verify the list size
     @Test
     public void should_return_all_companies_when_get_all_given_company() throws Exception {
         //given
