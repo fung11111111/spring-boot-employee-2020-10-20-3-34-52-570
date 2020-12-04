@@ -16,12 +16,6 @@ public class Company {
     public Company() {
     }
 
-    public Company(String companyId, String companyName, String companyType) {
-        this.companyId = companyId;
-        this.companyName = companyName;
-        this.companyType = companyType;
-    }
-
     public Company(String companyName, String companyType) {
         this.companyName = companyName;
         this.companyType = companyType;
@@ -50,7 +44,6 @@ public class Company {
     public void setCompanyType(String companyType) {
         this.companyType = companyType;
     }
-
 
 
 }
