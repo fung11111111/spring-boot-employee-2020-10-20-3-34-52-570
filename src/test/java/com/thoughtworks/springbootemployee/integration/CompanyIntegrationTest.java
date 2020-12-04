@@ -164,9 +164,9 @@ public class CompanyIntegrationTest {
         mockMvc.perform(get("/companies").param("page", String.valueOf(2)).param("pageSize", String.valueOf(2)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.*", hasSize(1)))
-                .andExpect(jsonPath("$[0].companyId").isString())
                 .andExpect(jsonPath("$[0].companyName").value("CCOM"))
-                .andExpect(jsonPath("$[0].companyType").value("Education"));
+                .andExpect(jsonPath("$[0].companyType").value("Education"))
+                .andExpect(jsonPath("$[0].employees").isEmpty());
     }
 
     @Test
