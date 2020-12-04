@@ -35,6 +35,7 @@ public class CompanyService {
 
     public Company updateCompany(String companyId, Company companyUpdate) throws CompanyNotFoundException {
         if (companyRepository.existsById(companyId)){
+            companyUpdate.setCompanyId(companyId);
             return companyRepository.save(companyUpdate);
         }
         throw new CompanyNotFoundException();

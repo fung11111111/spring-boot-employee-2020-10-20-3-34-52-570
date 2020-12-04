@@ -39,6 +39,18 @@ public class Company {
         return companyType;
     }
 
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public void setCompanyType(String companyType) {
+        this.companyType = companyType;
+    }
+
 
 
 }

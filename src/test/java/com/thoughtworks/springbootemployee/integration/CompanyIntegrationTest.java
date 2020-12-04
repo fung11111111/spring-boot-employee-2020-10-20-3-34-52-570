@@ -40,6 +40,7 @@ public class CompanyIntegrationTest {
         companyRepository.deleteAll();
     }
 
+    // can verify the list size
     @Test
     public void should_return_all_companies_when_get_all_given_company() throws Exception {
         //given
@@ -115,6 +116,7 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$[0].companyId").isString());
 
     }
+
     @Test
     public void should_return_2_companies_when_get_companies_by_pagination_given_3_companies_and_page_number_is_2_and_page_size_is_2() throws Exception {
         //given
