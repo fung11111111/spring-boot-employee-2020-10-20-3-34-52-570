@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
+import static junit.framework.Assert.assertNull;
 import static junit.framework.TestCase.assertEquals;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -73,9 +74,9 @@ public class CompanyIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(companyJson))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.companyId").isString())
                 .andExpect(jsonPath("$.companyName").value("ACOM"))
-                .andExpect(jsonPath("$.companyType").value("Banking"));
+                .andExpect(jsonPath("$.companyType").value("Banking"))
+                .andExpect(jsonPath("$.employees").isEmpty());
 
 
         List<Company> companies = companyRepository.findAll();
@@ -90,14 +91,13 @@ public class CompanyIntegrationTest {
         Company company = new Company("ACOM", "Banking");
         companyRepository.save(company);
 
-
         //when
         //then
         mockMvc.perform(get("/companies/" + company.getCompanyId()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.companyId").isString())
                 .andExpect(jsonPath("$.companyName").value("ACOM"))
-                .andExpect(jsonPath("$.companyType").value("Banking"));
+                .andExpect(jsonPath("$.companyType").value("Banking"))
+                .andExpect(jsonPath("$.employees").isEmpty());
     }
 
     @Test
