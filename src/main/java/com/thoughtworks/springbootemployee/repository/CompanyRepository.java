@@ -7,9 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CompanyRepository extends MongoRepository<Company, String> {
 
-   // Company save(Company company);
-
-    //can be remove
-   // boolean existsById(String id);
-
 }

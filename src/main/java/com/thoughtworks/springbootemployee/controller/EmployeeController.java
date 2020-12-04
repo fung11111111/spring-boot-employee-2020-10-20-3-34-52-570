@@ -1,35 +1,46 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
-import com.thoughtworks.springbootemployee.advice.ErrorResponse;
+import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
+import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
+import com.thoughtworks.springbootemployee.mapper.EmployeeMapper;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
 
-    @Autowired
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
+
+    private final EmployeeMapper employeeMapper;
+
+    public EmployeeController(EmployeeService employeeService, EmployeeMapper employeeMapper) {
+        this.employeeService = employeeService;
+        this.employeeMapper = employeeMapper;
+    }
 
     @GetMapping
-    public List<Employee> getEmployeesList() {
-        return employeeService.getEmployeesList();
+    public List<EmployeeResponse> getEmployeesList() {
+        return employeeService.getEmployeesList().stream()
+                .map(employeeMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     @PostMapping
-    public Employee addEmployee(@RequestBody Employee employeeCreate) {
-        return employeeService.addEmployee(employeeCreate);
+    public EmployeeResponse addEmployee(@RequestBody EmployeeRequest employeeRequest) {
+        Employee employee = employeeService.addEmployee(employeeMapper.toEntity(employeeRequest));
+        return employeeMapper.toResponse(employee);
     }
 
     @PutMapping("/{employeeId}")
-    public Employee updateEmployee(@PathVariable String employeeId, @RequestBody Employee employeeUpdate) throws EmployeeNotFoundException {
-        return employeeService.updateEmployee(employeeId, employeeUpdate);
+    public EmployeeResponse updateEmployee(@PathVariable String employeeId, @RequestBody EmployeeRequest employeeRequest) throws EmployeeNotFoundException {
+        Employee employee = employeeService.updateEmployee(employeeId,employeeMapper.toEntity(employeeRequest));
+        return employeeMapper.toResponse(employee);
     }
 
     @DeleteMapping("/{employeeId}")
@@ -38,17 +49,21 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}")
-    public Employee getEmployeeByID(@PathVariable String employeeId) throws EmployeeNotFoundException {
-        return employeeService.getEmployeeByID(employeeId);
+    public EmployeeResponse getEmployeeByID(@PathVariable String employeeId) throws EmployeeNotFoundException {
+        return employeeMapper.toResponse(employeeService.getEmployeeByID(employeeId));
     }
 
     @GetMapping(params = "gender")
-    public List<Employee> getEmployeeByGender(@RequestParam("gender") String gender) {
-        return employeeService.getEmployeesByGender(gender);
+    public  List<EmployeeResponse> getEmployeeByGender(@RequestParam("gender") String gender) {
+         return employeeService.getEmployeesByGender(gender).stream()
+                 .map(employeeMapper::toResponse)
+                 .collect(Collectors.toList());
     }
 
     @GetMapping(params = {"page", "pageSize"})
-    public List<Employee> getEmployeeByPage(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
-        return employeeService.getWithPagination(page, pageSize);
+    public List<EmployeeResponse> getEmployeeByPage(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
+        return employeeService.getWithPagination(page, pageSize).stream()
+                .map(employeeMapper::toResponse)
+                .collect(Collectors.toList());
     }
 }
