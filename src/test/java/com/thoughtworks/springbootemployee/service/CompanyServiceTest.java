@@ -28,6 +28,9 @@ public class CompanyServiceTest {
     @InjectMocks
     private CompanyService companyService;
 
+    @InjectMocks
+    private  EmployeeService employeeService;
+
     @Mock
     private CompanyRepository companyRepository;
 
@@ -209,14 +212,13 @@ public class CompanyServiceTest {
     @Test
     public void should_return_employees_when_get_employees_by_company_id_given_repository_with_company_id() throws CompanyNotFoundException, EmployeeNotFoundException {
         //given
-        Company existingCompany = new Company("Acom", "Banking");
-        companyRepository.save(new Company("Acom", "Banking"));
         ArrayList<Employee> expectedEmployees = new ArrayList<>();
-        expectedEmployees.add(new Employee( "Tom", 20, "Male", 200, existingCompany.getCompanyId()));
-        when(employeeRepository.findByCompanyId(existingCompany.getCompanyId())).thenReturn(expectedEmployees);
+        expectedEmployees.add(new Employee( "Tom", 20, "Male", 200, "123"));
+        when(companyRepository.existsById(any())).thenReturn(true);
+        when(employeeRepository.findByCompanyId(any())).thenReturn(expectedEmployees);
 
         //when
-        List<Employee> actualEmployees = companyService.getEmployeesByCompanyId(existingCompany.getCompanyId());
+        List<Employee> actualEmployees = companyService.getEmployeesByCompanyId("123");
 
         //then
         assertEquals(expectedEmployees, actualEmployees);

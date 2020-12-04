@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/companies")
@@ -18,7 +17,6 @@ public class CompanyController {
     @Autowired
     private CompanyService companyService;
 
-    //can add response to return companies with employees
     @GetMapping
     public List<Company> getCompanies() {
         return companyService.getCompanies();
@@ -40,14 +38,15 @@ public class CompanyController {
     }
 
     @DeleteMapping("/{companyId}")
-    public void deleteCompanyById(@PathVariable String companyId) throws CompanyNotFoundException {
+    public void deleteCompanyById(@PathVariable String companyId) {
         companyService.deleteCompanyById(companyId);
     }
 
     @GetMapping("/{companyId}/employees")
-    public List<Employee> getEmployeesByCompanyId(@PathVariable String companyId) throws CompanyNotFoundException, EmployeeNotFoundException {
+    public List<Employee> getEmployeesByCompanyId(@PathVariable String companyId) throws EmployeeNotFoundException, CompanyNotFoundException {
         return companyService.getEmployeesByCompanyId(companyId);
     }
+
 
     @GetMapping(params = {"page", "pageSize"})
     public List<Company> getCompaniesByPage(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
