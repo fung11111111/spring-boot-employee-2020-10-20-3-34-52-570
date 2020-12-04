@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.advice;
 
+import com.thoughtworks.springbootemployee.Exception.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,5 +21,12 @@ public class GlobalControllerAdvice {
     public ErrorResponse handleEmployeeNotFoundException(EmployeeNotFoundException exception){
         return new ErrorResponse(exception.getMessage(), HttpStatus.NOT_FOUND.name());
     }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler({CompanyNotFoundException.class})
+    public ErrorResponse handleEmployeeNotFoundException(CompanyNotFoundException exception){
+        return new ErrorResponse(exception.getMessage(), HttpStatus.NOT_FOUND.name());
+    }
+
 
 }

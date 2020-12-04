@@ -31,12 +31,15 @@ public class CompanyService {
         return companyRepository.save(company);
     }
 
-    public Optional<Company> getCompanyById(String companyId){
-        return companyRepository.findById(companyId);
+    public Company getCompanyById(String companyId) throws CompanyNotFoundException{
+        if (companyRepository.findById(companyId).isPresent()) {
+            return companyRepository.findById(companyId).get();
+        }
+        throw new CompanyNotFoundException();
     }
 
     public Company updateCompany(String companyId, Company companyUpdate) throws CompanyNotFoundException {
-        if (companyRepository.existsById(companyId)){
+        if (companyRepository.existsById(companyId)) {
             companyUpdate.setCompanyId(companyId);
             return companyRepository.save(companyUpdate);
         }
@@ -50,10 +53,10 @@ public class CompanyService {
     //add company not found exception
     // user service at same layer
     public List<Employee> getEmployeesByCompanyId(String companyId) throws EmployeeNotFoundException {
-       if (employeeRepository.findByCompanyId(companyId) != null){
-           return employeeRepository.findByCompanyId(companyId);
-       }
-       throw new EmployeeNotFoundException();
+        if (employeeRepository.findByCompanyId(companyId) != null) {
+            return employeeRepository.findByCompanyId(companyId);
+        }
+        throw new EmployeeNotFoundException();
     }
 
     public List<Company> getWithPagination(Integer page, Integer pageSize) {

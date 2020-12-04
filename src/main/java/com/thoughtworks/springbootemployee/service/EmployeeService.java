@@ -24,8 +24,11 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    public Optional<Employee> getEmployeeByID(String id){
-        return employeeRepository.findById(id);
+    public Employee getEmployeeByID(String id) throws EmployeeNotFoundException {
+        if (employeeRepository.findById(id).isPresent()) {
+            return employeeRepository.findById(id).get();
+        }
+        throw new EmployeeNotFoundException();
     }
 
     public Employee updateEmployee(String id, Employee employeeUpdate) throws EmployeeNotFoundException {
@@ -36,11 +39,8 @@ public class EmployeeService {
         throw new EmployeeNotFoundException();
     }
 
-    public void deleteEmployeeByID(String id) throws EmployeeNotFoundException{
-        if (employeeRepository.existsById(id)){
-            employeeRepository.deleteById(id);
-        }
-        throw new EmployeeNotFoundException();
+    public void deleteEmployeeByID(String id) {
+        employeeRepository.deleteById(id);
     }
 
     public List<Employee> getEmployeesByGender(String gender) {

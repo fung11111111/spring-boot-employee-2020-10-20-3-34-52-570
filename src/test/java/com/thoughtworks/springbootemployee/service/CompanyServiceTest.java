@@ -172,16 +172,16 @@ public class CompanyServiceTest {
     }
 
     @Test
-    public void should_return_company_when_find_company_by_id_given_repository_comapny_id() {
+    public void should_return_company_when_find_company_by_id_given_repository_comapny_id() throws CompanyNotFoundException {
         //given
         Optional<Company> expectedCompany = Optional.of(new Company( "A COM", "Banking"));
         when(companyRepository.findById("123")).thenReturn(expectedCompany);
 
         //when
-        Optional<Company> actualCompany = companyService.getCompanyById("123");
+        Company actualCompany = companyService.getCompanyById("123");
 
         //then
-        assertEquals(expectedCompany, actualCompany);
+        assertEquals(expectedCompany.get(), actualCompany);
     }
 
     @Test

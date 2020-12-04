@@ -30,7 +30,7 @@ public class CompanyController {
     }
 
     @GetMapping("/{companyId}")
-    public Optional<Company> getCompanyById(@PathVariable String companyId) throws CompanyNotFoundException {
+    public Company getCompanyById(@PathVariable String companyId) throws CompanyNotFoundException {
         return companyService.getCompanyById(companyId);
     }
 

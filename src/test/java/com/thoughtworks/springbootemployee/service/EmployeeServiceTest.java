@@ -158,16 +158,16 @@ public class EmployeeServiceTest {
         when(employeeRepository.findById("1")).thenReturn(expectedEmployee);
 
         //when
-        Optional<Employee> actualEmployees = employeeService.getEmployeeByID("1");
+        Employee actualEmployees = employeeService.getEmployeeByID("1");
 
         //then
-        assertEquals(expectedEmployee, actualEmployees);
+        assertEquals(expectedEmployee.get(), actualEmployees);
     }
 
     @Test
     public void should_return_employee_when_save_given_repository_interface_with_employee() throws EmployeeNotFoundException {
         //given
-        Employee expectedEmployee = new Employee( "Tom", 20, "Male", 20000, "123");
+        Employee expectedEmployee = new Employee("Tom", 20, "Male", 20000, "123");
         when(employeeRepository.save(expectedEmployee)).thenReturn(expectedEmployee);
 
         //when
@@ -181,8 +181,8 @@ public class EmployeeServiceTest {
     public void should_return_employee_when_get_employee_by_gender_given_repository_interface_with_gender() throws EmployeeNotFoundException {
         //given
         ArrayList<Employee> expectedEmployees = new ArrayList<>();
-        expectedEmployees.add(new Employee( "Tom", 20, "Male", 20000, "123"));
-        expectedEmployees.add(new Employee( "Tommy", 20, "Male", 20000, "123"));
+        expectedEmployees.add(new Employee("Tom", 20, "Male", 20000, "123"));
+        expectedEmployees.add(new Employee("Tommy", 20, "Male", 20000, "123"));
 
         when(employeeRepository.findByGender("Male")).thenReturn(expectedEmployees);
 
@@ -196,6 +196,7 @@ public class EmployeeServiceTest {
     @Test
     public void should_call_delete_employee_by_id_when_delete_employee_by_id_given_repository_with_employee_id() throws EmployeeNotFoundException {
         //when
+        Employee employee = new Employee("Tom", 20, "Male", 20000, "123");
         employeeService.deleteEmployeeByID("1");
 
         //then
@@ -206,7 +207,7 @@ public class EmployeeServiceTest {
     @Test
     public void should_return_updated_employee_when_update_employee_by_id_given_repository_with_employee_id_and_employee() throws EmployeeNotFoundException {
         //given
-        Employee expectedEmployee = new Employee( "Tom", 20, "Male", 20000, "123");
+        Employee expectedEmployee = new Employee("Tom", 20, "Male", 20000, "123");
         when(employeeRepository.existsById("1")).thenReturn(true);
         when(employeeRepository.save(expectedEmployee)).thenReturn(expectedEmployee);
         //when
@@ -220,7 +221,7 @@ public class EmployeeServiceTest {
     void should_return_2_employees_when_get_employees_with_pagination_given_employees_more_than_2_with_pageNumber_is_1_and_pageSize_is_2() {
         //given
         List<Employee> expectedEmployees = new ArrayList<>();
-        expectedEmployees.add(new Employee( "Tom", 20, "Male", 200, "123"));
+        expectedEmployees.add(new Employee("Tom", 20, "Male", 200, "123"));
         expectedEmployees.add(new Employee("Tommy", 20, "Male", 200, "123"));
         when(employeeRepository.findAll()).thenReturn(expectedEmployees);
 
@@ -236,7 +237,7 @@ public class EmployeeServiceTest {
         //given
         ArrayList<Employee> expectedEmployees = new ArrayList<>();
         expectedEmployees.add(new Employee("Tom", 20, "Male", 20000, "123"));
-        expectedEmployees.add(new Employee( "Tommy", 20, "Male", 20000, "123"));
+        expectedEmployees.add(new Employee("Tommy", 20, "Male", 20000, "123"));
 
         when(employeeRepository.findByCompanyId("123")).thenReturn(expectedEmployees);
 

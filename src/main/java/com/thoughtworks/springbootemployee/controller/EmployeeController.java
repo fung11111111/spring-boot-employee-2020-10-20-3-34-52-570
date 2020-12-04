@@ -38,11 +38,8 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}")
-    public Employee getEmployeeByID(@PathVariable String employeeId) throws EmployeeNotFoundException{
-        if (employeeService.getEmployeeByID(employeeId).isPresent()){
-            return employeeService.getEmployeeByID(employeeId).get();
-        }
-        throw  new EmployeeNotFoundException();
+    public Employee getEmployeeByID(@PathVariable String employeeId) throws EmployeeNotFoundException {
+        return employeeService.getEmployeeByID(employeeId);
     }
 
     @GetMapping(params = "gender")
