@@ -1,21 +1,15 @@
 package com.thoughtworks.springbootemployee.dto;
 
-import com.thoughtworks.springbootemployee.model.Employee;
-
-import java.util.List;
-
-public class CompanyResponse {
+public class CompanyRequest {
     private String companyName;
     private String companyType;
-    private List<Employee> employees;
 
-    public CompanyResponse() {
+    public CompanyRequest() {
     }
 
-    public CompanyResponse(String companyName, String companyType, List<Employee> employees) {
+    public CompanyRequest(String companyName, String companyType) {
         this.companyName = companyName;
         this.companyType = companyType;
-        this.employees = employees;
     }
 
     public String getCompanyName() {
