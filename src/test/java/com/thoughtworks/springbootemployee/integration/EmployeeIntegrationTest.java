@@ -155,7 +155,6 @@ public class EmployeeIntegrationTest {
         assertEquals("Male", employees.get(0).getGender());
         assertEquals(10000, employees.get(0).getSalary());
         assertEquals("1234", employees.get(0).getCompanyId());
-
     }
 
     @Test
