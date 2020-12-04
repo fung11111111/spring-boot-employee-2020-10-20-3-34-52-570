@@ -53,8 +53,11 @@ public class EmployeeService {
                 .collect(Collectors.toList());
     }
 
-    public List<Employee> getEmployeeByCompanyId(String companyId){
-        return employeeRepository.findByCompanyId(companyId);
+    public List<Employee> getEmployeeByCompanyId(String companyId) throws EmployeeNotFoundException{
+        if(employeeRepository.findByCompanyId(companyId) != null){
+            return employeeRepository.findByCompanyId(companyId);
+        }
+        throw  new EmployeeNotFoundException();
     }
 }
 

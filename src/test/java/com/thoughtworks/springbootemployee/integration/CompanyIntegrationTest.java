@@ -6,6 +6,7 @@ import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -59,7 +60,7 @@ public class CompanyIntegrationTest {
     @Test
     public void should_return_company_when_add_company_given_company() throws Exception {
         //given
-        String employeeJson = "{\n" +
+        String companyJson = "{\n" +
                 "   \"companyName\": \"ACOM\",\n" +
                 "   \"companyType\": \"Banking\"\n" +
                 "}";
@@ -68,7 +69,7 @@ public class CompanyIntegrationTest {
         //then
         mockMvc.perform(post("/companies")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(employeeJson))
+                .content(companyJson))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.companyId").isString())
                 .andExpect(jsonPath("$.companyName").value("ACOM"))
@@ -87,6 +88,7 @@ public class CompanyIntegrationTest {
         Company company = new Company("ACOM", "Banking");
         companyRepository.save(company);
 
+
         //when
         //then
         mockMvc.perform(get("/companies/" + company.getCompanyId()))
@@ -94,6 +96,32 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$.companyId").isString())
                 .andExpect(jsonPath("$.companyName").value("ACOM"))
                 .andExpect(jsonPath("$.companyType").value("Banking"));
+    }
+
+    @Test
+    public void should_return_updated_company_when_update_company_given_company_id_and_company() throws Exception {
+        //given
+        Company company = new Company("ACOM", "Banking");
+        companyRepository.save(company);
+        String companyJson = "{\n" +
+                "   \"companyName\": \"BCOM\",\n" +
+                "   \"companyType\": \"IT\"\n" +
+                "}";
+
+        //when
+        //then
+        mockMvc.perform(put("/companies/" + company.getCompanyId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(companyJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.companyId").isString())
+                .andExpect(jsonPath("$.companyName").value("BCOM"))
+                .andExpect(jsonPath("$.companyType").value("IT"));
+
+        List<Company> companies = companyRepository.findAll();
+        Assertions.assertEquals(1, companies.size());
+        assertEquals("BCOM", companies.get(0).getCompanyName());
+        assertEquals("IT", companies.get(0).getCompanyType());
     }
 
     @Test
