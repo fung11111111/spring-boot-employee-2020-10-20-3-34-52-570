@@ -39,6 +39,7 @@ public class CompanyIntegrationTest {
     @AfterEach
     void tearDown() {
         companyRepository.deleteAll();
+        employeeRepository.deleteAll();
     }
 
     // can verify the list size

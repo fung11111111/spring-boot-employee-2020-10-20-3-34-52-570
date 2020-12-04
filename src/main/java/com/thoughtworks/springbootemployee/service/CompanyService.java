@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.Exception.CompanyNotFoundException;
+import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -45,8 +46,11 @@ public class CompanyService {
         companyRepository.deleteById(companyId);
     }
 
-    public List<Employee> getEmployeesByCompanyId(String companyId) {
-        return employeeRepository.findByCompanyId(companyId);
+    public List<Employee> getEmployeesByCompanyId(String companyId) throws EmployeeNotFoundException {
+       if (employeeRepository.findByCompanyId(companyId) != null){
+           return employeeRepository.findByCompanyId(companyId);
+       }
+       throw new EmployeeNotFoundException();
     }
 
     public List<Company> getWithPagination(Integer page, Integer pageSize) {

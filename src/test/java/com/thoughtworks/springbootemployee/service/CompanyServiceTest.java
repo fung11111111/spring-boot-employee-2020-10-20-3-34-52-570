@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.Exception.CompanyNotFoundException;
+import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -206,15 +207,16 @@ public class CompanyServiceTest {
     }
 
     @Test
-    public void should_return_employees_when_get_employees_by_company_id_given_repository_with_company_id() throws CompanyNotFoundException {
+    public void should_return_employees_when_get_employees_by_company_id_given_repository_with_company_id() throws CompanyNotFoundException, EmployeeNotFoundException {
         //given
+        Company existingCompany = new Company("Acom", "Banking");
+        companyRepository.save(new Company("Acom", "Banking"));
         ArrayList<Employee> expectedEmployees = new ArrayList<>();
-        expectedEmployees.add(new Employee( "Tom", 20, "Male", 200, "1"));
-        expectedEmployees.add(new Employee( "Tommy", 20, "Male", 200, "1"));
-        when(employeeRepository.findByCompanyId("1")).thenReturn(expectedEmployees);
+        expectedEmployees.add(new Employee( "Tom", 20, "Male", 200, existingCompany.getCompanyId()));
+        when(employeeRepository.findByCompanyId(existingCompany.getCompanyId())).thenReturn(expectedEmployees);
 
         //when
-        List<Employee> actualEmployees = companyService.getEmployeesByCompanyId("1");
+        List<Employee> actualEmployees = companyService.getEmployeesByCompanyId(existingCompany.getCompanyId());
 
         //then
         assertEquals(expectedEmployees, actualEmployees);

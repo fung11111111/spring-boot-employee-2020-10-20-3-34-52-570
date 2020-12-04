@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.Exception.CompanyNotFoundException;
+import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
@@ -43,7 +44,7 @@ public class CompanyController {
     }
 
     @GetMapping("/{companyId}/employees")
-    public List<Employee> getEmployeesByCompanyId(@PathVariable String companyId) throws CompanyNotFoundException {
+    public List<Employee> getEmployeesByCompanyId(@PathVariable String companyId) throws CompanyNotFoundException, EmployeeNotFoundException {
         return companyService.getEmployeesByCompanyId(companyId);
     }
 
