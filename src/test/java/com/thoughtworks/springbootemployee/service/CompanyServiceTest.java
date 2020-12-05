@@ -189,11 +189,14 @@ public class CompanyServiceTest {
 
     @Test
     public void should_call_delete_company_by_id_when_delete_company_by_id_given_repository_with_company_id() {
+        //given
+        when(companyRepository.existsById(anyString())).thenReturn(true);
+
         //when
-        companyService.deleteCompanyById("1");
+        companyService.deleteCompanyById("123");
 
         //then
-        verify(companyRepository, times(1)).deleteById("1");
+        verify(companyRepository, times(1)).deleteById("123");
     }
 
     @Test
