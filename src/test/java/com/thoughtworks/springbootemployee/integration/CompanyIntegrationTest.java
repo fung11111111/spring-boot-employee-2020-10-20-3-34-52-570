@@ -118,7 +118,6 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$.companyName").value("BCOM"))
                 .andExpect(jsonPath("$.companyType").value("IT"))
                 .andExpect(jsonPath("$.employees").isEmpty());
-        ;
 
         List<Company> companies = companyRepository.findAll();
         Assertions.assertEquals(1, companies.size());
@@ -191,6 +190,24 @@ public class CompanyIntegrationTest {
         //when
         //then
         mockMvc.perform(get("/companies/" + non_existedId))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("message").value("Company Not Found."));
+    }
+
+    @Test
+    public void should_throw_company_not_found_exception_when_update_company_by_id_given_non_existed_company_id_updated_company() throws Exception {
+        //given
+        String non_existedId = "5fc89540208fd1789f2aa947";
+        String companyJson = "{\n" +
+                "   \"companyName\": \"BCOM\",\n" +
+                "   \"companyType\": \"IT\"\n" +
+                "}";
+
+        //when
+        //then
+        mockMvc.perform(put("/companies/" + non_existedId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(companyJson))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("message").value("Company Not Found."));
     }
