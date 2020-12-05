@@ -40,10 +40,10 @@ public class CompanyController {
                     try {
                         List<Employee> employees = companyService.getEmployeesByCompanyId(company.getCompanyId());
                         return companyMapper.toResponse(company, employees);
-                    } catch (EmployeeNotFoundException employeeNotFoundExceptionexception) {
-                        employeeNotFoundExceptionexception.getLocalizedMessage();
+                    } catch (EmployeeNotFoundException employeeNotFoundException) {
+                        employeeNotFoundException.printStackTrace();
                     } catch (CompanyNotFoundException companyNotFoundException) {
-                        companyNotFoundException.getLocalizedMessage();
+                        companyNotFoundException.printStackTrace();
                     }
                     return companyMapper.toResponse(company);
                 }).collect(Collectors.toList());
@@ -68,7 +68,7 @@ public class CompanyController {
     public CompanyResponse updateCompany(@PathVariable String companyId, @RequestBody CompanyRequest companyRequest) throws CompanyNotFoundException, EmployeeNotFoundException {
         Company company = companyService.updateCompany(companyId, companyMapper.toEntity(companyRequest));
         List<Employee> employees = companyService.getEmployeesByCompanyId(company.getCompanyId());
-        return companyMapper.toResponse(company);
+        return companyMapper.toResponse(company,employees);
     }
 
     @DeleteMapping("/{companyId}")
@@ -87,7 +87,18 @@ public class CompanyController {
     @GetMapping(params = {"page", "pageSize"})
     public Page<CompanyResponse> getCompaniesByPage(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
         return companyService.getWithPagination(page, pageSize)
-                .map(companyMapper::toResponse);
+                .map(company -> {
+                    try {
+                        List <Employee> employees = companyService.getEmployeesByCompanyId(company.getCompanyId());
+                        return companyMapper.toResponse(company, employees);
+                    } catch (EmployeeNotFoundException employeeNotFoundException) {
+                        employeeNotFoundException.printStackTrace();
+                    } catch (CompanyNotFoundException companyNotFoundException) {
+                        companyNotFoundException.printStackTrace();
+                    }
+                    return companyMapper.toResponse(company);
+                });
+
     }
 
 }

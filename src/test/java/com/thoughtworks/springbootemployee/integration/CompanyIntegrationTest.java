@@ -48,6 +48,8 @@ public class CompanyIntegrationTest {
         //given
         Company company = new Company("ACOM", "Banking");
         companyRepository.save(company);
+        employeeRepository.save(new Employee("Tom", 18, "Male", 10000, company.getCompanyId()));
+        employeeRepository.save(new Employee("Tommy", 20, "Male", 10000, company.getCompanyId()));
 
         //when
         //then
@@ -56,7 +58,7 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$.*", hasSize(1)))
                 .andExpect(jsonPath("$[0].companyName").value("ACOM"))
                 .andExpect(jsonPath("$[0].companyType").value("Banking"))
-                .andExpect(jsonPath("$[0].employees").isEmpty());
+                .andExpect(jsonPath("$[0].employees", hasSize(2)));
     }
 
     @Test
@@ -89,6 +91,8 @@ public class CompanyIntegrationTest {
         //given
         Company company = new Company("ACOM", "Banking");
         companyRepository.save(company);
+        employeeRepository.save(new Employee("Tom", 18, "Male", 10000, company.getCompanyId()));
+        employeeRepository.save(new Employee("Tommy", 20, "Male", 10000, company.getCompanyId()));
 
         //when
         //then
@@ -96,7 +100,7 @@ public class CompanyIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.companyName").value("ACOM"))
                 .andExpect(jsonPath("$.companyType").value("Banking"))
-                .andExpect(jsonPath("$.employees").isEmpty());
+                .andExpect(jsonPath("$.employees", hasSize(2)));
     }
 
     @Test
@@ -104,6 +108,8 @@ public class CompanyIntegrationTest {
         //given
         Company company = new Company("ACOM", "Banking");
         companyRepository.save(company);
+        employeeRepository.save(new Employee("Tom", 18, "Male", 10000, company.getCompanyId()));
+        employeeRepository.save(new Employee("Tommy", 20, "Male", 10000, company.getCompanyId()));
         String companyJson = "{\n" +
                 "   \"companyName\": \"BCOM\",\n" +
                 "   \"companyType\": \"IT\"\n" +
@@ -117,7 +123,7 @@ public class CompanyIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.companyName").value("BCOM"))
                 .andExpect(jsonPath("$.companyType").value("IT"))
-                .andExpect(jsonPath("$.employees").isEmpty());
+                .andExpect(jsonPath("$.employees",hasSize(2)));
 
         List<Company> companies = companyRepository.findAll();
         Assertions.assertEquals(1, companies.size());
@@ -126,14 +132,16 @@ public class CompanyIntegrationTest {
     }
 
     @Test
-    public void should_return_employees_when_get_employees_by_company_id_given_company_id() throws Exception {
+    public void should_return_2_employees_when_get_employees_by_company_id_given_company_id() throws Exception {
         //given
         Company company = new Company("ACOM", "Banking");
         companyRepository.save(company);
         Employee employee1 = new Employee("Tom", 18, "Male", 10000, company.getCompanyId());
         Employee employee2 = new Employee("Tommy", 20, "Male", 10000, company.getCompanyId());
+        Employee retiredEmployee = new Employee("May", 20, "Male", 10000, "5fc89540208fd1789f2aa947");
         employeeRepository.save(employee1);
         employeeRepository.save(employee2);
+        employeeRepository.save(retiredEmployee);
 
         //when
         //then
@@ -157,6 +165,9 @@ public class CompanyIntegrationTest {
         companyRepository.save(company1);
         companyRepository.save(company2);
         companyRepository.save(company3);
+        employeeRepository.save(new Employee("Tom", 18, "Male", 10000, company1.getCompanyId()));
+        employeeRepository.save(new Employee("Tom", 18, "Male", 10000, company3.getCompanyId()));
+        employeeRepository.save(new Employee("Tommy", 20, "Male", 10000, company3.getCompanyId()));
 
         //when
         //then
@@ -166,7 +177,7 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$.pageable.pageNumber").value(1))
                 .andExpect(jsonPath("$.content[0].companyName").value("CCOM"))
                 .andExpect(jsonPath("$.content[0].companyType").value("Education"))
-                .andExpect(jsonPath("$.content[0].employees").isEmpty());
+                .andExpect(jsonPath("$.content[0].employees", hasSize(2)));
     }
 
     @Test
