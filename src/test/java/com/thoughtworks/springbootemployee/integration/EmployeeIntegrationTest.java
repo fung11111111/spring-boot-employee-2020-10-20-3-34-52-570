@@ -1,5 +1,8 @@
 package com.thoughtworks.springbootemployee.integration;
 
+import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
+import com.thoughtworks.springbootemployee.advice.ErrorResponse;
+import com.thoughtworks.springbootemployee.advice.GlobalControllerAdvice;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import junit.framework.TestCase;
@@ -14,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -166,6 +170,7 @@ public class EmployeeIntegrationTest {
         employeeRepository.save(employee1);
         employeeRepository.save(employee2);
         employeeRepository.save(employee3);
+
         //when
         //then
         mockMvc.perform(get("/employees").param("page", String.valueOf(2)).param("pageSize", String.valueOf(2)))
@@ -191,5 +196,18 @@ public class EmployeeIntegrationTest {
 
         List<Employee> employees = employeeRepository.findAll();
         assertEquals(0, employees.size());
+    }
+
+    @Test
+    public void should_throw_employee_not_found_exception_when_find_employee_by_id_given_non_existed_employee_id() throws Exception {
+        //given
+        String non_existedId = "5fc89540208fd1789f2aa947";
+
+        //when
+        //then
+        mockMvc.perform(get("/employees/" + non_existedId))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("message").value("Employee Not Found."));
+
     }
 }
