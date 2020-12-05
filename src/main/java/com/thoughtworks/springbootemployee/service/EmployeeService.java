@@ -39,7 +39,9 @@ public class EmployeeService {
     }
 
     public void deleteEmployeeByID(String id) {
-        employeeRepository.deleteById(id);
+       if(employeeRepository.existsById(id)){
+           employeeRepository.deleteById(id);
+       }
     }
 
     public List<Employee> getEmployeesByGender(String gender) {
