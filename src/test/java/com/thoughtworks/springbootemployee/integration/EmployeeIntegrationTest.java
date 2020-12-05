@@ -209,4 +209,26 @@ public class EmployeeIntegrationTest {
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("message").value("Employee Not Found."));
     }
+
+    @Test
+    public void should_throw_employee_not_found_exception_when_update_employee_by_id_given_non_existed_employee_id_updated_company() throws Exception {
+        //given
+        String non_existedId = "5fc89540208fd1789f2aa947";
+        String employeeUpdatedJson = "\n" +
+                "{\n" +
+                "   \"name\": \"Tom\",\n" +
+                "   \"age\": 19,\n" +
+                "   \"gender\": \"Male\",\n" +
+                "   \"salary\": 10000,\n" +
+                "   \"companyId\": \"1234\"\n" +
+                "}";
+
+        //when
+        //then
+        mockMvc.perform(put("/employees/" + non_existedId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(employeeUpdatedJson))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("message").value("Employee Not Found."));
+    }
 }
