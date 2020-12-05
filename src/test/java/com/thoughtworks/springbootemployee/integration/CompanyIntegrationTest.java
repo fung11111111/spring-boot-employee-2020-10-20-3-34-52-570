@@ -212,4 +212,16 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("message").value("Company Not Found."));
     }
 
+    @Test
+    public void should_return_400_bad_request_when_find_company_by_id_given_invalid_company_id() throws Exception {
+        //given
+        String invalid = "1234";
+
+        //when
+        //then
+        mockMvc.perform(get("/companies/" + invalid))
+                .andExpect(status().isBadRequest());
+    }
+
+
 }

@@ -213,11 +213,11 @@ public class EmployeeIntegrationTest {
     @Test
     public void should_return_400_bad_request_when_find_employee_by_id_given_invalid_employee_id() throws Exception {
         //given
-        String invlaidId = "1234";
+        String invalid = "1234";
 
         //when
         //then
-        mockMvc.perform(get("/employees/" + invlaidId))
+        mockMvc.perform(get("/employees/" + invalid))
                 .andExpect(status().isBadRequest());
     }
 
