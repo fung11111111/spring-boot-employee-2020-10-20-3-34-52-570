@@ -157,14 +157,16 @@ public class CompanyIntegrationTest {
         companyRepository.save(company1);
         companyRepository.save(company2);
         companyRepository.save(company3);
+
         //when
         //then
         mockMvc.perform(get("/companies").param("page", String.valueOf(2)).param("pageSize", String.valueOf(2)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.*", hasSize(1)))
-                .andExpect(jsonPath("$[0].companyName").value("CCOM"))
-                .andExpect(jsonPath("$[0].companyType").value("Education"))
-                .andExpect(jsonPath("$[0].employees").isEmpty());
+                .andExpect(jsonPath("$.numberOfElements").value(1))
+                .andExpect(jsonPath("$.pageable.pageNumber").value(1))
+                .andExpect(jsonPath("$.content[0].companyName").value("CCOM"))
+                .andExpect(jsonPath("$.content[0].companyType").value("Education"))
+                .andExpect(jsonPath("$.content[0].employees").isEmpty());
     }
 
     @Test

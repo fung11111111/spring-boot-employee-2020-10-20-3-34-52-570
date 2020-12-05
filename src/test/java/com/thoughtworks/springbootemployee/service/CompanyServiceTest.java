@@ -12,6 +12,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -114,15 +117,18 @@ public class CompanyServiceTest {
     }
 
     @Test
-    public void should_return_2_companies_when_get_companies_with_pagination_given_companies_more_than_2_with_pageNumber_is_1_and_pageSize_is_2() {
+    public void should_return_1_company_when_get_companies_with_pagination_given_3_companies_with_pageNumber_is_2_and_pageSize_is_2() {
         //given
-        ArrayList<Company> expectedCompanies = new ArrayList<>();
-        expectedCompanies.add(new Company("A COM", "BANKING"));
-        expectedCompanies.add(new Company("B COM", "BANKING"));
-        when(companyRepository.findAll()).thenReturn(expectedCompanies);
+        List <Company> companies = new ArrayList<>();
+        companies.add(new Company("ACOM", "Banking"));
+        Page<Company> expectedCompanies = new PageImpl<>(companies);
+
+        when(companyRepository.findAll((Pageable)any())).thenReturn(expectedCompanies);
 
         //when
-        List<Company> actualCompanies = companyService.getWithPagination(1,2);
-        assertEquals(expectedCompanies, actualCompanies);
+        Page<Company> actualEmployees = companyService.getWithPagination(2, 2);
+
+        //then
+        assertEquals(expectedCompanies, actualEmployees);
     }
 }

@@ -7,6 +7,9 @@ import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -61,12 +64,8 @@ public class CompanyService {
         throw new EmployeeNotFoundException();
     }
 
-    public List<Company> getWithPagination(Integer page, Integer pageSize) {
-        int pageToSkip = page - 1;
-        return companyRepository.findAll()
-                .stream()
-                .skip(pageToSkip * pageSize)
-                .limit(pageSize)
-                .collect(Collectors.toList());
+    public Page<Company> getWithPagination(Integer page, Integer pageSize) {
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        return  companyRepository.findAll(pageable);
     }
 }

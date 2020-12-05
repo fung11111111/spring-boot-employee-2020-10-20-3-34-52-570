@@ -10,6 +10,7 @@ import com.thoughtworks.springbootemployee.mapper.EmployeeMapper;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,9 +85,9 @@ public class CompanyController {
     }
 
     @GetMapping(params = {"page", "pageSize"})
-    public List<CompanyResponse> getCompaniesByPage(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
-        return companyService.getWithPagination(page, pageSize).stream()
-                .map(companyMapper::toResponse).collect(Collectors.toList());
+    public Page<CompanyResponse> getCompaniesByPage(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
+        return companyService.getWithPagination(page, pageSize)
+                .map(companyMapper::toResponse);
     }
 
 }
