@@ -187,7 +187,7 @@ public class EmployeeIntegrationTest {
         //when
         //then
         mockMvc.perform(delete("/employees/" + employee.getId()))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
 
         List<Employee> employees = employeeRepository.findAll();
         assertEquals(0, employees.size());
