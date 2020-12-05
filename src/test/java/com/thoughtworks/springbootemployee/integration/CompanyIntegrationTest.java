@@ -211,4 +211,5 @@ public class CompanyIntegrationTest {
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("message").value("Company Not Found."));
     }
+
 }
