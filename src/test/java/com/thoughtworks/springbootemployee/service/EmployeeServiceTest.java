@@ -195,12 +195,14 @@ public class EmployeeServiceTest {
 
     @Test
     public void should_call_delete_employee_by_id_when_delete_employee_by_id_given_repository_with_employee_id() throws EmployeeNotFoundException {
+        //given
+        when(employeeRepository.existsById(anyString())).thenReturn(true);
+
         //when
-        Employee employee = new Employee("Tom", 20, "Male", 20000, "123");
-        employeeService.deleteEmployeeByID("1");
+        employeeService.deleteEmployeeByID("123");
 
         //then
-        verify(employeeRepository, times(1)).deleteById("1");
+        verify(employeeRepository, times(1)).deleteById("123");
     }
 
     // can use argumentcaptor java
