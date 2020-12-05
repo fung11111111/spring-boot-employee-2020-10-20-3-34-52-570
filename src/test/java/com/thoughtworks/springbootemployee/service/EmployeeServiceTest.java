@@ -10,6 +10,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -111,18 +115,19 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_2_employees_when_get_employees_with_pagination_given_employees_more_than_2_with_pageNumber_is_1_and_pageSize_is_2() {
+    void should_return_1_employees_when_get_employees_with_pagination_given_3_employees_with_pageNumber_is_2_and_pageSize_is_2() {
         //given
-        List<Employee> expectedEmployees = new ArrayList<>();
-        expectedEmployees.add(new Employee("Tom", 20, "Male", 200, "123"));
-        expectedEmployees.add(new Employee("Tommy", 20, "Male", 200, "123"));
-        when(employeeRepository.findAll()).thenReturn(expectedEmployees);
+        List <Employee> employees = new ArrayList<>();
+        employees.add(new Employee("Tom", 20, "Male", 20000, "123"));
+        Page<Employee> expectedEmployees = new PageImpl<>(employees);
+
+        when(employeeRepository.findAll((Pageable)any())).thenReturn(expectedEmployees);
 
         //when
-        List<Employee> actualEmployees = employeeService.getWithPagination(1, 2);
+        Page<Employee> actualEmployees = employeeService.getWithPagination(2, 2);
 
         //then
-        assertEquals(2, actualEmployees.size());
+        assertEquals(expectedEmployees, actualEmployees);
     }
 
     @Test

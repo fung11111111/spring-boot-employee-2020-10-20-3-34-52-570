@@ -175,12 +175,14 @@ public class EmployeeIntegrationTest {
         //then
         mockMvc.perform(get("/employees").param("page", String.valueOf(2)).param("pageSize", String.valueOf(2)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.*", hasSize(1)))
-                .andExpect(jsonPath("$[0].name").value("Marry"))
-                .andExpect(jsonPath("$[0].age").value(18))
-                .andExpect(jsonPath("$[0].gender").value("Female"))
-                .andExpect(jsonPath("$[0].salary").value(10000))
-                .andExpect(jsonPath("$[0].companyId").value("123"));
+                .andExpect(jsonPath("$.numberOfElements").value(1))
+                .andExpect(jsonPath("$.pageable.pageNumber").value(1))
+                .andExpect(jsonPath("$.content[0].id").isString())
+                .andExpect(jsonPath("$.content[0].name").value("Marry"))
+                .andExpect(jsonPath("$.content[0].age").value(18))
+                .andExpect(jsonPath("$.content[0].gender").value("Female"))
+                .andExpect(jsonPath("$.content[0].salary").value(10000))
+                .andExpect(jsonPath("$.content[0].companyId").value("123"));
     }
 
     @Test

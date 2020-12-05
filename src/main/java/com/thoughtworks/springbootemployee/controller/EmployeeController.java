@@ -6,6 +6,7 @@ import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.mapper.EmployeeMapper;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -64,10 +65,9 @@ public class EmployeeController {
     }
 
     @GetMapping(params = {"page", "pageSize"})
-    public List<EmployeeResponse> getEmployeeByPage(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
-        return employeeService.getWithPagination(page, pageSize).stream()
-                .map(employeeMapper::toResponse)
-                .collect(Collectors.toList());
+    public Page<EmployeeResponse> getEmployeeByPage(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
+        return employeeService.getWithPagination(page,pageSize)
+                .map(employeeMapper::toResponse);
     }
 
 }
