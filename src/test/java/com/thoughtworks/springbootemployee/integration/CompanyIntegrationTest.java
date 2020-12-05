@@ -177,7 +177,7 @@ public class CompanyIntegrationTest {
         //when
         //then
         mockMvc.perform(delete("/companies/" + company.getCompanyId()))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
 
         List<Company> companies = companyRepository.findAll();
         assertEquals(0, companies.size());
