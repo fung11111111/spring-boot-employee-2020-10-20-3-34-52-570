@@ -73,7 +73,7 @@ public class CompanyController {
 
     @DeleteMapping("/{companyId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCompanyById(@PathVariable String companyId) {
+    public void deleteCompanyById(@PathVariable String companyId) throws CompanyNotFoundException {
         companyService.deleteCompanyById(companyId);
     }
 

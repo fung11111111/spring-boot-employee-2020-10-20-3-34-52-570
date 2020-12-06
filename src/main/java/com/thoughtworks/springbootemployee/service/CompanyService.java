@@ -48,10 +48,11 @@ public class CompanyService {
         throw new CompanyNotFoundException();
     }
 
-    public void deleteCompanyById(String companyId) {
+    public void deleteCompanyById(String companyId) throws CompanyNotFoundException {
         if (companyRepository.existsById(companyId)){
             companyRepository.deleteById(companyId);
         }
+        throw new CompanyNotFoundException();
     }
 
     public List<Employee> getEmployeesByCompanyId(String companyId) throws EmployeeNotFoundException, CompanyNotFoundException {

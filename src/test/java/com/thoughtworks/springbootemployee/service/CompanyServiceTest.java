@@ -77,7 +77,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    public void should_call_delete_company_by_id_when_delete_company_by_id_given_repository_with_company_id() {
+    public void should_call_delete_company_by_id_when_delete_company_by_id_given_repository_with_company_id() throws CompanyNotFoundException {
         //given
         when(companyRepository.existsById(anyString())).thenReturn(true);
 
@@ -155,6 +155,20 @@ public class CompanyServiceTest {
         //when
         CompanyNotFoundException companyNotFoundException = assertThrows(CompanyNotFoundException.class, () -> {
             companyService.updateCompany("1", company);
+        });
+
+        //then
+        assertEquals("Company Not Found.", companyNotFoundException.getLocalizedMessage());
+    }
+
+    @Test
+    public void should_throw_company_not_found_exception_when_delete_company_by_id_given_repository_company_id() {
+        //given
+        when(companyRepository.existsById("1")).thenReturn(false);
+
+        //when
+        CompanyNotFoundException companyNotFoundException = assertThrows(CompanyNotFoundException.class, () -> {
+            companyService.deleteCompanyById("1");
         });
 
         //then
