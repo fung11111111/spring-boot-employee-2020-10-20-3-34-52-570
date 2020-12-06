@@ -213,6 +213,18 @@ public class EmployeeIntegrationTest {
     }
 
     @Test
+    public void should_throw_employee_not_found_exception_when_delete_employee_by_id_given_non_existed_employee_id() throws Exception {
+        //given
+        String non_existedId = "5fc89540208fd1789f2aa947";
+
+        //when
+        //then
+        mockMvc.perform(delete("/employees/" + non_existedId))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("message").value("Employee Not Found."));
+    }
+
+    @Test
     public void should_return_400_bad_request_when_find_employee_by_id_given_invalid_employee_id() throws Exception {
         //given
         String invalid = "1234";
