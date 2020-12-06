@@ -40,10 +40,11 @@ public class EmployeeService {
         throw new EmployeeNotFoundException();
     }
 
-    public void deleteEmployeeByID(String id) {
+    public void deleteEmployeeByID(String id) throws EmployeeNotFoundException{
        if(employeeRepository.existsById(id)){
            employeeRepository.deleteById(id);
        }
+       throw new EmployeeNotFoundException();
     }
 
     public List<Employee> getEmployeesByGender(String gender) {
