@@ -174,4 +174,20 @@ public class CompanyServiceTest {
         //then
         assertEquals("Company Not Found.", companyNotFoundException.getLocalizedMessage());
     }
+
+    @Test
+    public void should_throw_company_not_found_exception_when_get_employee_by_id_given_repository_company_id() {
+        //given
+        when(companyRepository.existsById("1")).thenReturn(false);
+
+        //when
+        CompanyNotFoundException companyNotFoundException = assertThrows(CompanyNotFoundException.class, () -> {
+            companyService.getEmployeesByCompanyId("1");
+        });
+
+        //then
+        assertEquals("Company Not Found.", companyNotFoundException.getLocalizedMessage());
+    }
+
+
 }
