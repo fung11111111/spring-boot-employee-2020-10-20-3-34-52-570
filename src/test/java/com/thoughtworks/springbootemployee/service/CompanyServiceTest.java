@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest

@@ -2,7 +2,6 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Employee;
-import com.thoughtworks.springbootemployee.repository.EmployeeRepositoryOld;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,7 +11,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
@@ -21,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -100,7 +98,6 @@ public class EmployeeServiceTest {
         verify(employeeRepository, times(1)).deleteById("123");
     }
 
-    // can use argumentcaptor java
     @Test
     public void should_return_updated_employee_when_update_employee_by_id_given_repository_with_employee_id_and_employee() throws EmployeeNotFoundException {
         //given
@@ -146,5 +143,18 @@ public class EmployeeServiceTest {
         assertEquals(expectedEmployees, actualEmployees);
     }
 
+    @Test
+    public void should_throw_employee_not_found_exception_when_get_employee_by_id_given_repository_employee_id() {
+        //given
+        when(employeeRepository.findById("1")).thenReturn(Optional.empty());
+
+        //when
+        EmployeeNotFoundException employeeNotFoundException = assertThrows(EmployeeNotFoundException.class, () -> {
+           employeeService.getEmployeeByID("1");
+        });
+
+        //then
+        assertEquals("Employee Not Found.", employeeNotFoundException.getLocalizedMessage());
+    }
 
 }
