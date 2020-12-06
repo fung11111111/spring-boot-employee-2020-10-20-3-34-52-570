@@ -49,10 +49,10 @@ public class CompanyService {
     }
 
     public void deleteCompanyById(String companyId) throws CompanyNotFoundException {
-        if (companyRepository.existsById(companyId)){
-            companyRepository.deleteById(companyId);
+        if (!companyRepository.existsById(companyId)) {
+            throw new CompanyNotFoundException();
         }
-        throw new CompanyNotFoundException();
+        companyRepository.deleteById(companyId);
     }
 
     public List<Employee> getEmployeesByCompanyId(String companyId) throws EmployeeNotFoundException, CompanyNotFoundException {
@@ -67,6 +67,6 @@ public class CompanyService {
 
     public Page<Company> getWithPagination(Integer page, Integer pageSize) {
         Pageable pageable = PageRequest.of(page - 1, pageSize);
-        return  companyRepository.findAll(pageable);
+        return companyRepository.findAll(pageable);
     }
 }

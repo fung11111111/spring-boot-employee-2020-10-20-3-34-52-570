@@ -226,6 +226,18 @@ public class CompanyIntegrationTest {
     }
 
     @Test
+    public void should_throw_company_not_found_exception_when_delete_company_by_id_given_non_existed_company_id() throws Exception {
+        //given
+        String non_existedId = "5fc89540208fd1789f2aa947";
+
+        //when
+        //then
+        mockMvc.perform(get("/companies/" + non_existedId))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("message").value("Company Not Found."));
+    }
+
+    @Test
     public void should_return_400_bad_request_when_find_company_by_id_given_invalid_company_id() throws Exception {
         //given
         String invalid = "1234";
@@ -235,6 +247,8 @@ public class CompanyIntegrationTest {
         mockMvc.perform(get("/companies/" + invalid))
                 .andExpect(status().isBadRequest());
     }
+
+
 
 
 }

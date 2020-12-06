@@ -92,10 +92,10 @@ public class EmployeeServiceTest {
         when(employeeRepository.existsById(anyString())).thenReturn(true);
 
         //when
-        employeeService.deleteEmployeeByID("123");
+        employeeService.deleteEmployeeByID("1");
 
         //then
-        verify(employeeRepository, times(1)).deleteById("123");
+        verify(employeeRepository, times(1)).deleteById("1");
     }
 
     @Test
