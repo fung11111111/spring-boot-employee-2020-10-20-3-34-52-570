@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -129,5 +130,19 @@ public class CompanyServiceTest {
 
         //then
         assertEquals(expectedCompanies, actualEmployees);
+    }
+
+    @Test
+    public void should_throw_company_not_found_exception_when_get_company_by_id_given_repository_company_id() {
+        //given
+        when(companyRepository.findById("1")).thenReturn(Optional.empty());
+
+        //when
+        CompanyNotFoundException companyNotFoundException = assertThrows(CompanyNotFoundException.class, () -> {
+            companyService.getCompanyById("1");
+        });
+
+        //then
+        assertEquals("Company Not Found.", companyNotFoundException.getLocalizedMessage());
     }
 }
