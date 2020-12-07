@@ -29,6 +29,7 @@ public class CompanyMapper {
 
     public CompanyResponse toResponse(Company company, List<Employee> employees) {
         CompanyResponse companyResponse = new CompanyResponse();
+        companyResponse.setCompanyId(company.getCompanyId());
         companyResponse.setCompanyName(company.getCompanyName());
         companyResponse.setCompanyType(company.getCompanyType());
         companyResponse.setEmployees(employees);

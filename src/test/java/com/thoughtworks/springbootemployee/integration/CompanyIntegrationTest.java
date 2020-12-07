@@ -56,6 +56,7 @@ public class CompanyIntegrationTest {
         mockMvc.perform(get("/companies"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.*", hasSize(1)))
+                .andExpect(jsonPath("$[0].companyId").isString())
                 .andExpect(jsonPath("$[0].companyName").value("ACOM"))
                 .andExpect(jsonPath("$[0].companyType").value("Banking"))
                 .andExpect(jsonPath("$[0].employees", hasSize(2)));
@@ -75,6 +76,7 @@ public class CompanyIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(companyJson))
                 .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.companyId").isString())
                 .andExpect(jsonPath("$.companyName").value("ACOM"))
                 .andExpect(jsonPath("$.companyType").value("Banking"))
                 .andExpect(jsonPath("$.employees").isEmpty());
@@ -98,6 +100,7 @@ public class CompanyIntegrationTest {
         //then
         mockMvc.perform(get("/companies/" + company.getCompanyId()))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.companyId").isString())
                 .andExpect(jsonPath("$.companyName").value("ACOM"))
                 .andExpect(jsonPath("$.companyType").value("Banking"))
                 .andExpect(jsonPath("$.employees", hasSize(2)));
@@ -121,6 +124,7 @@ public class CompanyIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(companyJson))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.companyId").isString())
                 .andExpect(jsonPath("$.companyName").value("BCOM"))
                 .andExpect(jsonPath("$.companyType").value("IT"))
                 .andExpect(jsonPath("$.employees", hasSize(2)));
@@ -175,6 +179,7 @@ public class CompanyIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.numberOfElements").value(1))
                 .andExpect(jsonPath("$.pageable.pageNumber").value(1))
+                .andExpect(jsonPath("$.content[0].companyId").isString())
                 .andExpect(jsonPath("$.content[0].companyName").value("CCOM"))
                 .andExpect(jsonPath("$.content[0].companyType").value("Education"))
                 .andExpect(jsonPath("$.content[0].employees", hasSize(2)));

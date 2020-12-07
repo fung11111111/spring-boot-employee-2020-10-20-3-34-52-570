@@ -4,7 +4,9 @@ import com.thoughtworks.springbootemployee.model.Employee;
 
 import java.util.List;
 
+// add company id
 public class CompanyResponse {
+    private String companyId;
     private String companyName;
     private String companyType;
     private List<Employee> employees;
@@ -12,7 +14,8 @@ public class CompanyResponse {
     public CompanyResponse() {
     }
 
-    public CompanyResponse(String companyName, String companyType, List<Employee> employees) {
+    public CompanyResponse(String companyId, String companyName, String companyType, List<Employee> employees) {
+        this.companyId = companyId;
         this.companyName = companyName;
         this.companyType = companyType;
         this.employees = employees;
@@ -40,5 +43,13 @@ public class CompanyResponse {
 
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
+    }
+
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
     }
 }
