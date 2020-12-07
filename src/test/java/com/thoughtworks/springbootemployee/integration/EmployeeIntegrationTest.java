@@ -15,8 +15,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -46,6 +46,7 @@ public class EmployeeIntegrationTest {
         mockMvc.perform(get("/employees"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.*", hasSize(1)))
+                .andExpect(jsonPath("$[0].id").isString())
                 .andExpect(jsonPath("$[0].name").value("May"))
                 .andExpect(jsonPath("$[0].age").value(18))
                 .andExpect(jsonPath("$[0].gender").value("Female"))
@@ -70,6 +71,7 @@ public class EmployeeIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(employeeJson))
                 .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").isString())
                 .andExpect(jsonPath("$.name").value("Tom"))
                 .andExpect(jsonPath("$.age").value(10))
                 .andExpect(jsonPath("$.gender").value("Male"))
@@ -78,6 +80,7 @@ public class EmployeeIntegrationTest {
 
         List<Employee> employees = employeeRepository.findAll();
         assertEquals(1, employees.size());
+        assertNotNull(employees.get(0).getId());
         assertEquals("Tom", employees.get(0).getName());
         assertEquals(10, employees.get(0).getAge());
         assertEquals("Male", employees.get(0).getGender());
@@ -95,6 +98,7 @@ public class EmployeeIntegrationTest {
         //then
         mockMvc.perform(get("/employees/" + employee.getId()))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").isString())
                 .andExpect(jsonPath("$.name").value("May"))
                 .andExpect(jsonPath("$.age").value(18))
                 .andExpect(jsonPath("$.gender").value("Female"))
@@ -115,6 +119,7 @@ public class EmployeeIntegrationTest {
         mockMvc.perform(get("/employees").param("gender", "Male"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.*", hasSize(1)))
+                .andExpect(jsonPath("$[0].id").isString())
                 .andExpect(jsonPath("$[0].name").value("Tom"))
                 .andExpect(jsonPath("$[0].age").value(18))
                 .andExpect(jsonPath("$[0].gender").value("Male"))
@@ -145,6 +150,7 @@ public class EmployeeIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(employeeUpdatedJson))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").isString())
                 .andExpect(jsonPath("$.name").value("Tom"))
                 .andExpect(jsonPath("$.age").value(19))
                 .andExpect(jsonPath("$.gender").value("Male"))
@@ -153,6 +159,7 @@ public class EmployeeIntegrationTest {
 
         List<Employee> employees = employeeRepository.findAll();
         assertEquals(1, employees.size());
+        assertNotNull(employees.get(0).getId());
         assertEquals("Tom", employees.get(0).getName());
         assertEquals(19, employees.get(0).getAge());
         assertEquals("Male", employees.get(0).getGender());
@@ -202,7 +209,7 @@ public class EmployeeIntegrationTest {
     @Test
     public void should_throw_employee_not_found_exception_when_find_employee_by_id_given_non_existed_employee_id() throws Exception {
         //given
-        String non_existedId = "5fc89540208fd1789f2aa947";
+        String non_existedId = new ObjectId().toString();
 
         //when
         //then
@@ -211,7 +218,6 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("message").value("Employee Not Found."));
     }
 
-    // use new ObjectId().toString();
     @Test
     public void should_throw_employee_not_found_exception_when_delete_employee_by_id_given_non_existed_employee_id() throws Exception {
         //given
