@@ -5,6 +5,7 @@ import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,7 @@ import java.util.List;
 
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -84,6 +86,7 @@ public class CompanyIntegrationTest {
 
         List<Company> companies = companyRepository.findAll();
         assertEquals(1, companies.size());
+        assertNotNull(companies.get(0).getCompanyId());
         assertEquals("ACOM", companies.get(0).getCompanyName());
         assertEquals("Banking", companies.get(0).getCompanyType());
     }
@@ -131,6 +134,7 @@ public class CompanyIntegrationTest {
 
         List<Company> companies = companyRepository.findAll();
         Assertions.assertEquals(1, companies.size());
+        assertNotNull(companies.get(0).getCompanyId());
         assertEquals("BCOM", companies.get(0).getCompanyName());
         assertEquals("IT", companies.get(0).getCompanyType());
     }
@@ -203,7 +207,7 @@ public class CompanyIntegrationTest {
     @Test
     public void should_throw_company_not_found_exception_when_find_company_by_id_given_non_existed_company_id() throws Exception {
         //given
-        String non_existedId = "5fc89540208fd1789f2aa947";
+        String non_existedId = ObjectId.get().toString();
 
         //when
         //then
@@ -215,7 +219,7 @@ public class CompanyIntegrationTest {
     @Test
     public void should_throw_company_not_found_exception_when_update_company_by_id_given_non_existed_company_id_updated_company() throws Exception {
         //given
-        String non_existedId = "5fc89540208fd1789f2aa947";
+        String non_existedId = ObjectId.get().toString();
         String companyJson = "{\n" +
                 "   \"companyName\": \"BCOM\",\n" +
                 "   \"companyType\": \"IT\"\n" +
@@ -233,7 +237,7 @@ public class CompanyIntegrationTest {
     @Test
     public void should_throw_company_not_found_exception_when_delete_company_by_id_given_non_existed_company_id() throws Exception {
         //given
-        String non_existedId = "5fc89540208fd1789f2aa947";
+        String non_existedId = ObjectId.get().toString();
 
         //when
         //then
