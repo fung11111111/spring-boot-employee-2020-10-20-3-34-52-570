@@ -32,6 +32,9 @@ public class CompanyServiceTest {
     private CompanyService companyService;
 
     @Mock
+    private EmployeeService employeeService;
+
+    @Mock
     private CompanyRepository companyRepository;
 
     @Mock
@@ -102,12 +105,12 @@ public class CompanyServiceTest {
     }
 
     @Test
-    public void should_return_employees_when_get_employees_by_company_id_given_repository_with_company_id() throws CompanyNotFoundException, EmployeeNotFoundException {
+    public void should_return_employees_when_get_employees_by_company_id_given_repository_with_company_id() throws CompanyNotFoundException {
         //given
         ArrayList<Employee> expectedEmployees = new ArrayList<>();
         expectedEmployees.add(new Employee( "Tom", 20, "Male", 200, "123"));
         when(companyRepository.existsById(any())).thenReturn(true);
-        when(employeeRepository.findByCompanyId(any())).thenReturn(expectedEmployees);
+        when(employeeService.getEmployeeByCompanyId(any())).thenReturn(expectedEmployees);
 
         //when
         List<Employee> actualEmployees = companyService.getEmployeesByCompanyId("123");

@@ -56,11 +56,8 @@ public class EmployeeService {
         return employeeRepository.findAll(pageable);
     }
 
-    public List<Employee> getEmployeeByCompanyId(String companyId) throws EmployeeNotFoundException {
-        if (employeeRepository.findByCompanyId(companyId) != null) {
-            return employeeRepository.findByCompanyId(companyId);
-        }
-        throw new EmployeeNotFoundException();
+    public List<Employee> getEmployeeByCompanyId(String companyId){
+        return employeeRepository.findByCompanyId(companyId);
     }
 }
 

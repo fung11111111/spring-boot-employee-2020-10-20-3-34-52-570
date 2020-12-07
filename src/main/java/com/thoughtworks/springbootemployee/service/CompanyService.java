@@ -22,7 +22,7 @@ public class CompanyService {
     private CompanyRepository companyRepository;
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private EmployeeService employeeService;
 
     public List<Company> getCompanies() {
         return companyRepository.findAll();
@@ -54,13 +54,11 @@ public class CompanyService {
         companyRepository.deleteById(companyId);
     }
 
-    // can ignore EmployeeNotFoundException
     public List<Employee> getEmployeesByCompanyId(String companyId) throws CompanyNotFoundException {
         if (!companyRepository.existsById(companyId)) {
             throw new CompanyNotFoundException();
         }
-        // through service layer
-        return employeeRepository.findByCompanyId(companyId);
+        return employeeService.getEmployeeByCompanyId(companyId);
     }
 
     public Page<Company> getWithPagination(Integer page, Integer pageSize) {

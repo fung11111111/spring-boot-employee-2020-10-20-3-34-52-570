@@ -186,17 +186,4 @@ public class EmployeeServiceTest {
         assertEquals("Employee Not Found.", employeeNotFoundException.getLocalizedMessage());
     }
 
-    @Test
-    public void should_throw_employee_not_found_exception_when_get_employee_by_company_id_given_repository_company_id() {
-        //given
-        when(employeeRepository.findByCompanyId("1")).thenReturn(null);
-
-        //when
-        EmployeeNotFoundException employeeNotFoundException = assertThrows(EmployeeNotFoundException.class, () -> {
-            employeeService.getEmployeeByCompanyId("1");
-        });
-
-        //then
-        assertEquals("Employee Not Found.", employeeNotFoundException.getLocalizedMessage());
-    }
 }
