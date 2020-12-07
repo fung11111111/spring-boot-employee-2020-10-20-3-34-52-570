@@ -54,14 +54,13 @@ public class CompanyService {
         companyRepository.deleteById(companyId);
     }
 
-    public List<Employee> getEmployeesByCompanyId(String companyId) throws EmployeeNotFoundException, CompanyNotFoundException {
+    // can ignore EmployeeNotFoundException
+    public List<Employee> getEmployeesByCompanyId(String companyId) throws CompanyNotFoundException {
         if (!companyRepository.existsById(companyId)) {
             throw new CompanyNotFoundException();
         }
-        if (employeeRepository.findByCompanyId(companyId) != null) {
-            return employeeRepository.findByCompanyId(companyId);
-        }
-        throw new EmployeeNotFoundException();
+        // through service layer
+        return employeeRepository.findByCompanyId(companyId);
     }
 
     public Page<Company> getWithPagination(Integer page, Integer pageSize) {

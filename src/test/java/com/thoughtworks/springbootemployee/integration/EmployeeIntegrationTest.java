@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee.integration;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import junit.framework.TestCase;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,6 +109,7 @@ public class EmployeeIntegrationTest {
         Employee employee2 = new Employee("May", 18, "Female", 10000, "123");
         employeeRepository.save(employee1);
         employeeRepository.save(employee2);
+
         //when
         //then
         mockMvc.perform(get("/employees").param("gender", "Male"))
@@ -209,10 +211,11 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("message").value("Employee Not Found."));
     }
 
+    // use new ObjectId().toString();
     @Test
     public void should_throw_employee_not_found_exception_when_delete_employee_by_id_given_non_existed_employee_id() throws Exception {
         //given
-        String non_existedId = "5fc89540208fd1789f2aa947";
+        String non_existedId = new ObjectId().toString();
 
         //when
         //then

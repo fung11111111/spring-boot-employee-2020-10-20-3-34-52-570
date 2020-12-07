@@ -40,8 +40,6 @@ public class CompanyController {
                     try {
                         List<Employee> employees = companyService.getEmployeesByCompanyId(company.getCompanyId());
                         return companyMapper.toResponse(company, employees);
-                    } catch (EmployeeNotFoundException employeeNotFoundException) {
-                        employeeNotFoundException.printStackTrace();
                     } catch (CompanyNotFoundException companyNotFoundException) {
                         companyNotFoundException.printStackTrace();
                     }
@@ -51,6 +49,7 @@ public class CompanyController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    // shd be no employees
     public CompanyResponse addCompany(@RequestBody CompanyRequest companyRequest) throws CompanyNotFoundException, EmployeeNotFoundException {
         Company company = companyService.addCompany(companyMapper.toEntity(companyRequest));
         List<Employee> employees = companyService.getEmployeesByCompanyId(company.getCompanyId());
@@ -85,14 +84,13 @@ public class CompanyController {
     }
 
     @GetMapping(params = {"page", "pageSize"})
+    // need to throw exception
     public Page<CompanyResponse> getCompaniesByPage(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
         return companyService.getWithPagination(page, pageSize)
                 .map(company -> {
                     try {
                         List<Employee> employees = companyService.getEmployeesByCompanyId(company.getCompanyId());
                         return companyMapper.toResponse(company, employees);
-                    } catch (EmployeeNotFoundException employeeNotFoundException) {
-                        employeeNotFoundException.printStackTrace();
                     } catch (CompanyNotFoundException companyNotFoundException) {
                         companyNotFoundException.printStackTrace();
                     }
