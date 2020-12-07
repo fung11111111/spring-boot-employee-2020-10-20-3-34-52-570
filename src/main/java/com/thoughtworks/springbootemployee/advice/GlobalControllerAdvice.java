@@ -1,7 +1,7 @@
 package com.thoughtworks.springbootemployee.advice;
 
-import com.thoughtworks.springbootemployee.Exception.CompanyNotFoundException;
-import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
+import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
+import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

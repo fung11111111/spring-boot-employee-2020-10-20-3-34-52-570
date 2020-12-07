@@ -123,7 +123,7 @@ public class CompanyIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.companyName").value("BCOM"))
                 .andExpect(jsonPath("$.companyType").value("IT"))
-                .andExpect(jsonPath("$.employees",hasSize(2)));
+                .andExpect(jsonPath("$.employees", hasSize(2)));
 
         List<Company> companies = companyRepository.findAll();
         Assertions.assertEquals(1, companies.size());
@@ -247,8 +247,5 @@ public class CompanyIntegrationTest {
         mockMvc.perform(get("/companies/" + invalid))
                 .andExpect(status().isBadRequest());
     }
-
-
-
 
 }

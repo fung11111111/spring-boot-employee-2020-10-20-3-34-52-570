@@ -1,8 +1,5 @@
 package com.thoughtworks.springbootemployee.integration;
 
-import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
-import com.thoughtworks.springbootemployee.advice.ErrorResponse;
-import com.thoughtworks.springbootemployee.advice.GlobalControllerAdvice;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import junit.framework.TestCase;

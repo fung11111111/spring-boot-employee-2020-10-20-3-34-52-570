@@ -1,7 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
-import com.thoughtworks.springbootemployee.Exception.CompanyNotFoundException;
-import com.thoughtworks.springbootemployee.Exception.EmployeeNotFoundException;
+import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
+import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.dto.CompanyRequest;
 import com.thoughtworks.springbootemployee.dto.CompanyResponse;
 import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
@@ -68,7 +68,7 @@ public class CompanyController {
     public CompanyResponse updateCompany(@PathVariable String companyId, @RequestBody CompanyRequest companyRequest) throws CompanyNotFoundException, EmployeeNotFoundException {
         Company company = companyService.updateCompany(companyId, companyMapper.toEntity(companyRequest));
         List<Employee> employees = companyService.getEmployeesByCompanyId(company.getCompanyId());
-        return companyMapper.toResponse(company,employees);
+        return companyMapper.toResponse(company, employees);
     }
 
     @DeleteMapping("/{companyId}")
@@ -89,7 +89,7 @@ public class CompanyController {
         return companyService.getWithPagination(page, pageSize)
                 .map(company -> {
                     try {
-                        List <Employee> employees = companyService.getEmployeesByCompanyId(company.getCompanyId());
+                        List<Employee> employees = companyService.getEmployeesByCompanyId(company.getCompanyId());
                         return companyMapper.toResponse(company, employees);
                     } catch (EmployeeNotFoundException employeeNotFoundException) {
                         employeeNotFoundException.printStackTrace();
@@ -98,7 +98,5 @@ public class CompanyController {
                     }
                     return companyMapper.toResponse(company);
                 });
-
     }
-
 }
